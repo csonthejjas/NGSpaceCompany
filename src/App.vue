@@ -1,26 +1,1178 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <div v-if="!loaded" id="loadScreen">
+        <div class="row row-cols-1 g-2 justify-content-center">
+            <div class="col text-center"><h1 class="text-light">NG Space Company</h1></div>
+            <div class="col text-center"><img id="loadLogo" style="width:25%; height:auto;" :src="require('./assets/whiteLogo.png')" /></div>
+            <div class="col text-center"><h5 class="text-light">Reticulating Splines...</h5></div>
+        </div>
+    </div>
+
+    <div v-if="loaded" id="gameScreen">
+        <div id="sidebar" :class="{ 'open':sidebarOpen }">
+            <top-header>
+            
+                <div class="col-auto">
+                    <img :src="require('./assets/whiteLogo.png')" width="42" height="42" />
+                </div>
+
+                <div class="col">
+                    <span class="h5 text-light">NG Space Company</span>
+                </div>
+
+                <div class="col-auto d-lg-none" @click="sidebarOpen = false;">
+                    <i class="fas fa-fw fa-times"></i>
+                </div>
+                
+            </top-header>
+            <inner-content data-simplebar>
+                <div class="row gx-2 gy-3 row-cols-1">
+                
+                    <sidenav-group id="fabricatedHeading" :unlocked="data['energy'].unlocked">
+                        <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" :boost="data['energy'].boost" :count="data['energy'].count" :storage="data['energy'].storage" />
+                        <sidenav-item id="plasmaPane" icon="plasma.png" :unlocked="data['plasma'].unlocked" :prod="data['plasma'].prod" :boost="data['plasma'].boost" :count="data['plasma'].count" :storage="data['plasma'].storage" />
+                        <sidenav-item id="meteoritePane" icon="meteorite.png" :unlocked="data['meteorite'].unlocked" :prod="data['meteorite'].prod" :boost="data['meteorite'].boost" :count="data['meteorite'].count" :storage="data['meteorite'].storage" />
+                        <sidenav-item id="carbonPane" icon="carbon.png" :unlocked="data['carbon'].unlocked" :prod="data['carbon'].prod" :boost="data['carbon'].boost" :count="data['carbon'].count" :storage="data['carbon'].storage" />
+                    </sidenav-group>
+
+                    <sidenav-group id="earthResourcesHeading" :unlocked="data['metal'].unlocked">
+                        <sidenav-item id="oilPane" icon="oil.png" :unlocked="data['oil'].unlocked" :prod="data['oil'].prod" :boost="data['oil'].boost" :count="data['oil'].count" :storage="data['oil'].storage" />
+                        <sidenav-item id="metalPane" icon="metal.png" :unlocked="data['metal'].unlocked" :prod="data['metal'].prod" :boost="data['metal'].boost" :count="data['metal'].count" :storage="data['metal'].storage" />
+                        <sidenav-item id="gemPane" icon="gem.png" :unlocked="data['gem'].unlocked" :prod="data['gem'].prod" :boost="data['gem'].boost" :count="data['gem'].count" :storage="data['gem'].storage" />
+                        <sidenav-item id="woodPane" icon="wood.png" :unlocked="data['wood'].unlocked" :prod="data['wood'].prod" :boost="data['wood'].boost" :count="data['wood'].count" :storage="data['wood'].storage" />
+                        <sidenav-item id="siliconPane" icon="silicon.png" :unlocked="data['silicon'].unlocked" :prod="data['silicon'].prod" :boost="data['silicon'].boost" :count="data['silicon'].count" :storage="data['silicon'].storage" />
+                        <sidenav-item id="uraniumPane" icon="uranium.png" :unlocked="data['uranium'].unlocked" :prod="data['uranium'].prod" :boost="data['uranium'].boost" :count="data['uranium'].count" :storage="data['uranium'].storage" />
+                        <sidenav-item id="lavaPane" icon="lava.png" :unlocked="data['lava'].unlocked" :prod="data['lava'].prod" :boost="data['lava'].boost" :count="data['lava'].count" :storage="data['lava'].storage" />
+                    </sidenav-group>
+
+                    <sidenav-group id="innerResourcesHeading" :unlocked="data['lunarite'].unlocked">
+                        <sidenav-item id="lunaritePane" icon="lunarite.png" :unlocked="data['lunarite'].unlocked" :prod="data['lunarite'].prod" :boost="data['lunarite'].boost" :count="data['lunarite'].count" :storage="data['lunarite'].storage" />
+                        <sidenav-item id="methanePane" icon="methane.png" :unlocked="data['methane'].unlocked" :prod="data['methane'].prod" :boost="data['methane'].boost" :count="data['methane'].count" :storage="data['methane'].storage" />
+                        <sidenav-item id="titaniumPane" icon="titanium.png" :unlocked="data['titanium'].unlocked" :prod="data['titanium'].prod" :boost="data['titanium'].boost" :count="data['titanium'].count" :storage="data['titanium'].storage" />
+                        <sidenav-item id="goldPane" icon="gold.png" :unlocked="data['gold'].unlocked" :prod="data['gold'].prod" :boost="data['gold'].boost" :count="data['gold'].count" :storage="data['gold'].storage" />
+                        <sidenav-item id="silverPane" icon="silver.png" :unlocked="data['silver'].unlocked" :prod="data['silver'].prod" :boost="data['silver'].boost" :count="data['silver'].count" :storage="data['silver'].storage" />
+                    </sidenav-group>
+
+                    <sidenav-group id="outerResourcesHeading" :unlocked="data['hydrogen'].unlocked">
+                        <sidenav-item id="hydrogenPane" icon="hydrogen.png" :unlocked="data['hydrogen'].unlocked" :prod="data['hydrogen'].prod" :boost="data['hydrogen'].boost" :count="data['hydrogen'].count" :storage="data['hydrogen'].storage" />
+                        <sidenav-item id="heliumPane" icon="helium.png" :unlocked="data['helium'].unlocked" :prod="data['helium'].prod" :boost="data['helium'].boost" :count="data['helium'].count" :storage="data['helium'].storage" />
+                        <sidenav-item id="icePane" icon="ice.png" :unlocked="data['ice'].unlocked" :prod="data['ice'].prod" :boost="data['ice'].boost" :count="data['ice'].count" :storage="data['ice'].storage" />
+                    </sidenav-group>
+
+                    <sidenav-group id="researchesHeading" :unlocked="data['science'].unlocked">
+                        <sidenav-item id="sciencePane" icon="science.png" :unlocked="data['science'].unlocked" :prod="data['science'].prod" :boost="data['science'].boost" :count="data['science'].count" />
+                        <sidenav-item id="technologiesPane" icon="technologies.png" :unlocked="data['science'].unlocked" />
+                    </sidenav-group>
+
+                    <sidenav-group id="solSytemHeading" :unlocked="data['fuel'].unlocked">
+                        <sidenav-item id="fuelPane" icon="fuel.png" :unlocked="data['fuel'].unlocked" :prod="data['fuel'].prod" :boost="data['fuel'].boost" :count="data['fuel'].count" />
+                        <sidenav-item id="rocketPane" icon="rocket.png" :unlocked="data['rocket1'].unlocked" />
+                        <sidenav-item id="innerSolarSystemPane" icon="innerSolarSystem.png" :unlocked="data['moon'].unlocked" />
+                        <sidenav-item id="outerSolarSystemPane" icon="outerSolarSystem.png" :unlocked="data['jupiter'].unlocked" />
+                    </sidenav-group>
+
+                    <sidenav-group id="wondersHeading" :unlocked="data['wonderPrecious0'].unlocked">
+                        <sidenav-item id="wonderStationPane" icon="wonderStation.png" :unlocked="data['wonderPrecious0'].unlocked" />
+                        <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked" />
+                        <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" />
+                        <sidenav-item id="floor3Pane" icon="floor3.png" :unlocked="data['wonderStargate'].unlocked" />
+                    </sidenav-group>
+
+                    <sidenav-group id="solCenterHeading" :unlocked="data['techPlasma0'].unlocked">
+                        <sidenav-item id="solCenterPane" icon="solCenter.png" :unlocked="data['techPlasma0'].unlocked" />
+                        <sidenav-item id="emcPane" icon="emc.png" :unlocked="data['emc'].unlocked" />
+                        <sidenav-item id="dysonPane" icon="dyson.png" :unlocked="data['segment'].unlocked" />
+                        <sidenav-item id="nanoswarmPane" icon="nanoswarm.png" :unlocked="data['nanoswarm'].unlocked" />
+                    </sidenav-group>
+
+                    <sidenav-group id="interstellarHeading" :unlocked="data['radarT1'].unlocked">
+                        <sidenav-item id="antimatterPane" icon="antimatter.png" :unlocked="data['antimatter'].unlocked" :prod="data['antimatter'].prod" :boost="data['antimatter'].boost" :count="data['antimatter'].count" :storage="data['antimatter'].storage" />
+                        <sidenav-item id="communicationPane" icon="communication.png" :unlocked="data['radarT1'].unlocked" />
+                        <sidenav-item id="spaceshipPane" icon="spaceship.png" :unlocked="data['spaceship'].unlocked" />
+                        <sidenav-item id="militaryPane" icon="military.png" :unlocked="data['shipT1'].unlocked" />
+                        <sidenav-item id="interstellarCarnelianPane" icon="carnelian.png" :unlocked="data['spaceship'].count > 0" />
+                        <sidenav-item id="interstellarPrasnianPane" icon="prasnian.png" :unlocked="data['spaceship'].count > 0" />
+                        <sidenav-item id="interstellarHyacinitePane" icon="hyacinite.png" :unlocked="data['spaceship'].count > 0" />
+                        <sidenav-item id="interstellarKitrinosPane" icon="kitrinos.png" :unlocked="data['spaceship'].count > 0" />
+                        <sidenav-item id="interstellarMovitonPane" icon="moviton.png" :unlocked="data['spaceship'].count > 0" />
+                    </sidenav-group>
+
+                    <sidenav-group id="stargazeHeading">
+                        <sidenav-item id="darkmatterPane" icon="darkmatter.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazeCarnelianPane" icon="carnelian.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazePrasnianPane" icon="prasnian.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazeHyacinitePane" icon="hyacinite.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazeKitrinosPane" icon="kitrinos.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazeMovitonPane" icon="moviton.png" :unlocked="data['darkmatter'].unlocked" />
+                        <sidenav-item id="stargazeOverlordPane" icon="overlord.png" :unlocked="data['darkmatter'].unlocked" />
+                    </sidenav-group>
+                    
+                </div>
+            </inner-content>
+        </div>
+        <div id="page">
+            <top-header>
+            
+                <div class="col-auto d-lg-none position-relative" @click="sidebarOpen = true;">
+                    <div v-if="hasNotif" class="position-absolute top-0 end-0" style="line-height:1">
+                        <i class="fas fa-fw fa-certificate text-success small"></i>
+                    </div>
+                    <img :src="require('./assets/whiteLogo.png')" width="36" height="36" />
+                </div>
+                
+                <div class="col-auto ms-auto">
+                    <a href="https://discord.gg/3UkgeeT9CV" target="_blank" data-bs-toggle="tooltip" title="Discord">
+                        <img :src="require('./assets/interface/discord.png')" width="16" height="16" />
+                    </a>
+                </div>
+                
+                <div class="col-auto cursor-hover" @click="setActivePane('donatingPane')">
+                    <img :src="require('./assets/interface/donating.png')" width="16" height="16" />
+                    <span class="ms-1 text-light">{{ $t('donatingPane') }}</span>
+                </div>
+                
+                <div class="col-auto cursor-hover position-relative" @click="setActivePane('achievementPane')" data-bs-toggle="tooltip" :title="$t('achievementPane')">
+                    <div v-if="isNotif('achievementPane')" class="position-absolute top-0 end-0" style="line-height:1">
+                        <i class="fas fa-fw fa-certificate text-success small"></i>
+                    </div>
+                    <img :src="require('./assets/interface/trophy.png')" width="16" height="16" />
+                </div>
+                
+                <div class="col-auto">
+                    <a class="text-normal cursor-hover" data-bs-toggle="dropdown">
+                        <span v-if="locale == 'en'" class="flag-icon flag-icon-gb rounded"></span>
+                        <span v-if="locale == 'fr'" class="flag-icon flag-icon-fr rounded"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item cursor-hover" @click="changeLocale('en')">
+                                <span class="flag-icon flag-icon-gb rounded me-2"></span>
+                                English
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item cursor-hover" @click="changeLocale('fr')">
+                                <span class="flag-icon flag-icon-fr rounded me-2"></span>
+                                Français
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-auto">
+                    <a class="text-light cursor-hover" data-bs-toggle="dropdown">
+                        <i class="fas fa-fw fa-ellipsis-v"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item cursor-hover" @click="setActivePane('helpPane')">
+                                <img :src="require('./assets/interface/help.png')" width="16" height="16" class="me-2">
+                                {{ $t('helpPane') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item cursor-hover" @click="setActivePane('settingsPane')">
+                                <img :src="require('./assets/interface/cog.png')" width="16" height="16" class="me-2">
+                                {{ $t('settingsPane') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item cursor-hover" @click="setActivePane('aboutPane')">
+                                <img :src="require('./assets/interface/about.png')" width="16" height="16" class="me-2">
+                                {{ $t('aboutPane') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </top-header>
+            <inner-content data-simplebar>
+                <div class="tab-content">
+                    
+                    <div class="alert alert-danger">
+                        <small class="text-danger">You are playing a debugging version : game speed is increased by 100, all functionnalities are not implemented, bug could happen, data could be lost, etc ...</small>
+                    </div>
+                    
+                    <!-- ENERGY PANE -->
+                    <pane id="energyPane" icon="energy.png" :descs="['energyPane_desc']">
+                        <resource id="energy" />
+                        <buildable id="energyT1" btnText="build" />
+                        <buildable id="energyT2" btnText="build" />
+                        <buildable id="energyT3" btnText="build" />
+                        <buildable id="energyT4" btnText="build" />
+                        <buildable id="energyT5" btnText="build" />
+                        <buildable id="energyT6" btnText="build" />
+                        <buildable id="energyS1" btnText="build" />
+                        <buildable id="energyS2" btnText="build" />
+                        <buildable id="energyS3" btnText="build" />
+                        <buildable id="energyS4" btnText="build" />
+                        <buildable id="energyS5" btnText="build" />
+                        <buildable id="energyS6" btnText="build" />
+                    </pane>
+                    
+                    <!-- PLASMA PANE -->
+                    <pane id="plasmaPane" icon="plasma.png" :descs="['plasmaPane_desc']">
+                        <resource id="plasma" />
+                        <buildable id="plasmaT1" btnText="build" />
+                        <buildable id="plasmaT2" btnText="build" />
+                        <buildable id="plasmaT3" btnText="build" />
+                        <buildable id="plasmaT4" btnText="build" />
+                        <buildable id="plasmaS1" btnText="build" />
+                        <buildable id="plasmaS2" btnText="build" />
+                        <buildable id="plasmaS3" btnText="build" />
+                    </pane>
+                    
+                    <!-- METEORITE PANE -->
+                    <pane id="meteoritePane" icon="meteorite.png" :descs="['meteoritePane_desc']">
+                        <resource id="meteorite" />
+                        <buildable id="meteoriteS1" btnText="upgrade" />
+                        <buildable id="meteoriteT1" btnText="build" />
+                        <buildable id="meteoriteT2" btnText="build" />
+                        <buildable id="meteoriteT3" btnText="build" />
+                        <buildable id="meteoriteT4" btnText="build" />
+                    </pane>
+                    
+                    <!-- CARBON PANE -->
+                    <pane id="carbonPane" icon="carbon.png" :descs="['carbonPane_desc']">
+                        <resource id="carbon" />
+                        <buildable id="carbonS1" btnText="upgrade" />
+                        <buildable id="carbonT1" btnText="build" />
+                        <buildable id="carbonT2" btnText="build" />
+                        <buildable id="carbonT3" btnText="build" />
+                        <buildable id="carbonT4" btnText="build" />
+                        <buildable id="carbonT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- OIL PANE -->
+                    <pane id="oilPane" icon="oil.png" :descs="['oilPane_desc']">
+                        <resource id="oil" />
+                        <buildable id="oilS1" btnText="upgrade" />
+                        <buildable id="oilT1" btnText="build" />
+                        <buildable id="oilT2" btnText="build" />
+                        <buildable id="oilT3" btnText="build" />
+                        <buildable id="oilT4" btnText="build" />
+                        <buildable id="oilT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- METAL PANE -->
+                    <pane id="metalPane" icon="metal.png" :descs="['metalPane_desc']">
+                        <resource id="metal" />
+                        <buildable id="metalS1" btnText="upgrade" />
+                        <buildable id="metalT1" btnText="build" />
+                        <buildable id="metalT2" btnText="build" />
+                        <buildable id="metalT3" btnText="build" />
+                        <buildable id="metalT4" btnText="build" />
+                        <buildable id="metalT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- GEM PANE -->
+                    <pane id="gemPane" icon="gem.png" :descs="['gemPane_desc']">
+                        <resource id="gem" />
+                        <buildable id="gemS1" btnText="upgrade" />
+                        <buildable id="gemT1" btnText="build" />
+                        <buildable id="gemT2" btnText="build" />
+                        <buildable id="gemT3" btnText="build" />
+                        <buildable id="gemT4" btnText="build" />
+                        <buildable id="gemT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- WOOD PANE -->
+                    <pane id="woodPane" icon="wood.png" :descs="['woodPane_desc']">
+                        <resource id="wood" />
+                        <buildable id="woodS1" btnText="upgrade" />
+                        <buildable id="woodT1" btnText="build" />
+                        <buildable id="woodT2" btnText="build" />
+                        <buildable id="woodT3" btnText="build" />
+                        <buildable id="woodT4" btnText="build" />
+                        <buildable id="woodT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- SILICON PANE -->
+                    <pane id="siliconPane" icon="silicon.png" :descs="['siliconPane_desc']">
+                        <resource id="silicon" />
+                        <buildable id="siliconS1" btnText="upgrade" />
+                        <buildable id="siliconT1" btnText="build" />
+                        <buildable id="siliconT2" btnText="build" />
+                        <buildable id="siliconT3" btnText="build" />
+                        <buildable id="siliconT4" btnText="build" />
+                        <buildable id="siliconT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- URANIUM PANE -->
+                    <pane id="uraniumPane" icon="uranium.png" :descs="['uraniumPane_desc']">
+                        <resource id="uranium" />
+                        <buildable id="uraniumS1" btnText="upgrade" />
+                        <buildable id="uraniumT1" btnText="build" />
+                        <buildable id="uraniumT2" btnText="build" />
+                        <buildable id="uraniumT3" btnText="build" />
+                        <buildable id="uraniumT4" btnText="build" />
+                        <buildable id="uraniumT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- LAVA PANE -->
+                    <pane id="lavaPane" icon="lava.png" :descs="['lavaPane_desc']">
+                        <resource id="lava" />
+                        <buildable id="lavaS1" btnText="upgrade" />
+                        <buildable id="lavaT1" btnText="build" />
+                        <buildable id="lavaT2" btnText="build" />
+                        <buildable id="lavaT3" btnText="build" />
+                        <buildable id="lavaT4" btnText="build" />
+                        <buildable id="lavaT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- LUNARITE PANE -->
+                    <pane id="lunaritePane" icon="lunarite.png" :descs="['lunaritePane_desc']">
+                        <resource id="lunarite" />
+                        <buildable id="lunariteS1" btnText="upgrade" />
+                        <buildable id="lunariteT1" btnText="build" />
+                        <buildable id="lunariteT2" btnText="build" />
+                        <buildable id="lunariteT3" btnText="build" />
+                        <buildable id="lunariteT4" btnText="build" />
+                        <buildable id="lunariteT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- METHANE PANE -->
+                    <pane id="methanePane" icon="methane.png" :descs="['methanePane_desc']">
+                        <resource id="methane" />
+                        <buildable id="methaneS1" btnText="upgrade" />
+                        <buildable id="methaneT1" btnText="build" />
+                        <buildable id="methaneT2" btnText="build" />
+                        <buildable id="methaneT3" btnText="build" />
+                        <buildable id="methaneT4" btnText="build" />
+                        <buildable id="methaneT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- TITANIUM PANE -->
+                    <pane id="titaniumPane" icon="titanium.png" :descs="['titaniumPane_desc']">
+                        <resource id="titanium" />
+                        <buildable id="titaniumS1" btnText="upgrade" />
+                        <buildable id="titaniumT1" btnText="build" />
+                        <buildable id="titaniumT2" btnText="build" />
+                        <buildable id="titaniumT3" btnText="build" />
+                        <buildable id="titaniumT4" btnText="build" />
+                        <buildable id="titaniumT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- GOLD PANE -->
+                    <pane id="goldPane" icon="gold.png" :descs="['goldPane_desc']">
+                        <resource id="gold" />
+                        <buildable id="goldS1" btnText="upgrade" />
+                        <buildable id="goldT1" btnText="build" />
+                        <buildable id="goldT2" btnText="build" />
+                        <buildable id="goldT3" btnText="build" />
+                        <buildable id="goldT4" btnText="build" />
+                        <buildable id="goldT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- SILVER PANE -->
+                    <pane id="silverPane" icon="silver.png" :descs="['silverPane_desc']">
+                        <resource id="silver" />
+                        <buildable id="silverS1" btnText="upgrade" />
+                        <buildable id="silverT1" btnText="build" />
+                        <buildable id="silverT2" btnText="build" />
+                        <buildable id="silverT3" btnText="build" />
+                        <buildable id="silverT4" btnText="build" />
+                        <buildable id="silverT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- HYDROGEN PANE -->
+                    <pane id="hydrogenPane" icon="hydrogen.png" :descs="['hydrogenPane_desc']">
+                        <resource id="hydrogen" />
+                        <buildable id="hydrogenS1" btnText="upgrade" />
+                        <buildable id="hydrogenT1" btnText="build" />
+                        <buildable id="hydrogenT2" btnText="build" />
+                        <buildable id="hydrogenT3" btnText="build" />
+                        <buildable id="hydrogenT4" btnText="build" />
+                        <buildable id="hydrogenT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- HELIUM PANE -->
+                    <pane id="heliumPane" icon="helium.png" :descs="['heliumPane_desc']">
+                        <resource id="helium" />
+                        <buildable id="heliumS1" btnText="upgrade" />
+                        <buildable id="heliumT1" btnText="build" />
+                        <buildable id="heliumT2" btnText="build" />
+                        <buildable id="heliumT3" btnText="build" />
+                        <buildable id="heliumT4" btnText="build" />
+                        <buildable id="heliumT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- ICE PANE -->
+                    <pane id="icePane" icon="ice.png" :descs="['icePane_desc']">
+                        <resource id="ice" />
+                        <buildable id="iceS1" btnText="upgrade" />
+                        <buildable id="iceT1" btnText="build" />
+                        <buildable id="iceT2" btnText="build" />
+                        <buildable id="iceT3" btnText="build" />
+                        <buildable id="iceT4" btnText="build" />
+                        <buildable id="iceT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- SCIENCE PANE -->
+                    <pane id="sciencePane" icon="science.png" :descs="['sciencePane_desc']">
+                        <buildable id="scienceT1" btnText="build" />
+                        <buildable id="scienceT2" btnText="build" />
+                        <buildable id="scienceT3" btnText="build" />
+                        <buildable id="scienceT4" btnText="build" />
+                        <buildable id="scienceT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- TECHNOLOGIES PANE -->
+                    <pane id="technologiesPane" icon="technologies.png" :descs="['technologiesPane_desc']">
+                        <buildable id="techStorage" btnText="unlock" />
+                        <buildable id="techEnergy1" btnText="unlock" />
+                        <buildable id="techOil" btnText="unlock" />
+                        <buildable id="techEnergy2" btnText="unlock" />
+                        <buildable id="techTier2" btnText="unlock" />
+                        <buildable id="techDestruction" btnText="unlock" />
+                        <buildable id="techFuel1" btnText="unlock" />
+                        <buildable id="techFuel2" btnText="unlock" />
+                        <buildable id="techFuel3" btnText="unlock" />
+                        <buildable id="techScience2" btnText="unlock" />
+                        <buildable id="techScience3" btnText="unlock" />
+                        <buildable id="techScience4" btnText="unlock" />
+                        <buildable id="techEnergyStorage1" btnText="unlock" />
+                        <buildable id="techEnergyStorage2" btnText="unlock" />
+                        <buildable id="techEnergyStorage3" btnText="unlock" />
+                        <buildable id="techEnergyStorage4" btnText="unlock" />
+                        <buildable id="techPlasma1" btnText="unlock" />
+                        <buildable id="techPlasma2" btnText="unlock" />
+                        <buildable id="techPlasmaStorage1" btnText="unlock" />
+                        <buildable id="techPlasmaStorage2" btnText="unlock" />
+                        <buildable id="techEmc1" btnText="unlock" />
+                        <buildable id="techMeteorite0" btnText="unlock" />
+                        <buildable id="techMeteorite1" btnText="unlock" />
+                        <buildable id="techMeteorite2" btnText="unlock" />
+                        <buildable id="techDyson1" btnText="unlock" />
+                        <buildable id="techDyson2" btnText="unlock" />
+                        <buildable id="techNanoswarm1" btnText="unlock" />
+                        <buildable id="upgradeTier2" btnText="upgrade" />
+                        <buildable id="upgradeEnergy1" btnText="upgrade" />
+                        <buildable id="upgradeEnergy2" btnText="upgrade" />
+                        <buildable id="boostProduction" btnText="boost" />
+                        <buildable id="boostScience" btnText="boost" />
+                        <buildable id="boostEnergy" btnText="boost" />
+                        <buildable id="boostEnergyStorage" btnText="boost" />
+                    </pane>
+                    
+                    <!-- FUEL PANE -->
+                    <pane id="fuelPane" icon="fuel.png" :descs="['fuelPane_desc']">
+                        <resource id="fuel" />
+                        <buildable id="fuelT1" btnText="build" />
+                        <buildable id="fuelT2" btnText="build" />
+                        <buildable id="fuelT3" btnText="build" />
+                    </pane>
+                    
+                    <!-- ROCKET PANE -->
+                    <pane id="rocketPane" icon="rocket.png" :descs="['rocketPane_desc']">
+                        <buildable id="rocket1" btnText="build" />
+                        <buildable id="rocket2" btnText="launch" />
+                    </pane>
+                    
+                    <!-- INNER SOLAR SYSTEM PANE -->
+                    <pane id="innerSolarSystemPane" icon="innerSolarSystem.png" :descs="['innerSolarSystemPane_desc']">
+                        <buildable id="moon" btnText="explore" />
+                        <buildable id="mercury" btnText="explore" />
+                        <buildable id="venus" btnText="explore" />
+                        <buildable id="mars" btnText="explore" />
+                        <buildable id="asteroid" btnText="explore" />
+                        <buildable id="wonderStation" btnText="explore" />
+                    </pane>
+
+                    <!-- OUTER SOLAR SYSTEM PANE -->
+                    <pane id="outerSolarSystemPane" icon="outerSolarSystem.png" :descs="['outerSolarSystemPane_desc']">
+                        <buildable id="jupiter" btnText="explore" />
+                        <buildable id="saturn" btnText="explore" />
+                        <buildable id="uranus" btnText="explore" />
+                        <buildable id="neptune" btnText="explore" />
+                        <buildable id="pluto" btnText="explore" />
+                        <buildable id="solCenter0" btnText="explore" />
+                        <buildable id="solCenter1" btnText="explore" />
+                    </pane>
+
+                    <!-- WONDER STATION PANE -->
+                    <pane id="wonderStationPane" icon="wonderStation.png" :descs="['wonderStationPane_desc']">
+                        <buildable id="wonderPrecious0" btnText="build" />
+                        <buildable id="wonderEnergetic0" btnText="build" />
+                        <buildable id="wonderTechnological0" btnText="build" />
+                        <buildable id="wonderMeteorite0" btnText="build" />
+                    </pane>
+
+                    <!-- FLOOR #1 PANE -->
+                    <pane id="floor1Pane" icon="floor1.png" :descs="['floor1Pane_desc']">
+                        <buildable id="wonderPrecious1" btnText="activate" />
+                        <buildable id="wonderEnergetic1" btnText="activate" />
+                        <buildable id="wonderTechnological1" btnText="activate" />
+                        <buildable id="wonderMeteorite1" btnText="activate" />
+                    </pane>
+
+                    <!-- FLOOR #2 PANE -->
+                    <pane id="floor2Pane" icon="floor2.png" :descs="['floor2Pane_desc']">
+                        <buildable id="wonderComm" btnText="activate" />
+                        <buildable id="wonderSpaceship" btnText="activate" />
+                        <buildable id="wonderAntimatter" btnText="activate" />
+                        <buildable id="wonderPortal" btnText="activate" />
+                    </pane>
+
+                    <!-- FLOOR #3 PANE -->
+                    <pane id="floor3Pane" icon="floor3.png" :descs="['floor3Pane_desc']">
+                        <buildable id="wonderStargate" btnText="activate" />
+                    </pane>
+                    
+                    <!-- SOL CENTER PANE -->
+                    <pane id="solCenterPane" icon="solCenter.png">
+                        <buildable id="techPlasma0" btnText="unlock" />
+                        <buildable id="techEmc0" btnText="unlock" />
+                        <buildable id="techDyson0" btnText="unlock" />
+                    </pane>
+                    
+                    <!-- EMC PANE -->
+                    <pane id="emcPane" icon="emc.png" :descs="['emcPane_desc']">
+                        <card>
+                            <div class="row g-1">
+                                <emc id="emcMeteorite" />
+                                <emc id="emcCarbon" />
+                                <emc id="emcOil" />
+                                <emc id="emcMetal" />
+                                <emc id="emcGem" />
+                                <emc id="emcWood" />
+                                <emc id="emcSilicon" />
+                                <emc id="emcUranium" />
+                                <emc id="emcLava" />
+                                <emc id="emcLunarite" />
+                                <emc id="emcMethane" />
+                                <emc id="emcTitanium" />
+                                <emc id="emcGold" />
+                                <emc id="emcSilver" />
+                                <emc id="emcHydrogen" />
+                                <emc id="emcHelium" />
+                                <emc id="emcIce" />
+                            </div>
+                        </card>
+                    </pane>
+                    
+                    <!-- DYSON PANE -->
+                    <pane id="dysonPane" icon="dyson.png" :descs="['dysonPane_desc']">
+                        <buildable id="segment" btnText="build" />
+                        <buildable id="dysonT1" btnText="build" />
+                        <buildable id="dysonT2" btnText="build" />
+                        <buildable id="dysonT3" btnText="build" />
+                    </pane>
+                    
+                    <!-- NANOSWARM PANE -->
+                    <pane id="nanoswarmPane" icon="nanoswarm.png" :descs="['nanoswarmPane_desc']">
+                        <buildable id="nanoswarm" btnText="build" />
+                    </pane>
+                    
+                    <!-- ANTIMATTER PANE -->
+                    <pane id="antimatterPane" icon="antimatter.png" :descs="['antimatterPane_desc']">
+                        <buildable id="antimatterT1" btnText="build" />
+                    </pane>
+                    
+                    <!-- COMMUNICATION PANE -->
+                    <pane id="communicationPane" icon="communication.png" :descs="['communicationPane_desc']">
+                        <buildable id="radarT1" btnText="build" />
+                        <buildable id="radarT2" btnText="build" />
+                    </pane>
+                    
+                    <!-- SPACESHIP PANE -->
+                    <pane id="spaceshipPane" icon="spaceship.png" :descs="['spaceshipPane_desc']">
+                        <buildable id="spaceship" btnText="build" />
+                        <buildable id="shield" btnText="build" />
+                        <buildable id="engine" btnText="build" />
+                        <buildable id="aero" btnText="build" />
+                    </pane>
+                    
+                    <!-- MILITARY PANE -->
+                    <pane id="militaryPane" icon="military.png">
+                        <buildable id="shipT1" btnText="build" />
+                        <buildable id="shipT2" btnText="build" />
+                        <buildable id="shipT3" btnText="build" />
+                        <buildable id="shipT4" btnText="build" />
+                        <buildable id="shipT5" btnText="build" />
+                    </pane>
+                    
+                    <!-- CARNELIAN STARS PANE -->
+                    <pane id="interstellarCarnelianPane" icon="carnelian.png" :descs="['interstellarCarnelianPane_desc']">
+                        <star id="star301" />
+                    </pane>
+                    
+                    <pane id="interstellarPrasnianPane" icon="prasnian.png" :descs="['interstellarPrasnianPane_desc']">
+                    </pane>
+                    <pane id="interstellarHyacinitePane" icon="hyacinite.png" :descs="['interstellarHyacinitePane_desc']">
+                    </pane>
+                    <pane id="interstellarKitrinosPane" icon="kitrinos.png" :descs="['interstellarKitrinosPane_desc']">
+                    </pane>
+                    <pane id="interstellarMovitonPane" icon="moviton.png" :descs="['interstellarMovitonPane_desc']">
+                    </pane>
+                    
+                    <pane id="darkmatterPane" icon="darkmatter.png" :descs="['darkmatterPane_desc']">
+                    </pane>
+                    <pane id="stargazeCarnelianPane" icon="carnelian.png" :descs="['stargazeCarnelianPane_desc']">
+                    </pane>
+                    <pane id="stargazePrasnianPane" icon="prasnian.png" :descs="['stargazePrasnianPane_desc']">
+                    </pane>
+                    <pane id="stargazeHyacinitePane" icon="hyacinite.png" :descs="['stargazeHyacinitePane_desc']">
+                    </pane>
+                    <pane id="stargazeKitrinosPane" icon="kitrinos.png" :descs="['stargazeKitrinosPane_desc']">
+                    </pane>
+                    <pane id="stargazeMovitonPane" icon="moviton.png" :descs="['stargazeMovitonPane_desc']">
+                    </pane>
+                    <pane id="stargazeOverlordPane" icon="overlord.png" :descs="['stargazeOverlordPane_desc']">
+                    </pane>
+                        
+                    <!-- DONATING PANE -->
+                    <pane id="donatingPane" icon="donating.png" :descs="['donatingPane_desc1', 'donatingPane_desc2']">
+                        <card id="donatingPane_desc3">
+                            <div class="col-12">
+                                <form class="row g-2 justify-content-end align-items-end" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="7XYD7SJFKQ8M4">
+                                    <div class="col-12 text-end">
+                                        <small>{{ $t('donatingPane_desc4') }}</small>
+                                    </div>
+                                    <div class="col-12 text-end">
+                                        <button type="submit" class="btn">
+                                            <div class="row gx-2 align-items-center">
+                                                <div class="col-auto d-flex align-items-center"><img :src="require('./assets/interface/paypal.png')" width="16" height="16" /></div>
+                                                <div class="col-auto">{{ $t('donate') }}</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </card>
+                    </pane>
+                    
+                    <!-- ACHIEVEMENTS PANE -->
+                    <pane id="achievementPane" icon="trophy.png" :descs="['achievementPane_desc']">
+                        <card id="currentRank">
+                            <div class="col-12"><small>{{ rank.level }} - {{ $t('rank_' + rank.level) }}</small></div>
+                            <div class="col-12">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" :style="'width: ' + rank.percent + '%'">
+                                        <div class="small">
+                                            <span>{{ rank.percent }}%</span>
+                                            <span class="ms-1">{{ rank.current }}</span>
+                                            <small>/{{ rank.xpNeeded }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                        <card id="resources">
+                            <div class="col-12 mt-2">
+                                <div class="row g-1">
+                                    <div v-for="ach in resAchievements" :key="ach.id" class="col-auto">
+                                        <div v-if="!ach.unlocked" class="rounded px-3 py-1 opacity-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('locked') + '</div>'">
+                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
+                                            <div class="text-center small" style="line-height:1;">
+                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
+                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                            </div>
+                                        </div>
+                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('collect') + ' ' + numeralFormat(ach.brackets[ach.count], '0a') + ' ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
+                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
+                                            <div class="text-center small" style="line-height:1;">
+                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
+                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                        <card id="producers">
+                            <div class="col-12 mt-2">
+                                <div class="row g-1">
+                                    <div v-for="ach in prodAchievements" :key="ach.id" class="col-auto">
+                                        <div v-if="!ach.unlocked" class="rounded px-3 py-1 opacity-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('locked') + '</div>'">
+                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
+                                            <div class="text-center small" style="line-height:1;">
+                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
+                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                            </div>
+                                        </div>
+                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('own') + ' ' + numeralFormat(ach.brackets[ach.count], '0a') + ' ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
+                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
+                                            <div class="text-center small" style="line-height:1;">
+                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
+                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                    </pane>
+                    
+                    <!-- HELP PANE -->
+                    <pane id="helpPane" icon="help.png" :descs="['helpPane_desc']">
+                        <card id="help1" :descs="['help1_desc1']" />
+                        <card id="help2" :descs="['help2_desc1', 'help2_desc2']" />
+                        <card id="help3" :descs="['help3_desc1']" />
+                        <card id="help4" :descs="['help4_desc1']" />
+                    </pane>
+                    
+                    <!-- OPTIONS PANE -->
+                    <pane id="settingsPane" icon="cog.png" :descs="['settingsPane_desc']">
+                    </pane>
+                    
+                    <!-- ABOUT PANE -->
+                    <pane id="aboutPane" icon="about.png" :descs="['aboutPane_desc']">
+                        <card id="about1" :descs="['about1_desc1']">
+                            <div class="col-12 small">
+                                <ul class="mb-2">
+                                    <li>
+                                        <span class="text-light me-2">NG Site</span>
+                                        <a href="https://spacecompany.exileng.com/">https://spacecompany.exileng.com/</a>
+                                    </li>
+                                    <li>
+                                        <span class="text-light me-2">NG Github</span>
+                                        <a href="https://github.com/ExileNG/NGSpaceCompany" target="_blank">https://github.com/ExileNG/NGSpaceCompany</a>
+                                    </li>
+                                    <li>
+                                        <span class="text-light me-2">NG Discord</span>
+                                        <a href="https://discord.gg/3UkgeeT9CV" target="_blank">https://discord.gg/3UkgeeT9CV</a>
+                                    </li>
+                                </ul>
+                                <ul class="mb-0">
+                                    <li>
+                                        <span class="text-light me-2">Original Site</span>
+                                        <a href="https://sparticle999.github.io/spacecompany" target="_blank">https://sparticle999.github.io/spacecompany</a>
+                                    </li>
+                                    <li>
+                                        <span class="text-light me-2">Original Github</span>
+                                        <a href="https://github.com/sparticle999/SpaceCompany" target="_blank">https://github.com/sparticle999/SpaceCompany</a>
+                                    </li>
+                                    <li>
+                                        <span class="text-light me-2">Original Discord</span>
+                                        <a href="https://discord.gg/hgRUjVp" target="_blank">https://discord.gg/hgRUjVp</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </card>
+                        <card id="about3">
+                            <div class="col-12 small">{{ $t('about3_desc1') }} <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                            <div class="col-12 small">
+                                <ul class="mb-0">
+                                    <li>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a></li>
+                                </ul>
+                            </div>
+                        </card>
+                    </pane>
+
+                </div>
+            </inner-content>
+        </div>
+        <div class="toast-container position-fixed bottom-0 end-0 me-2">
+            
+            <!-- SAVING TOAST -->
+            <div id="toastAutoSave" class="toast hide fade bg-info">
+                <div class="toast-body text-dark">
+                    <div><strong>{{ $t('toastAutoSave_title') }}</strong></div>
+                    <div class="small">{{ $t('toastAutoSave_text') }}</div>
+                </div>
+            </div>
+            
+            <!-- ACHIEVEMENT TOAST -->
+            <div id="toastAchievement" class="toast hide fade bg-success">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastAchievement_title') }}</strong></div>
+                    <div class="small">{{ $t('toastAchievement_text') }}</div>
+                </div>
+            </div>
+            
+            <!-- SPY TOAST -->
+            <div id="toastSpySuccess" class="toast hide fade bg-success">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastSpySuccess_title') }}</strong></div>
+                    <div class="small">{{ $t('toastSpySuccess_text') }}</div>
+                </div>
+            </div>
+            <div id="toastSpyFailed" class="toast hide fade bg-danger">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastSpyFailed_title') }}</strong></div>
+                    <div class="small">{{ $t('toastSpyFailed_text') }}</div>
+                </div>
+            </div>
+            
+            <!-- INVADE TOAST -->
+            <div id="toastInvadeSuccess" class="toast hide fade bg-success">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastInvadeSuccess_title') }}</strong></div>
+                    <div class="small">{{ $t('toastInvadeSuccess_text') }}</div>
+                </div>
+            </div>
+            <div id="toastInvadeFailed" class="toast hide fade bg-danger">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastInvadeFailed_title') }}</strong></div>
+                    <div class="small">{{ $t('toastInvadeFailed_text') }}</div>
+                </div>
+            </div>
+            
+            <!-- ABSORB TOAST -->
+            <div id="toastAbsorbSuccess" class="toast hide fade bg-success">
+                <div class="toast-body text-light">
+                    <div><strong>{{ $t('toastAbsorbSuccess_title') }}</strong></div>
+                    <div class="small">{{ $t('toastAbsorbSuccess_text') }}</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- SPY MODAL -->
+    <div v-if="loaded" id="spyModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('spy') }} {{ $t(activeStar) }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <span class="text-normal">{{ $t('spy_desc') }}</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2">
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('threat') }}</div>
+                                    <div class="text-light">{{ $t('threat') }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('power') }}</div>
+                                    <div class="text-light">{{ getStarPower(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('defense') }}</div>
+                                    <div class="text-light">{{ getStarDefense(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('speed') }}</div>
+                                    <div class="text-light">{{ getStarSpeed(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('chance') }}</div>
+                                    <div class="text-light">{{ numeralFormat(getSpyChance(activeStar), '0') }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2 align-items-center">
+                                <div class="col">
+                                    <small class="text-normal">{{ $t('shipT1') }}</small>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-light">{{ data['shipT1'].active }}</span>
+                                    <small class="ms-1 text-normal">/{{ data['shipT1'].count }}</small>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group">
+                                        <button class="btn p-1" @click="setActiveShip('shipT1', 1)">
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                        </button>
+                                        <button class="btn p-1" @click="setActiveShip('shipT1', 'max')">
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group">
+                                        <button class="btn p-1" @click="setActiveShip('shipT1', -1)">
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                        </button>
+                                        <button class="btn p-1" @click="setActiveShip('shipT1', 'none')">
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2 justify-content-end">
+                                <div class="col-auto">
+                                    <button class="btn" @click="spyStar(activeStar)" data-bs-dismiss="modal">
+                                        {{ $t('spy') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- INVADE MODAL -->
+    <div v-if="loaded" id="invadeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('invade') }} {{ $t(activeStar) }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <span class="text-normal">{{ $t('invade_desc') }}</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2">
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('threat') }}</div>
+                                    <div class="text-light">{{ $t('threat') }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('power') }}</div>
+                                    <div class="text-light">{{ getStarPower(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('defense') }}</div>
+                                    <div class="text-light">{{ getStarDefense(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('speed') }}</div>
+                                    <div class="text-light">{{ getStarSpeed(activeStar) }}</div>
+                                </div>
+                                <div class="col small">
+                                    <div class="text-normal">{{ $t('chance') }}</div>
+                                    <div class="text-light">{{ numeralFormat(getInvadeChance(activeStar), '0') }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-for="shipId in ['shipT1', 'shipT2', 'shipT3', 'shipT4', 'shipT5']" :key="shipId" class="col-12">
+                            <div class="row g-2 align-items-center">
+                                <div class="col">
+                                    <small class="text-normal">{{ $t(shipId) }}</small>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-light">{{ data[shipId].active }}</span>
+                                    <small class="ms-1 text-normal">/{{ data[shipId].count }}</small>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group">
+                                        <button class="btn p-1" @click="setActiveShip(shipId, 1)">
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                        </button>
+                                        <button class="btn p-1" @click="setActiveShip(shipId, 'max')">
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                            <i class="fas fa-fw fa-plus small"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group">
+                                        <button class="btn p-1" @click="setActiveShip(shipId, -1)">
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                        </button>
+                                        <button class="btn p-1" @click="setActiveShip(shipId, 'none')">
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                            <i class="fas fa-fw fa-minus small"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2 justify-content-end">
+                                <div class="col-auto">
+                                    <button class="btn" @click="invadeStar(activeStar)" data-bs-dismiss="modal">
+                                        {{ $t('invade') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ABSORB MODAL -->
+    <div v-if="loaded" id="absorbModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('absorb') }} {{ $t(activeStar) }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <span class="text-normal">{{ $t('absorb_desc') }}</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2 justify-content-end">
+                                <div class="col-auto">
+                                    <button class="btn" @click="absorbStar(activeStar)" data-bs-dismiss="modal">
+                                        {{ $t('absorb') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Content from './components/Content.vue'
+import SidenavGroup from './components/SidenavGroup.vue'
+import SidenavItem from './components/SidenavItem.vue'
+import Pane from './components/Pane.vue'
+import Card from './components/Card.vue'
+import Resource from './components/Resource.vue'
+import Buildable from './components/Buildable.vue'
+import Emc from './components/Emc.vue'
+import Star from './components/Star.vue'
+
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+import { Tooltip, Toast } from 'bootstrap'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    components: {
+        
+        'top-header': Header,
+        'inner-content': Content,
+        'sidenav-group': SidenavGroup,
+        'sidenav-item': SidenavItem,
+        'pane': Pane,
+        'card': Card,
+        'resource': Resource,
+        'buildable': Buildable,
+        'emc': Emc,
+        'star': Star,
+    },
+    data() {
+        return {
+        
+            loaded: false,
+            sidebarOpen: false,
+            
+            fastInterval: null,
+            slowInterval: null,
+            
+            tooltips: [],
+            
+            toastAutoSave: null,
+            toastAchievement: null,
+            toastSpySuccess: null,
+            toastSpyFailed: null,
+            toastInvadeSuccess: null,
+            toastInvadeFailed: null,
+            toastAbsorbSuccess: null,
+        }
+    },
+    computed: {
+        ...mapState([
+        
+            'data', 'locale', 'activePane', 'activeStar', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
+            'resAchievements', 'prodAchievements', 'newAchievement',
+        ]),
+        ...mapGetters([
+        
+            'isNotif', 'hasNotif',
+            'getSpyChance', 'getInvadeChance', 'getStarPower', 'getStarDefense', 'getStarSpeed',
+        ]),
+    },
+    created() {        
+        setTimeout(this.start, 1000)
+    },
+    methods: {
+        ...mapMutations([
+        
+            'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave',
+        ]),
+        ...mapActions([
+        
+            'initialize', 'load',
+            'computeProdValues', 'produceResources', 'updateTimers', 'checkBoosts', 'updateAchievements', 'save',
+        ]),
+        start() {
+
+            this.initialize()
+            this.load()
+
+            this.fastInterval = setInterval(() => { this.fastUpdate() }, 100)
+            this.slowInterval = setInterval(() => { this.slowUpdate() }, 1000)
+
+            this.loaded = true
+            
+            this.$nextTick(() => {
+            
+                let toastNode = null
+                
+                toastNode = document.getElementById('toastAutoSave')
+                this.toastAutoSave = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastAchievement')
+                this.toastAchievement = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastSpySuccess')
+                this.toastSpySuccess = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastSpyFailed')
+                this.toastSpyFailed = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastInvadeSuccess')
+                this.toastInvadeSuccess = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastInvadeFailed')
+                this.toastInvadeFailed = new Toast(toastNode)
+                
+                toastNode = document.getElementById('toastAbsorbSuccess')
+                this.toastAbsorbSuccess = new Toast(toastNode)
+            
+                Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(node => this.tooltips.push(new Tooltip(node)))
+            })
+        },
+        fastUpdate() {
+        
+            let currentTime = new Date().getTime()
+            let delta = (currentTime - this.lastUpdateTime) / 1000
+
+            this.setLastUpdateTime(currentTime)
+            this.setTimeSinceAutoSave(this.timeSinceAutoSave + delta)
+            
+            delta *= 100
+            
+            this.computeProdValues()
+            this.produceResources(delta)
+            this.updateTimers()
+            this.checkBoosts()
+        },
+        slowUpdate() {
+            
+            this.updateAchievements()
+            if (this.newAchievement == true) this.toastAchievement.show()
+            
+            let timeLeft = this.autoSaveInterval - (this.timeSinceAutoSave * 1000)
+            if (timeLeft < 100) {
+                this.save()
+                this.setTimeSinceAutoSave(1)
+                this.toastAutoSave.show()
+            }
+        },
+    },
+    beforeUnmount() {
+        
+        delete this.toastAutoSave
+        delete this.toastAchievement
+        delete this.toastSpySuccess
+        delete this.toastSpyFailed
+        delete this.toastInvadeSuccess
+        delete this.toastInvadeFailed
+        delete this.toastAbsorbSuccess
+        
+        delete this.tooltips
+        
+        clearInterval(this.fastInterval)
+        clearInterval(this.slowInterval)
+    },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

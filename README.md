@@ -1,24 +1,17 @@
-# spacecompany
+# NG Space Company
 
-## Project setup
-```
-npm install
-```
+Incremental space game about resource mining, interstellar exploration and system conquest
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+This game has been made as a remake of the original game from Sparticle999. Of course I have the authorization from Sparticle999 to do it. I made this game to improve my skills in VueJS and to get knowledge about incremental games.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+These are links to everything NG Space Company outside of the game itself.
 
-### Lints and fixes files
-```
-npm run lint
-```
+NG Site https://spacecompany.exileng.com
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+NG Discord https://discord.gg/3UkgeeT9CV
+
+Original Site https://sparticle999.github.io/spacecompany
+
+Original Github https://github.com/sparticle999/SpaceCompany
+
+Original Discord https://discord.gg/hgRUjVp
