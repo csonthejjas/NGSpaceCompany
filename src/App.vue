@@ -16,8 +16,8 @@
                     <img :src="require('./assets/whiteLogo.png')" width="42" height="42" />
                 </div>
 
-                <div class="col">
-                    <span class="h5 text-light">NG Space Company</span>
+                <div class="col text-truncate">
+                    <span class="h5 text-light">{{ companyName }} Company</span>
                 </div>
 
                 <div class="col-auto d-lg-none" @click="sidebarOpen = false;">
@@ -28,8 +28,12 @@
             <inner-content data-simplebar>
                 <div class="row gx-2 gy-3 row-cols-1">
                 
-                    <sidenav-group id="fabricatedHeading" :unlocked="data['energy'].unlocked">
-                        <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" :boost="data['energy'].boost" :count="data['energy'].count" :storage="data['energy'].storage" />
+                    <sidenav-group id="energyHeading" :unlocked="data['energy'].unlocked">
+                        <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" :boost="data['energy'].boost" />
+                        <sidenav-item id="batteryPane" icon="battery.png" :unlocked="data['energyS1'].unlocked" :count="data['energy'].count" :storage="data['energy'].storage" />
+                    </sidenav-group>
+                    
+                    <sidenav-group id="fabricatedHeading" :unlocked="data['carbon'].unlocked">
                         <sidenav-item id="plasmaPane" icon="plasma.png" :unlocked="data['plasma'].unlocked" :prod="data['plasma'].prod" :boost="data['plasma'].boost" :count="data['plasma'].count" :storage="data['plasma'].storage" />
                         <sidenav-item id="meteoritePane" icon="meteorite.png" :unlocked="data['meteorite'].unlocked" :prod="data['meteorite'].prod" :boost="data['meteorite'].boost" :count="data['meteorite'].count" :storage="data['meteorite'].storage" />
                         <sidenav-item id="carbonPane" icon="carbon.png" :unlocked="data['carbon'].unlocked" :prod="data['carbon'].prod" :boost="data['carbon'].boost" :count="data['carbon'].count" :storage="data['carbon'].storage" />
@@ -66,20 +70,20 @@
 
                     <sidenav-group id="solSytemHeading" :unlocked="data['fuel'].unlocked">
                         <sidenav-item id="fuelPane" icon="fuel.png" :unlocked="data['fuel'].unlocked" :prod="data['fuel'].prod" :boost="data['fuel'].boost" :count="data['fuel'].count" />
-                        <sidenav-item id="rocketPane" icon="rocket.png" :unlocked="data['rocket1'].unlocked" />
-                        <sidenav-item id="innerSolarSystemPane" icon="innerSolarSystem.png" :unlocked="data['moon'].unlocked" />
-                        <sidenav-item id="outerSolarSystemPane" icon="outerSolarSystem.png" :unlocked="data['jupiter'].unlocked" />
+                        <sidenav-item id="rocketPane" icon="rocket.png" :unlocked="data['rocket1'].unlocked" :done="data['rocket2'].count > 0" doneText="launched" />
+                        <sidenav-item id="innerSolarSystemPane" icon="innerSolarSystem.png" :unlocked="data['moon'].unlocked" :done="data['wonderStation'].count > 0" doneText="explored" />
+                        <sidenav-item id="outerSolarSystemPane" icon="outerSolarSystem.png" :unlocked="data['jupiter'].unlocked" :done="data['solCenter1'].count > 0" doneText="explored" />
                     </sidenav-group>
 
                     <sidenav-group id="wondersHeading" :unlocked="data['wonderPrecious0'].unlocked">
-                        <sidenav-item id="wonderStationPane" icon="wonderStation.png" :unlocked="data['wonderPrecious0'].unlocked" />
-                        <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked" />
-                        <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" />
-                        <sidenav-item id="floor3Pane" icon="floor3.png" :unlocked="data['wonderStargate'].unlocked" />
+                        <sidenav-item id="wonderStationPane" icon="wonderStation.png" :unlocked="data['wonderPrecious0'].unlocked" :done="data['wonderPrecious0'].count > 0 && data['wonderEnergetic0'].count > 0 && data['wonderTechnological0'].count > 0 && data['wonderMeteorite0'].count > 0" doneText="done" />
+                        <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked" :done="data['wonderPrecious1'].count > 0 && data['wonderEnergetic1'].count > 0 && data['wonderTechnological1'].count > 0 && data['wonderMeteorite1'].count > 0" doneText="done" />
+                        <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" :done="data['wonderPortal'].count > 0" doneText="done" />
+                        <sidenav-item id="floor3Pane" icon="floor3.png" :unlocked="data['wonderStargate'].unlocked" :done="data['wonderStargate'].count > 0" doneText="done" />
                     </sidenav-group>
 
                     <sidenav-group id="solCenterHeading" :unlocked="data['techPlasma0'].unlocked">
-                        <sidenav-item id="solCenterPane" icon="solCenter.png" :unlocked="data['techPlasma0'].unlocked" />
+                        <sidenav-item id="solCenterPane" icon="solCenter.png" :unlocked="data['techPlasma0'].unlocked" :done="data['techPlasma0'].count > 0 && data['techEmc0'].count > 0 && data['techDyson0'].count > 0" doneText="done" />
                         <sidenav-item id="emcPane" icon="emc.png" :unlocked="data['emc'].unlocked" />
                         <sidenav-item id="dysonPane" icon="dyson.png" :unlocked="data['segment'].unlocked" />
                         <sidenav-item id="nanoswarmPane" icon="nanoswarm.png" :unlocked="data['nanoswarm'].unlocked" />
@@ -88,23 +92,23 @@
                     <sidenav-group id="interstellarHeading" :unlocked="data['radarT1'].unlocked">
                         <sidenav-item id="antimatterPane" icon="antimatter.png" :unlocked="data['antimatter'].unlocked" :prod="data['antimatter'].prod" :boost="data['antimatter'].boost" :count="data['antimatter'].count" :storage="data['antimatter'].storage" />
                         <sidenav-item id="communicationPane" icon="communication.png" :unlocked="data['radarT1'].unlocked" />
-                        <sidenav-item id="spaceshipPane" icon="spaceship.png" :unlocked="data['spaceship'].unlocked" />
+                        <sidenav-item id="spaceshipPane" icon="spaceship.png" :unlocked="data['spaceship'].unlocked" :done="data['spaceship'].count > 0" doneText="built" />
                         <sidenav-item id="militaryPane" icon="military.png" :unlocked="data['shipT1'].unlocked" />
-                        <sidenav-item id="interstellarCarnelianPane" icon="carnelian.png" :unlocked="data['spaceship'].count > 0" />
-                        <sidenav-item id="interstellarPrasnianPane" icon="prasnian.png" :unlocked="data['spaceship'].count > 0" />
-                        <sidenav-item id="interstellarHyacinitePane" icon="hyacinite.png" :unlocked="data['spaceship'].count > 0" />
-                        <sidenav-item id="interstellarKitrinosPane" icon="kitrinos.png" :unlocked="data['spaceship'].count > 0" />
-                        <sidenav-item id="interstellarMovitonPane" icon="moviton.png" :unlocked="data['spaceship'].count > 0" />
+                        <sidenav-item id="interstellarCarnelianPane" icon="carnelian.png" :unlocked="data['shipT1'].count > 0" />
+                        <sidenav-item id="interstellarPrasnianPane" icon="prasnian.png" :unlocked="data['shipT1'].count > 0" />
+                        <sidenav-item id="interstellarHyacinitePane" icon="hyacinite.png" :unlocked="data['shipT1'].count > 0" />
+                        <sidenav-item id="interstellarKitrinosPane" icon="kitrinos.png" :unlocked="data['shipT1'].count > 0" />
+                        <sidenav-item id="interstellarMovitonPane" icon="moviton.png" :unlocked="data['shipT1'].count > 0" />
                     </sidenav-group>
 
-                    <sidenav-group id="stargazeHeading">
-                        <sidenav-item id="darkmatterPane" icon="darkmatter.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazeCarnelianPane" icon="carnelian.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazePrasnianPane" icon="prasnian.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazeHyacinitePane" icon="hyacinite.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazeKitrinosPane" icon="kitrinos.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazeMovitonPane" icon="moviton.png" :unlocked="data['darkmatter'].unlocked" />
-                        <sidenav-item id="stargazeOverlordPane" icon="overlord.png" :unlocked="data['darkmatter'].unlocked" />
+                    <sidenav-group id="stargazeHeading" :unlocked="data['darkmatter'].unlocked">
+                        <sidenav-item id="darkmatterPane" icon="darkmatter.png" :unlocked="data['darkmatter'].unlocked" :count="data['darkmatter'].count" :potential="getPotentialDM" />
+                        <sidenav-item id="stargazeCarnelianPane" icon="carnelian.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['carnelian'].opinion" />
+                        <sidenav-item id="stargazePrasnianPane" icon="prasnian.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['prasnian'].opinion" />
+                        <sidenav-item id="stargazeHyacinitePane" icon="hyacinite.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['hyacinite'].opinion" />
+                        <sidenav-item id="stargazeKitrinosPane" icon="kitrinos.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['kitrinos'].opinion" />
+                        <sidenav-item id="stargazeMovitonPane" icon="moviton.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['moviton'].opinion" />
+                        <sidenav-item id="stargazeOverlordPane" icon="overlord.png" :unlocked="data['darkmatter'].unlocked" :opinion="data['overlord'].opinion" />
                     </sidenav-group>
                     
                 </div>
@@ -202,6 +206,10 @@
                         <buildable id="energyT4" btnText="build" />
                         <buildable id="energyT5" btnText="build" />
                         <buildable id="energyT6" btnText="build" />
+                    </pane>
+                    
+                    <!-- BATTERY PANE -->
+                    <pane id="batteryPane" icon="battery.png" :descs="['batteryPane_desc']">
                         <buildable id="energyS1" btnText="build" />
                         <buildable id="energyS2" btnText="build" />
                         <buildable id="energyS3" btnText="build" />
@@ -259,7 +267,7 @@
                         <resource id="metal" />
                         <buildable id="metalS1" btnText="upgrade" />
                         <buildable id="metalT1" btnText="build" />
-                        <buildable id="metalT2" btnText="build" />
+                        <buildable id="metalT2" btnText="build" unlocker="techTier2" />
                         <buildable id="metalT3" btnText="build" />
                         <buildable id="metalT4" btnText="build" />
                         <buildable id="metalT5" btnText="build" />
@@ -585,6 +593,7 @@
                     
                     <!-- MILITARY PANE -->
                     <pane id="militaryPane" icon="military.png">
+                        <fleet id="fleet" />
                         <buildable id="shipT1" btnText="build" />
                         <buildable id="shipT2" btnText="build" />
                         <buildable id="shipT3" btnText="build" />
@@ -592,33 +601,131 @@
                         <buildable id="shipT5" btnText="build" />
                     </pane>
                     
-                    <!-- CARNELIAN STARS PANE -->
+                    <!-- INTERSTELLAR CARNELIAN PANE -->
                     <pane id="interstellarCarnelianPane" icon="carnelian.png" :descs="['interstellarCarnelianPane_desc']">
-                        <star id="star301" />
+                        <star id="star301"    /> <star id="star163901" /> <star id="star181901" /> <star id="star151801" /> <star id="star25401"  /> <star id="star146301" />
+                        <star id="star122601" /> <star id="star79501"  /> <star id="star1501"   /> <star id="star79901"  /> <star id="star37601"  /> <star id="star123401" />
+                        <star id="star164301" /> <star id="star219102" /> <star id="star204702" /> <star id="star116901" /> <star id="star74001"  /> <star id="star205102" />
+                        <star id="star144001" /> <star id="star222301" /> <star id="star3901"   /> <star id="star168301" /> <star id="star120901" /> <star id="star125301" />
+                        <star id="star113101" /> <star id="star89101"  /> <star id="star93901"  /> <star id="star79201"  /> <star id="star80501"  /> <star id="star77301"  />
+                        <star id="star191701" /> <star id="star199702" /> <star id="star21001"  /> <star id="star178302" /> <star id="star32201"  /> <star id="star74801"  />
                     </pane>
                     
+                    <!-- INTERSTELLAR PRASNIAN PANE -->
                     <pane id="interstellarPrasnianPane" icon="prasnian.png" :descs="['interstellarPrasnianPane_desc']">
-                    </pane>
-                    <pane id="interstellarHyacinitePane" icon="hyacinite.png" :descs="['interstellarHyacinitePane_desc']">
-                    </pane>
-                    <pane id="interstellarKitrinosPane" icon="kitrinos.png" :descs="['interstellarKitrinosPane_desc']">
-                    </pane>
-                    <pane id="interstellarMovitonPane" icon="moviton.png" :descs="['interstellarMovitonPane_desc']">
+                        <star id="star401"    /> <star id="star25101"  /> <star id="star207601" /> <star id="star223901" /> <star id="star121101" /> <star id="star136701" />
+                        <star id="star166402" /> <star id="star95001"  /> <star id="star175902" /> <star id="star56501"  /> <star id="star167801" /> <star id="star103201" />
+                        <star id="star113301" /> <star id="star199602" /> <star id="star157201" /> <star id="star222201" /> <star id="star6301"   /> <star id="star214301" />
+                        <star id="star40801"  /> <star id="star207301" /> <star id="star169601" /> <star id="star157101" /> <star id="star178501" /> <star id="star208601" />
+                        <star id="star78101"  /> <star id="star123501" /> <star id="star85901"  /> <star id="star18501"  /> <star id="star199801" /> <star id="star141901" />
+                        <star id="star5201"   /> <star id="star223701" /> <star id="star166903" /> <star id="star32101"  /> <star id="star77801"  /> <star id="star205201" />
                     </pane>
                     
-                    <pane id="darkmatterPane" icon="darkmatter.png" :descs="['darkmatterPane_desc']">
+                    <!-- INTERSTELLAR HYACINITE PANE -->
+                    <pane id="interstellarHyacinitePane" icon="hyacinite.png" :descs="['interstellarHyacinitePane_desc']">
+                        <star id="star201"    /> <star id="star217101" /> <star id="star166701" /> <star id="star179501" /> <star id="star6501"   /> <star id="star222401" />
+                        <star id="star200001" /> <star id="star24201"  /> <star id="star224202" /> <star id="star92801"  /> <star id="star172701" /> <star id="star86401"  />
+                        <star id="star202902" /> <star id="star177001" /> <star id="star68301"  /> <star id="star205001" /> <star id="star13401"  /> <star id="star34201"  />
+                        <star id="star182101" /> <star id="star178401" /> <star id="star107601" /> <star id="star192101" /> <star id="star24001"  /> <star id="star16601"  />
+                        <star id="star27501"  /> <star id="star121601" /> <star id="star212102" /> <star id="star117501" />
                     </pane>
+                    
+                    <!-- INTERSTELLAR KITRINOS PANE -->
+                    <pane id="interstellarKitrinosPane" icon="kitrinos.png" :descs="['interstellarKitrinosPane_desc']">
+                        <star id="star501"    /> <star id="star130601" /> <star id="star158101" /> <star id="star224601" /> <star id="star58601"  /> <star id="star10101"  />
+                        <star id="star194201" /> <star id="star1101"   /> <star id="star72501"  /> <star id="star210501" /> <star id="star189701" /> <star id="star175601" />
+                        <star id="star206902" /> <star id="star133601" /> <star id="star135801" /> <star id="star39101"  /> <star id="star107001" /> <star id="star105801" />
+                        <star id="star224201" /> <star id="star205101" /> <star id="star162501" /> <star id="star4001"   /> <star id="star141101" /> <star id="star180502" />
+                        <star id="star208702" /> <star id="star85501"  /> <star id="star217202" /> <star id="star180101" /> <star id="star13801"  /> <star id="star37101"  />
+                        <star id="star42501"  /> <star id="star80901"  /> <star id="star215902" /> <star id="star190502" /> <star id="star99701"  /> <star id="star176802" />
+                    </pane>
+                    
+                    <!-- INTERSTELLAR MOVITON PANE -->
+                    <pane id="interstellarMovitonPane" icon="moviton.png" :descs="['interstellarMovitonPane_desc']">
+                        <star id="star701"    /> <star id="star601"    /> <star id="star80101"  /> <star id="star213301" /> <star id="star13601"  /> <star id="star51801"  />
+                        <star id="star35801"  /> <star id="star216801" /> <star id="star224101" /> <star id="star114001" /> <star id="star15301"  /> <star id="star69601"  />
+                        <star id="star148501" /> <star id="star155801" /> <star id="star185101" /> <star id="star175901" /> <star id="star203902" /> <star id="star204801" />
+                        <star id="star211202" /> <star id="star100801" /> <star id="star124101" /> <star id="star139701" /> <star id="star50401"  /> <star id="star159101" />
+                        <star id="star148101" /> <star id="star157301" /> <star id="star72601"  /> <star id="star224801" /> <star id="star71001"  /> <star id="star207501" />
+                        <star id="star168302" /> <star id="star128901" /> <star id="star68401"  /> <star id="star30701"  /> <star id="star193402" /> <star id="star84201"  />
+                        <star id="star76401"  /> <star id="star32301"  /> <star id="star191401" /> <star id="star118301" /> <star id="star166901" /> <star id="star62901"  />
+                        <star id="star21601"  /> <star id="star63801"  /> <star id="star187202" />
+                    </pane>
+                    
+                    <!-- DARKMATTER PANE -->
+                    <pane id="darkmatterPane" icon="darkmatter.png" :descs="['darkmatterPane_desc1', 'darkmatterPane_desc2', 'darkmatterPane_desc3', 'darkmatterPane_desc4', 'darkmatterPane_desc5']">
+                        <card id="darkmatter" :descs="['darkmatter_desc']">
+                            <div class="col-12">
+                                <div class="heading-6">{{ $t('dmWonders') }} <span class="text-light">{{ getDMWonders }}</span></div>
+                                <div class="small"><span>{{ $t('dmWonders_desc') }}</span></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="heading-6">{{ $t('dmSpheres') }} <span class="text-light">{{ getDMSpheres }}</span></div>
+                                <div class="small"><span>{{ $t('dmSpheres_desc') }}</span></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="heading-6">{{ $t('dmResearches') }} <span class="text-light">{{ getDMResearches }}</span></div>
+                                <div class="small"><span>{{ $t('dmResearches_desc') }}</span></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="heading-6">{{ $t('dmRank') }} <span class="text-light">{{ getDMRank }}</span></div>
+                                <div class="small"><span>{{ $t('dmRank_desc') }}</span></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="heading-6">{{ $t('dmSwarms') }} <span class="text-light">{{ getDMSwarms }}</span></div>
+                                <div class="small"><span>{{ $t('dmSwarms_desc') }}</span></div>
+                            </div>
+                        </card>
+                    </pane>
+                    
+                    <!-- STARGAZE CARNELIAN PANE -->
                     <pane id="stargazeCarnelianPane" icon="carnelian.png" :descs="['stargazeCarnelianPane_desc']">
+                        <buildable id="upgradeGain" btnText="activate" />
+                        <buildable id="upgradeStorage1" btnText="activate" />
+                        <buildable id="upgradeStorage2" btnText="activate" />
+                        <buildable id="techEnergyStorage6" btnText="activate" />
+                        <buildable id="upgradeStorage3" btnText="activate" />
                     </pane>
+                    
+                    <!-- STARGAZE PRASNIAN PANE -->
                     <pane id="stargazePrasnianPane" icon="prasnian.png" :descs="['stargazePrasnianPane_desc']">
+                        <buildable id="techPlasma3" btnText="activate" />
+                        <buildable id="upgradeWonder1" btnText="activate" />
+                        <buildable id="upgradeWonder2" btnText="activate" />
+                        <buildable id="upgradeWonder3" btnText="activate" />
+                        <buildable id="techPlasma4" btnText="activate" />
+                        <buildable id="techPlasmaStorage3" btnText="activate" />
                     </pane>
+                    
+                    <!-- STARGAZE HYACINITE PANE -->
                     <pane id="stargazeHyacinitePane" icon="hyacinite.png" :descs="['stargazeHyacinitePane_desc']">
+                        <buildable id="upgradeScience1" btnText="activate" />
+                        <buildable id="upgradeScience2" btnText="activate" />
+                        <buildable id="techScience5" btnText="activate" />
+                        <buildable id="upgradeEnergyBoost" btnText="activate" />
                     </pane>
+                    
+                    <!-- STARGAZE KITRINOS PANE -->
                     <pane id="stargazeKitrinosPane" icon="kitrinos.png" :descs="['stargazeKitrinosPane_desc']">
+                        <buildable id="upgradeTier1" btnText="activate" />
+                        <buildable id="techEnergyStorage5" btnText="activate" />
+                        <buildable id="boostCapital" btnText="activate" />
+                        <buildable id="techTier5" btnText="activate" />
                     </pane>
+                    
+                    <!-- STARGAZE MOVITON PANE -->
                     <pane id="stargazeMovitonPane" icon="moviton.png" :descs="['stargazeMovitonPane_desc']">
+                        <buildable id="upgradeFuel1" btnText="activate" />
+                        <buildable id="upgradeSpaceship" btnText="activate" />
+                        <buildable id="techMeteorite3" btnText="activate" />
+                        <buildable id="techMeteorite4" btnText="activate" />
                     </pane>
+                    
+                    <!-- STARGAZE OVERLORD PANE -->
                     <pane id="stargazeOverlordPane" icon="overlord.png" :descs="['stargazeOverlordPane_desc']">
+                        <buildable id="boostDarkmatter" btnText="activate" />
+                        <buildable id="techNanoswarm0" btnText="activate" />
+                        <buildable id="upgradeFaction" btnText="activate" />
                     </pane>
                         
                     <!-- DONATING PANE -->
@@ -716,6 +823,39 @@
                     
                     <!-- OPTIONS PANE -->
                     <pane id="settingsPane" icon="cog.png" :descs="['settingsPane_desc']">
+                        <card id="companyName">
+                            <div class="col-12">
+                                <div class="row g-1">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="newCompanyName" />
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn" @click="setCompanyName(newCompanyName)">{{ $t('change') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                        <card id="importExport">
+                            <div class="col-12">
+                                <div class="row g-1">
+                                    <div class="col-auto">
+                                        <button class="btn" @click="exportData()">{{ $t('export') }}</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn" @click="importData()">{{ $t('import') }}</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn">{{ $t('copy') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" style="height:100px;" v-model="compressed"></textarea>
+                            </div>
+                            <div class="col-12 small">
+                                <span>{{ $t('importExport_desc') }}</span>
+                            </div>
+                        </card>
                     </pane>
                     
                     <!-- ABOUT PANE -->
@@ -1019,6 +1159,8 @@
 </template>
 
 <script>
+import LZString from 'lz-string'
+
 import Header from './components/Header.vue'
 import Content from './components/Content.vue'
 import SidenavGroup from './components/SidenavGroup.vue'
@@ -1029,6 +1171,7 @@ import Resource from './components/Resource.vue'
 import Buildable from './components/Buildable.vue'
 import Emc from './components/Emc.vue'
 import Star from './components/Star.vue'
+import Fleet from './components/Fleet.vue'
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -1047,6 +1190,7 @@ export default {
         'buildable': Buildable,
         'emc': Emc,
         'star': Star,
+        'fleet': Fleet,
     },
     data() {
         return {
@@ -1066,18 +1210,22 @@ export default {
             toastInvadeSuccess: null,
             toastInvadeFailed: null,
             toastAbsorbSuccess: null,
+            
+            compressed: null,
+            newCompanyName: null,
         }
     },
     computed: {
         ...mapState([
         
-            'data', 'locale', 'activePane', 'activeStar', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
+            'data', 'companyName', 'locale', 'activePane', 'activeStar', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
         ]),
         ...mapGetters([
         
             'isNotif', 'hasNotif',
             'getSpyChance', 'getInvadeChance', 'getStarPower', 'getStarDefense', 'getStarSpeed',
+            'getDMWonders', 'getDMSpheres', 'getDMResearches', 'getDMRank', 'getDMSwarms', 'getPotentialDM',
         ]),
     },
     created() {        
@@ -1086,7 +1234,7 @@ export default {
     methods: {
         ...mapMutations([
         
-            'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave',
+            'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName',
         ]),
         ...mapActions([
         
@@ -1097,7 +1245,9 @@ export default {
 
             this.initialize()
             this.load()
-
+            
+            this.newCompanyName = this.companyName
+            
             this.fastInterval = setInterval(() => { this.fastUpdate() }, 100)
             this.slowInterval = setInterval(() => { this.slowUpdate() }, 1000)
 
@@ -1157,6 +1307,25 @@ export default {
                 this.setTimeSinceAutoSave(1)
                 this.toastAutoSave.show()
             }
+        },
+        exportData() {
+            
+            let text = JSON.stringify(JSON.parse(localStorage.getItem('ngsave')))
+            this.compressed = LZString.compressToBase64(text)
+        },
+        importData() {
+
+            if (!this.compressed || !this.compressed.trim()) return console.warn('No data to import')
+            if (this.compressed.length % 4 !== 0) return console.warn('Data corrupted')
+
+            console.log(this.compressed)
+            let text = LZString.decompressFromBase64(this.compressed)
+            if (!text) return console.warn('Import failed')
+            
+            let impdata = JSON.parse(text)
+            localStorage.setItem('ngsave', JSON.stringify(impdata))
+
+            window.location.reload()
         },
     },
     beforeUnmount() {

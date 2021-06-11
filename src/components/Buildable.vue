@@ -12,8 +12,14 @@
             </div>
             <div class="col">
             
-                <div v-if="!data[id].unlocked" class="card card-body">
-                    <span class="text-muted">{{ $t('locked') }}</span>
+                <div v-if="!data[id].unlocked" class="card card-body small">
+                    <span class="text-muted">
+                        {{ $t('locked') }}
+                        <span v-if="unlocker">
+                            {{ $t('by') }}
+                            <span class="text-normal">{{ $t(unlocker) }}</span>
+                        </span>
+                    </span>
                 </div>
                 
                 <div v-if="data[id].unlocked && data[id].max && data[id].count >= data[id].max" class="card card-body">
@@ -102,7 +108,8 @@
                                             <small class="text-light">{{ $t(data[id].storage.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small class="text-success">+{{ numeralFormat(data[id].storage.count, '0.[0]a') }}</small>
+                                            <small v-if="data[id].storage.id != 'energy'" class="text-success">+{{ numeralFormat(data[id].storage.count, '0.[0]a') }}</small>
+                                            <small v-if="data[id].storage.id == 'energy'" class="text-success">+{{ numeralFormat(data[id].storage.count * (1 + (0.01 * data['boostEnergyStorage'].count)), '0.[0]a') }}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +124,8 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small class="text-success">+{{ numeralFormat(output.count * data[output.id].boost, '0.[0]a') }}</small>
+                                            <small v-if="output.id == 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.02 * data['boostScience'].count)), '0.[0]a') }}</small>
+                                            <small v-if="output.id != 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count)), '0.[0]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
@@ -129,7 +137,7 @@
                                             <small class="text-light">{{ $t(input.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="input.id == 'energy'" class="text-warning">-{{ numeralFormat(input.count, '0.[0]a') }}</small>
+                                            <small v-if="input.id == 'energy'" class="text-warning">-{{ numeralFormat(input.count * (1 - (0.01 * data['boostEnergy'].count)), '0.[0]a') }}</small>
                                             <small v-if="input.id != 'energy'" class="text-warning">-{{ numeralFormat(input.count, '0.[0]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
@@ -145,10 +153,18 @@
                                                 <span class="text-danger">{{ $t('destroy') }}</span>
                                             </button>
                                         </div>
-                                        <div class="ms-auto col-auto">
-                                            <button class="btn" @click="build(id, 1)">
+                                        <div v-if="id != 'segment'" class="ms-auto col-auto">
+                                            <button class="btn" @click="build({id:id, count:1})">
                                                 {{ $t(btnText) }}
                                             </button>
+                                        </div>
+                                        <div v-if="id == 'segment'" class="ms-auto col-auto">
+                                            <div class="row g-1">
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">+1</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:50})">=50</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:100})">=100</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:250})">=250</button></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +185,7 @@ import Costs from './Costs.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-    props: [ 'id', 'btnText' ],
+    props: [ 'id', 'btnText', 'unlocker' ],
     components: {
         'costs': Costs,
     },

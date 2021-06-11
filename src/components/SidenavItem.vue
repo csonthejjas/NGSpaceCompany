@@ -11,19 +11,22 @@
                 <div class="col">
                     {{ $t(id) }}
                 </div>
-                <div v-if="prod != null" class="col-3 text-end">
+                <div v-if="prod != null" class="col-auto text-end">
                     <small :class="{ 'text-danger':(prod * boost) < 0, 'text-normal':(prod * boost) == 0, 'text-success':(prod * boost) > 0 }">
-                        <span v-if="(prod * boost) > 0">+</span>
-                        {{ numeralFormat(prod * boost, '0.[0]a') }}
+                        <span v-if="(prod * boost) > 0">+</span>{{ numeralFormat(prod * boost, '0.[0]a') }}
                     </small>
                     <small class="text-normal ms-1">/s</small>
                 </div>
-                <div v-if="count != null" class="col-4 text-end">
+                <div v-if="count != null" class="col-auto text-end" style="width:110px;">
                     <small :class="{ 'text-light':(count > 0 && (!storage || count < storage)), 'text-normal':count == 0, 'text-danger':count < 0, 'text-success':storage && count >= storage }">{{ numeralFormat(count, '0.[0]a') }}</small>
                     <small v-if="storage" class="text-normal ms-1">/{{ numeralFormat(storage, '0.[0]a') }}</small>
+                    <small v-if="potential >= 0" class="text-normal ms-1">({{ potential }})</small>
                 </div>
-                <div v-if="opinion != null" class="col-4 text-end">
+                <div v-if="opinion != null" class="col-auto text-end">
                     <small :class="{ 'text-light':opinion > 0, 'text-normal':opinion <= 0 }">{{ opinion }}</small>
+                </div>
+                <div v-if="done" class="col-auto text-end small">
+                    <small class="text-success text-uppercase">{{ $t(doneText) }}</small>
                 </div>
             </div>
         </button>
@@ -50,7 +53,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
-    props: [ 'id', 'unlocked', 'icon', 'prod', 'boost', 'count', 'storage', 'opinion' ],
+    props: [ 'id', 'unlocked', 'icon', 'prod', 'boost', 'count', 'storage', 'opinion', 'done', 'doneText', 'potential' ],
     computed: {
         ...mapState([        
             'activePane',
