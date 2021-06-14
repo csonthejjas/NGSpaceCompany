@@ -53,7 +53,6 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             locale: 'en',
             activePane: 'metalPane',
-            activeStar: 'star301',
             companyName: 'NG Space',
             notifications: [],
             newAchievement: false,
@@ -74,8 +73,14 @@ export const store = createStore({
             return false
         },
         /*--------------------------------------------------------------------*/
+        getThreat: (state) => (id) => {
+            
+            let item = state.data[id]
+            return threat(item.stats)
+        },
+        /*--------------------------------------------------------------------*/
         getSpyChance: (state) => (id) => {
-        
+            
             let item = state.data[id]
             let t = threat(item.stats)
             return Math.min(100, state.data['shipT1'].active / (t + 1) * (20 / (item.spy + 1)))
@@ -103,8 +108,8 @@ export const store = createStore({
 
                 let damage = (activeFleet.power / star.stats.defense * multi) * activeFleet.speed
                 let starDamage = (star.stats.power * multi / Math.max(activeFleet.defense, 1)) * star.stats.speed
-                if (damage > starDamage) return (damage / starDamage) - 0.5
-                else if (damage != 0) return Math.max(0, 1.5 - (starDamage / damage))
+                if (damage > starDamage) return Math.min(1, Math.round((damage / starDamage) - 0.5))
+                else if (damage != 0) return Math.min(1, Math.round(Math.max(0, 1.5 - (starDamage / damage))))
             }
         },
         /*--------------------------------------------------------------------*/
@@ -175,7 +180,7 @@ export const store = createStore({
             var star = state.data[id]
             if (star.spy <= 0) return '???'
             
-            var val = (star.stats.defense).toString()
+            var val = (star.stats.speed).toString()
             var unknown = ''
             for (var i = 0; i < val.length - (star.spy - 1); i++) { unknown += '?' }
             return val.substring(0, star.spy - 1) + unknown
@@ -654,11 +659,11 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             state.data['science'] = { id:'science', unlocked:false, count:0, prod:0, boost:0, notifs:['sciencePane'], }
             /*----------------------------------------------------------------*/
-            state.data['scienceT1'] = { id:'scienceT1', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:20       }, { id:'gem', count:15      }, { id:'wood', count:10       }], outputs:[{ id:'science', count:0.1  }], notifs:['sciencePane'], }
-            state.data['scienceT2'] = { id:'scienceT2', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:1000     }, { id:'gem', count:200     }, { id:'wood', count:500      }], outputs:[{ id:'science', count:1    }], notifs:['sciencePane'], }
-            state.data['scienceT3'] = { id:'scienceT3', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:17000    }, { id:'gem', count:4700    }, { id:'wood', count:9600     }], outputs:[{ id:'science', count:10   }], notifs:['sciencePane'], }
-            state.data['scienceT4'] = { id:'scienceT4', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:610000   }, { id:'gem', count:370000  }, { id:'wood', count:926000   }], outputs:[{ id:'science', count:100  }], notifs:['sciencePane'], }
-            state.data['scienceT5'] = { id:'scienceT5', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:12400000 }, { id:'gem', count:7300000 }, { id:'wood', count:15900000 }], outputs:[{ id:'science', count:1000 }], notifs:['sciencePane'], }
+            state.data['scienceT1'] = { id:'scienceT1', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:20       }, { id:'gem', count:15      }, { id:'wood', count:10       }], outputs:[{ id:'science', count:0.1  }], notifs:['sciencePane'], }
+            state.data['scienceT2'] = { id:'scienceT2', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:1000     }, { id:'gem', count:200     }, { id:'wood', count:500      }], outputs:[{ id:'science', count:1    }], notifs:['sciencePane'], }
+            state.data['scienceT3'] = { id:'scienceT3', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:17000    }, { id:'gem', count:4700    }, { id:'wood', count:9600     }], outputs:[{ id:'science', count:10   }], notifs:['sciencePane'], }
+            state.data['scienceT4'] = { id:'scienceT4', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:610000   }, { id:'gem', count:370000  }, { id:'wood', count:926000   }], outputs:[{ id:'science', count:100  }], notifs:['sciencePane'], }
+            state.data['scienceT5'] = { id:'scienceT5', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal', count:12400000 }, { id:'gem', count:7300000 }, { id:'wood', count:15900000 }], outputs:[{ id:'science', count:1000 }], notifs:['sciencePane'], }
             /*----------------------------------------------------------------*/
             
             // TECHS
@@ -705,9 +710,9 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             state.data['fuel'] = { id:'fuel', unlocked:false, count:0, prod:0, boost:0, toggle:'on', notifs:['fuelPane'], }
             /*----------------------------------------------------------------*/
-            state.data['fuelT1'] = { id:'fuelT1', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:1000   }, { id:'gem',     count:750   }, { id:'wood', count:500   }], outputs:[{ id:'fuel', count:0.2 }], inputs:[{ id:'carbon',  count:20  }, { id:'oil', count:20  }], notifs:['fuelPane'], }
-            state.data['fuelT2'] = { id:'fuelT2', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:12000  }, { id:'gem',     count:8300  }, { id:'wood', count:6800  }], outputs:[{ id:'fuel', count:1.5 }], inputs:[{ id:'carbon',  count:100 }, { id:'oil', count:100 }], notifs:['fuelPane'], }
-            state.data['fuelT3'] = { id:'fuelT3', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'titanium', count:140000 }, { id:'silicon', count:96300 }, { id:'gold', count:78600 }], outputs:[{ id:'fuel', count:20  }], inputs:[{ id:'methane', count:520 }],                          notifs:['fuelPane'], }
+            state.data['fuelT1'] = { id:'fuelT1', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:1000   }, { id:'gem',     count:750   }, { id:'wood', count:500   }], outputs:[{ id:'fuel', count:0.2 }], inputs:[{ id:'carbon',  count:20  }, { id:'oil', count:20  }], notifs:['fuelPane'], }
+            state.data['fuelT2'] = { id:'fuelT2', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:12000  }, { id:'gem',     count:8300  }, { id:'wood', count:6800  }], outputs:[{ id:'fuel', count:1.5 }], inputs:[{ id:'carbon',  count:100 }, { id:'oil', count:100 }], notifs:['fuelPane'], }
+            state.data['fuelT3'] = { id:'fuelT3', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'titanium', count:140000 }, { id:'silicon', count:96300 }, { id:'gold', count:78600 }], outputs:[{ id:'fuel', count:20  }], inputs:[{ id:'methane', count:520 }],                          notifs:['fuelPane'], }
             /*----------------------------------------------------------------*/
             
             // ROCKET
@@ -807,7 +812,8 @@ export const store = createStore({
                                                                                                                                                                                                                                                                                                                      'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost',
                                                                                                                                                                                                                                                                                                                      'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
                                                                                                                                                                                                                                                                                                                      'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
-                                                                                                                                                                                                                                                                                                                     'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction' ], }            
+                                                                                                                                                                                                                                                                                                                     'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction',
+                                                                                                                                                                                                                                                                                                                     'carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }            
             /*----------------------------------------------------------------*/
             
             // NANOSWARM
@@ -819,7 +825,7 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             state.data['antimatter'] = { id:'antimatter', unlocked:false, count:0, prod:0, boost:0, baseStorage:100000, toggle:'on', notifs:['antimatterPane'], }
             /*----------------------------------------------------------------*/
-            state.data['antimatterT1'] = { id:'antimatterT1', unlocked:false, count:0, active:0, costType:'EXPONENTIAL', baseCosts:[{ id:'silver', count:163000000 }, { id:'oil', count:712000000 }, { id:'meteorite', count:12300000 }], outputs:[{ id:'antimatter', count:0.5 }], inputs:[{ id:'plasma', count:100 }, { id:'ice', count:12000 }], notifs:['antimatterPane'], }
+            state.data['antimatterT1'] = { id:'antimatterT1', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'silver', count:163000000 }, { id:'oil', count:712000000 }, { id:'meteorite', count:12300000 }], outputs:[{ id:'antimatter', count:0.5 }], inputs:[{ id:'plasma', count:100 }, { id:'ice', count:12000 }], notifs:['antimatterPane'], }
             /*----------------------------------------------------------------*/
             
             // COMMUNICATIONS
@@ -830,7 +836,7 @@ export const store = createStore({
             
             // SPACESHIP
             /*----------------------------------------------------------------*/
-            state.data['spaceship'] = { id:'spaceship', unlocked:false, count:0, max:1,  costType:'FIXED',       baseCosts:[{ id:'shield',   count:50       }, { id:'engine',    count:25       }, { id:'aero',     count:15       }], notifs:['spaceshipPane'], }
+            state.data['spaceship'] = { id:'spaceship', unlocked:false, count:0, max:1,  costType:'FIXED',       baseCosts:[{ id:'shield',   count:50       }, { id:'engine',    count:25       }, { id:'aero',     count:15       }], notifs:['spaceshipPane'], unlocks:['carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }
             state.data['shield'] =    { id:'shield',    unlocked:false, count:0, max:50, costType:'EXPONENTIAL', baseCosts:[{ id:'lunarite', count:10000000 }, { id:'titanium',  count:10000000 }, { id:'metal',    count:10000000 }], notifs:['spaceshipPane'], }
             state.data['engine'] =    { id:'engine',    unlocked:false, count:0, max:25, costType:'EXPONENTIAL', baseCosts:[{ id:'silicon',  count:50000000 }, { id:'meteorite', count:1000000  }, { id:'hydrogen', count:25000000 }], notifs:['spaceshipPane'], }
             state.data['aero'] =      { id:'aero',      unlocked:false, count:0, max:15, costType:'EXPONENTIAL', baseCosts:[{ id:'silver',   count:20000000 }, { id:'ice',       count:30000000 }, { id:'gem',      count:25000000 }], notifs:['spaceshipPane'], }
@@ -1058,7 +1064,7 @@ export const store = createStore({
             
             // DARKMATTER
             /*----------------------------------------------------------------*/
-            state.data['darkmatter'] = { id:'darkmatter', unlocked:false, count:0, notifs:['darkmatterPane'], }
+            state.data['darkmatter'] = { id:'darkmatter', unlocked:false, count:0, notifs:['darkmatterPane'], unlocks:['carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }
             /*----------------------------------------------------------------*/
             
             // DM CARNELIAN
@@ -1297,18 +1303,26 @@ export const store = createStore({
                 }
             }
             
+            let ownedStarCount = 0
+            
             for (let i in state.data) {
                 let item = state.data[i]
-                
-                if ('baseCosts' in item) commit('computeCosts', i)
-                if ('baseStorage' in item) commit('computeStorage', i)
-                
                 if ('count' in item && item.count > 0) {
                 
                     if ('unlocks' in item) item.unlocks.forEach(unlock => { dispatch('unlock', unlock) })
                     
                     dispatch('onBuild', i)
                 }
+                
+                if ('baseCosts' in item) commit('computeCosts', i)
+                if ('baseStorage' in item) commit('computeStorage', i)
+                
+                if ('status' in item && item.status == 'owned') ownedStarCount += 1
+            }
+            
+            if (ownedStarCount > 0) {
+                state.data['dysonT3'].max += ownedStarCount
+                state.data['antimatter'].storage += ownedStarCount * 100000
             }
         },
         /*--------------------------------------------------------------------*/
@@ -1357,7 +1371,7 @@ export const store = createStore({
             item = state.data['boostProduction']
             if (item.unlocked && item.count > 0) { boost += 0.01 * item.count }
             item = state.data['boostDarkmatter']
-            if (item.unlocked && item.count > 0) { boost += 0.01 * item.count }
+            if (item.unlocked && item.count > 0) { boost += 0.01 * state.data['darkmatter'].count }
             item = state.data['boostCapital']
             if (item.unlocked && item.count > 0) { state.resources.forEach(res => { if ('storage' in res && res.count >= res.storage) boost += 0.05 }) }
 
@@ -1537,7 +1551,10 @@ export const store = createStore({
             else if (id == 'upgradeStorage1') {
                 for (let i = 0; i < state.resources.length; i++) {
                     let item = state.resources[i]
-                    if ('baseStorage' in item && item.baseStorage == 50 && item.storage < 6400) item.storage = 6400
+                    if ('baseStorage' in item && item.baseStorage == 50) {
+                        item.baseStorage = 6400
+                        commit('computeStorage', item.id)
+                    }
                 }
             }
             /*----------------------------------------------------------------*/
@@ -1581,7 +1598,11 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeScience1') {
                 let item = state.data['scienceT1']
-                if (item.count < 20) item.count = 20
+                if (item.count < 20) {
+                    item.count = 20
+                    item.active = 20
+                    commit('computeCosts', item.id)
+                }
             }
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeScience2') {
@@ -1774,9 +1795,12 @@ export const store = createStore({
             state.data['nanoswarm'].resource = id
         },
         /*--------------------------------------------------------------------*/
-        setActiveShip({ state, commit }, id, count) {
+        setActiveShip({ state, commit }, payload) {
             
-            var item = state.data[id]
+            let id = payload.id
+            let count = payload.count
+            
+            let item = state.data[id]
             
             if (count == 'max') item.active = item.count
             else if (count == 'none') item.active = 0
@@ -1785,13 +1809,17 @@ export const store = createStore({
             commit('computeFleetStats')
         },
         /*--------------------------------------------------------------------*/
-        spyStar({ state, commit, getters }, id) {
-        
+        spy({ state, commit, getters }, id) {
+            
+            let result = false
             let star = state.data[id]
 
-            let chance = getters.getSpyChance(star) / 100
+            let chance = getters.getSpyChance(id) / 100
             let roll = Math.random()
-            if (chance >= roll) star.spy += 1
+            if (chance >= roll) {
+                star.spy += 1
+                result = true
+            }
             else {
                 let scout = state.data['shipT1']
                 scout.count -= scout.active
@@ -1799,25 +1827,30 @@ export const store = createStore({
             }
             
             commit('computeFleetStats')
+            
+            return result
         },
         /*--------------------------------------------------------------------*/
-        invadeStar({ state, getters, dispatch, commit }, id) {
-        
+        invade({ state, getters, dispatch, commit }, id) {
+            
             let activeFleet = state.activeFleet
-            if (activeFleet.stats.power != 0) {
+            if (activeFleet.power != 0) {
                 let star = state.data[id]
+                let result = false            
                 
-                let chance = getters.getInvadeChance(star)
+                let chance = getters.getInvadeChance(id)
                 if (chance == 'peace') {
-                    dispatch('absorbStar', id)
+                    dispatch('absorbStar', id).then(res => { return res })
                     return
                 }
                 
-                chance /= 100
                 let roll = Math.random()
                 if (chance >= roll) {
                 
-                    star.state = 'owned'
+                    result = true
+                    star.status = 'owned'
+                    state.data['dysonT3'].max += 1
+                    state.data['antimatter'].storage += 100000
                     
                     let random = Math.random() * chance
                     if (random < 1) {
@@ -1848,26 +1881,34 @@ export const store = createStore({
                 }
                 
                 commit('computeFleetStats')
+            
+                return result
             }
         },
         /*--------------------------------------------------------------------*/
-        absorbStar({ state }, id) {
+        absorb({ state }, id) {
         
             let star = state.data[id]
             let faction = state.data[star.faction]
             if (faction.opinion >= 60) {
             
                 faction.opinion -= 5
-                star.state = 'owned'
+                star.status = 'owned'
+                state.data['dysonT3'].max += 1
+                state.data['antimatter'].storage += 100000
+                
+                return true
             }
+            
+            return false
         },
         /*--------------------------------------------------------------------*/
         rebirth({ state, getters, dispatch }) {
         
-            if (state.data['dysonT3'].count < 1) return
+            if (state.data['dysonT3'].count < 1) return false
             
-            state.data['darkmatter'] += getters.getPotentialDM
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+            state.data['darkmatter'].count += getters.getPotentialDM
+            
             let exludedList = [
                 'darkmatter',
                 'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
@@ -1880,21 +1921,21 @@ export const store = createStore({
             
             for (let i in state.data) {
                 let item = state.data[i]
-                if (!(item.id in exludedList)) {
-                
+                if (!(exludedList.includes(i))) {
+                    
                     if ('unlocked' in item) item.unlocked = false
                     if ('count' in item) item.count = 0
                     if ('active' in item) item.active = 0
                     if ('toggle' in item) item.toggleState = 'on'
                     if ('resource' in item) item.resource = null
-                    if ('status' in item) item.state = 'new'
+                    if ('status' in item) item.status = 'new'
                     if ('spy' in item) item.spy = 0
                 }
             }
             
             dispatch('save')
             
-            window.location.reload()
+            return true
         },
     },
 })

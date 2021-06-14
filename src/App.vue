@@ -30,7 +30,7 @@
                 
                     <sidenav-group id="energyHeading" :unlocked="data['energy'].unlocked">
                         <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" :boost="data['energy'].boost" />
-                        <sidenav-item id="batteryPane" icon="battery.png" :unlocked="data['energyS1'].unlocked" :count="data['energy'].count" :storage="data['energy'].storage" />
+                        <sidenav-item id="batteryPane" icon="battery.png" :unlocked="data['energy'].unlocked" :count="data['energy'].count" :storage="data['energy'].storage" />
                     </sidenav-group>
                     
                     <sidenav-group id="fabricatedHeading" :unlocked="data['carbon'].unlocked">
@@ -94,11 +94,11 @@
                         <sidenav-item id="communicationPane" icon="communication.png" :unlocked="data['radarT1'].unlocked" />
                         <sidenav-item id="spaceshipPane" icon="spaceship.png" :unlocked="data['spaceship'].unlocked" :done="data['spaceship'].count > 0" doneText="built" />
                         <sidenav-item id="militaryPane" icon="military.png" :unlocked="data['shipT1'].unlocked" />
-                        <sidenav-item id="interstellarCarnelianPane" icon="carnelian.png" :unlocked="data['shipT1'].count > 0" />
-                        <sidenav-item id="interstellarPrasnianPane" icon="prasnian.png" :unlocked="data['shipT1'].count > 0" />
-                        <sidenav-item id="interstellarHyacinitePane" icon="hyacinite.png" :unlocked="data['shipT1'].count > 0" />
-                        <sidenav-item id="interstellarKitrinosPane" icon="kitrinos.png" :unlocked="data['shipT1'].count > 0" />
-                        <sidenav-item id="interstellarMovitonPane" icon="moviton.png" :unlocked="data['shipT1'].count > 0" />
+                        <sidenav-item id="interstellarCarnelianPane" icon="carnelian.png" :unlocked="data['spaceship'].count > 0" :opinion="data['carnelian'].opinion" />
+                        <sidenav-item id="interstellarPrasnianPane" icon="prasnian.png" :unlocked="data['spaceship'].count > 0" :opinion="data['prasnian'].opinion" />
+                        <sidenav-item id="interstellarHyacinitePane" icon="hyacinite.png" :unlocked="data['spaceship'].count > 0" :opinion="data['hyacinite'].opinion" />
+                        <sidenav-item id="interstellarKitrinosPane" icon="kitrinos.png" :unlocked="data['spaceship'].count > 0" :opinion="data['kitrinos'].opinion" />
+                        <sidenav-item id="interstellarMovitonPane" icon="moviton.png" :unlocked="data['spaceship'].count > 0" :opinion="data['moviton'].opinion" />
                     </sidenav-group>
 
                     <sidenav-group id="stargazeHeading" :unlocked="data['darkmatter'].unlocked">
@@ -201,262 +201,262 @@
                     <pane id="energyPane" icon="energy.png" :descs="['energyPane_desc']">
                         <resource id="energy" />
                         <buildable id="energyT1" btnText="build" />
-                        <buildable id="energyT2" btnText="build" />
-                        <buildable id="energyT3" btnText="build" />
-                        <buildable id="energyT4" btnText="build" />
-                        <buildable id="energyT5" btnText="build" />
-                        <buildable id="energyT6" btnText="build" />
+                        <buildable id="energyT2" btnText="build" unlocker="techEnergy2" />
+                        <buildable id="energyT3" btnText="build" unlocker="venus" />
+                        <buildable id="energyT4" btnText="build" unlocker="wonderPrecious1" />
+                        <buildable id="energyT5" btnText="build" unlocker="wonderEnergetic1" />
+                        <buildable id="energyT6" btnText="build" unlocker="jupiter" />
                     </pane>
                     
                     <!-- BATTERY PANE -->
                     <pane id="batteryPane" icon="battery.png" :descs="['batteryPane_desc']">
-                        <buildable id="energyS1" btnText="build" />
-                        <buildable id="energyS2" btnText="build" />
-                        <buildable id="energyS3" btnText="build" />
-                        <buildable id="energyS4" btnText="build" />
-                        <buildable id="energyS5" btnText="build" />
-                        <buildable id="energyS6" btnText="build" />
+                        <buildable id="energyS1" btnText="build" unlocker="techEnergyStorage1" />
+                        <buildable id="energyS2" btnText="build" unlocker="techEnergyStorage2" />
+                        <buildable id="energyS3" btnText="build" unlocker="techEnergyStorage3" />
+                        <buildable id="energyS4" btnText="build" unlocker="techEnergyStorage4" />
+                        <buildable id="energyS5" btnText="build" unlocker="techEnergyStorage5" />
+                        <buildable id="energyS6" btnText="build" unlocker="techEnergyStorage6" />
                     </pane>
                     
                     <!-- PLASMA PANE -->
                     <pane id="plasmaPane" icon="plasma.png" :descs="['plasmaPane_desc']">
                         <resource id="plasma" />
-                        <buildable id="plasmaT1" btnText="build" />
-                        <buildable id="plasmaT2" btnText="build" />
-                        <buildable id="plasmaT3" btnText="build" />
-                        <buildable id="plasmaT4" btnText="build" />
-                        <buildable id="plasmaS1" btnText="build" />
-                        <buildable id="plasmaS2" btnText="build" />
-                        <buildable id="plasmaS3" btnText="build" />
+                        <buildable id="plasmaT1" btnText="build" unlocker="techPlasma1" />
+                        <buildable id="plasmaT2" btnText="build" unlocker="techPlasma2" />
+                        <buildable id="plasmaT3" btnText="build" unlocker="techPlasma3" />
+                        <buildable id="plasmaT4" btnText="build" unlocker="techPlasma4" />
+                        <buildable id="plasmaS1" btnText="build" unlocker="techPlasmaStorage1" />
+                        <buildable id="plasmaS2" btnText="build" unlocker="techPlasmaStorage2" />
+                        <buildable id="plasmaS3" btnText="build" unlocker="techPlasmaStorage3" />
                     </pane>
                     
                     <!-- METEORITE PANE -->
                     <pane id="meteoritePane" icon="meteorite.png" :descs="['meteoritePane_desc']">
                         <resource id="meteorite" />
                         <buildable id="meteoriteS1" btnText="upgrade" />
-                        <buildable id="meteoriteT1" btnText="build" />
-                        <buildable id="meteoriteT2" btnText="build" />
-                        <buildable id="meteoriteT3" btnText="build" />
-                        <buildable id="meteoriteT4" btnText="build" />
+                        <buildable id="meteoriteT1" btnText="build" unlocker="techMeteorite1" />
+                        <buildable id="meteoriteT2" btnText="build" unlocker="techMeteorite2" />
+                        <buildable id="meteoriteT3" btnText="build" unlocker="techMeteorite3" />
+                        <buildable id="meteoriteT4" btnText="build" unlocker="techMeteorite4" />
                     </pane>
                     
                     <!-- CARBON PANE -->
                     <pane id="carbonPane" icon="carbon.png" :descs="['carbonPane_desc']">
                         <resource id="carbon" />
-                        <buildable id="carbonS1" btnText="upgrade" />
+                        <buildable id="carbonS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="carbonT1" btnText="build" />
-                        <buildable id="carbonT2" btnText="build" />
-                        <buildable id="carbonT3" btnText="build" />
-                        <buildable id="carbonT4" btnText="build" />
-                        <buildable id="carbonT5" btnText="build" />
+                        <buildable id="carbonT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="carbonT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="carbonT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="carbonT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- OIL PANE -->
                     <pane id="oilPane" icon="oil.png" :descs="['oilPane_desc']">
                         <resource id="oil" />
-                        <buildable id="oilS1" btnText="upgrade" />
+                        <buildable id="oilS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="oilT1" btnText="build" />
-                        <buildable id="oilT2" btnText="build" />
-                        <buildable id="oilT3" btnText="build" />
-                        <buildable id="oilT4" btnText="build" />
-                        <buildable id="oilT5" btnText="build" />
+                        <buildable id="oilT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="oilT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="oilT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="oilT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- METAL PANE -->
                     <pane id="metalPane" icon="metal.png" :descs="['metalPane_desc']">
                         <resource id="metal" />
-                        <buildable id="metalS1" btnText="upgrade" />
+                        <buildable id="metalS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="metalT1" btnText="build" />
                         <buildable id="metalT2" btnText="build" unlocker="techTier2" />
-                        <buildable id="metalT3" btnText="build" />
-                        <buildable id="metalT4" btnText="build" />
-                        <buildable id="metalT5" btnText="build" />
+                        <buildable id="metalT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="metalT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="metalT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- GEM PANE -->
                     <pane id="gemPane" icon="gem.png" :descs="['gemPane_desc']">
                         <resource id="gem" />
-                        <buildable id="gemS1" btnText="upgrade" />
+                        <buildable id="gemS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="gemT1" btnText="build" />
-                        <buildable id="gemT2" btnText="build" />
-                        <buildable id="gemT3" btnText="build" />
-                        <buildable id="gemT4" btnText="build" />
-                        <buildable id="gemT5" btnText="build" />
+                        <buildable id="gemT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="gemT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="gemT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="gemT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- WOOD PANE -->
                     <pane id="woodPane" icon="wood.png" :descs="['woodPane_desc']">
                         <resource id="wood" />
-                        <buildable id="woodS1" btnText="upgrade" />
+                        <buildable id="woodS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="woodT1" btnText="build" />
-                        <buildable id="woodT2" btnText="build" />
-                        <buildable id="woodT3" btnText="build" />
-                        <buildable id="woodT4" btnText="build" />
-                        <buildable id="woodT5" btnText="build" />
+                        <buildable id="woodT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="woodT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="woodT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="woodT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SILICON PANE -->
                     <pane id="siliconPane" icon="silicon.png" :descs="['siliconPane_desc']">
                         <resource id="silicon" />
-                        <buildable id="siliconS1" btnText="upgrade" />
+                        <buildable id="siliconS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="siliconT1" btnText="build" />
-                        <buildable id="siliconT2" btnText="build" />
-                        <buildable id="siliconT3" btnText="build" />
-                        <buildable id="siliconT4" btnText="build" />
-                        <buildable id="siliconT5" btnText="build" />
+                        <buildable id="siliconT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="siliconT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="siliconT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="siliconT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- URANIUM PANE -->
                     <pane id="uraniumPane" icon="uranium.png" :descs="['uraniumPane_desc']">
                         <resource id="uranium" />
-                        <buildable id="uraniumS1" btnText="upgrade" />
+                        <buildable id="uraniumS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="uraniumT1" btnText="build" />
-                        <buildable id="uraniumT2" btnText="build" />
-                        <buildable id="uraniumT3" btnText="build" />
-                        <buildable id="uraniumT4" btnText="build" />
-                        <buildable id="uraniumT5" btnText="build" />
+                        <buildable id="uraniumT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="uraniumT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="uraniumT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="uraniumT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- LAVA PANE -->
                     <pane id="lavaPane" icon="lava.png" :descs="['lavaPane_desc']">
                         <resource id="lava" />
-                        <buildable id="lavaS1" btnText="upgrade" />
+                        <buildable id="lavaS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="lavaT1" btnText="build" />
-                        <buildable id="lavaT2" btnText="build" />
-                        <buildable id="lavaT3" btnText="build" />
-                        <buildable id="lavaT4" btnText="build" />
-                        <buildable id="lavaT5" btnText="build" />
+                        <buildable id="lavaT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="lavaT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="lavaT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="lavaT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- LUNARITE PANE -->
                     <pane id="lunaritePane" icon="lunarite.png" :descs="['lunaritePane_desc']">
                         <resource id="lunarite" />
-                        <buildable id="lunariteS1" btnText="upgrade" />
+                        <buildable id="lunariteS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="lunariteT1" btnText="build" />
-                        <buildable id="lunariteT2" btnText="build" />
-                        <buildable id="lunariteT3" btnText="build" />
-                        <buildable id="lunariteT4" btnText="build" />
-                        <buildable id="lunariteT5" btnText="build" />
+                        <buildable id="lunariteT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="lunariteT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="lunariteT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="lunariteT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- METHANE PANE -->
                     <pane id="methanePane" icon="methane.png" :descs="['methanePane_desc']">
                         <resource id="methane" />
-                        <buildable id="methaneS1" btnText="upgrade" />
+                        <buildable id="methaneS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="methaneT1" btnText="build" />
-                        <buildable id="methaneT2" btnText="build" />
-                        <buildable id="methaneT3" btnText="build" />
-                        <buildable id="methaneT4" btnText="build" />
-                        <buildable id="methaneT5" btnText="build" />
+                        <buildable id="methaneT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="methaneT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="methaneT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="methaneT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- TITANIUM PANE -->
                     <pane id="titaniumPane" icon="titanium.png" :descs="['titaniumPane_desc']">
                         <resource id="titanium" />
-                        <buildable id="titaniumS1" btnText="upgrade" />
+                        <buildable id="titaniumS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="titaniumT1" btnText="build" />
-                        <buildable id="titaniumT2" btnText="build" />
-                        <buildable id="titaniumT3" btnText="build" />
-                        <buildable id="titaniumT4" btnText="build" />
-                        <buildable id="titaniumT5" btnText="build" />
+                        <buildable id="titaniumT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="titaniumT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="titaniumT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="titaniumT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- GOLD PANE -->
                     <pane id="goldPane" icon="gold.png" :descs="['goldPane_desc']">
                         <resource id="gold" />
-                        <buildable id="goldS1" btnText="upgrade" />
+                        <buildable id="goldS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="goldT1" btnText="build" />
-                        <buildable id="goldT2" btnText="build" />
-                        <buildable id="goldT3" btnText="build" />
-                        <buildable id="goldT4" btnText="build" />
-                        <buildable id="goldT5" btnText="build" />
+                        <buildable id="goldT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="goldT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="goldT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="goldT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SILVER PANE -->
                     <pane id="silverPane" icon="silver.png" :descs="['silverPane_desc']">
                         <resource id="silver" />
-                        <buildable id="silverS1" btnText="upgrade" />
+                        <buildable id="silverS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="silverT1" btnText="build" />
-                        <buildable id="silverT2" btnText="build" />
-                        <buildable id="silverT3" btnText="build" />
-                        <buildable id="silverT4" btnText="build" />
-                        <buildable id="silverT5" btnText="build" />
+                        <buildable id="silverT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="silverT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="silverT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="silverT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- HYDROGEN PANE -->
                     <pane id="hydrogenPane" icon="hydrogen.png" :descs="['hydrogenPane_desc']">
                         <resource id="hydrogen" />
-                        <buildable id="hydrogenS1" btnText="upgrade" />
+                        <buildable id="hydrogenS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="hydrogenT1" btnText="build" />
-                        <buildable id="hydrogenT2" btnText="build" />
-                        <buildable id="hydrogenT3" btnText="build" />
-                        <buildable id="hydrogenT4" btnText="build" />
-                        <buildable id="hydrogenT5" btnText="build" />
+                        <buildable id="hydrogenT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="hydrogenT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="hydrogenT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="hydrogenT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- HELIUM PANE -->
                     <pane id="heliumPane" icon="helium.png" :descs="['heliumPane_desc']">
                         <resource id="helium" />
-                        <buildable id="heliumS1" btnText="upgrade" />
+                        <buildable id="heliumS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="heliumT1" btnText="build" />
-                        <buildable id="heliumT2" btnText="build" />
-                        <buildable id="heliumT3" btnText="build" />
-                        <buildable id="heliumT4" btnText="build" />
-                        <buildable id="heliumT5" btnText="build" />
+                        <buildable id="heliumT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="heliumT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="heliumT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="heliumT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- ICE PANE -->
                     <pane id="icePane" icon="ice.png" :descs="['icePane_desc']">
                         <resource id="ice" />
-                        <buildable id="iceS1" btnText="upgrade" />
+                        <buildable id="iceS1" btnText="upgrade" unlocker="techStorage" />
                         <buildable id="iceT1" btnText="build" />
-                        <buildable id="iceT2" btnText="build" />
-                        <buildable id="iceT3" btnText="build" />
-                        <buildable id="iceT4" btnText="build" />
-                        <buildable id="iceT5" btnText="build" />
+                        <buildable id="iceT2" btnText="build" unlocker="techTier2" />
+                        <buildable id="iceT3" btnText="build" unlocker="wonderTechnological1" />
+                        <buildable id="iceT4" btnText="build" unlocker="wonderMeteorite1" />
+                        <buildable id="iceT5" btnText="build" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SCIENCE PANE -->
                     <pane id="sciencePane" icon="science.png" :descs="['sciencePane_desc']">
                         <buildable id="scienceT1" btnText="build" />
-                        <buildable id="scienceT2" btnText="build" />
-                        <buildable id="scienceT3" btnText="build" />
-                        <buildable id="scienceT4" btnText="build" />
-                        <buildable id="scienceT5" btnText="build" />
+                        <buildable id="scienceT2" btnText="build" unlocker="techScience2" />
+                        <buildable id="scienceT3" btnText="build" unlocker="techScience3" />
+                        <buildable id="scienceT4" btnText="build" unlocker="techScience4" />
+                        <buildable id="scienceT5" btnText="build" unlocker="techScience5" />
                     </pane>
                     
                     <!-- TECHNOLOGIES PANE -->
                     <pane id="technologiesPane" icon="technologies.png" :descs="['technologiesPane_desc']">
                         <buildable id="techStorage" btnText="unlock" />
                         <buildable id="techEnergy1" btnText="unlock" />
-                        <buildable id="techOil" btnText="unlock" />
-                        <buildable id="techEnergy2" btnText="unlock" />
-                        <buildable id="techTier2" btnText="unlock" />
-                        <buildable id="techDestruction" btnText="unlock" />
-                        <buildable id="techFuel1" btnText="unlock" />
-                        <buildable id="techFuel2" btnText="unlock" />
-                        <buildable id="techFuel3" btnText="unlock" />
-                        <buildable id="techScience2" btnText="unlock" />
-                        <buildable id="techScience3" btnText="unlock" />
-                        <buildable id="techScience4" btnText="unlock" />
-                        <buildable id="techEnergyStorage1" btnText="unlock" />
-                        <buildable id="techEnergyStorage2" btnText="unlock" />
-                        <buildable id="techEnergyStorage3" btnText="unlock" />
-                        <buildable id="techEnergyStorage4" btnText="unlock" />
-                        <buildable id="techPlasma1" btnText="unlock" />
-                        <buildable id="techPlasma2" btnText="unlock" />
-                        <buildable id="techPlasmaStorage1" btnText="unlock" />
-                        <buildable id="techPlasmaStorage2" btnText="unlock" />
-                        <buildable id="techEmc1" btnText="unlock" />
-                        <buildable id="techMeteorite0" btnText="unlock" />
-                        <buildable id="techMeteorite1" btnText="unlock" />
-                        <buildable id="techMeteorite2" btnText="unlock" />
-                        <buildable id="techDyson1" btnText="unlock" />
-                        <buildable id="techDyson2" btnText="unlock" />
-                        <buildable id="techNanoswarm1" btnText="unlock" />
-                        <buildable id="upgradeTier2" btnText="upgrade" />
-                        <buildable id="upgradeEnergy1" btnText="upgrade" />
-                        <buildable id="upgradeEnergy2" btnText="upgrade" />
+                        <buildable id="techOil" btnText="unlock" unlocker="techStorage" />
+                        <buildable id="techEnergy2" btnText="unlock" unlocker="techEnergy1" />
+                        <buildable id="techTier2" btnText="unlock" unlocker="techEnergy1" />
+                        <buildable id="techDestruction" btnText="unlock" unlocker="techTier2" />
+                        <buildable id="techFuel1" btnText="unlock" unlocker="techTier2" />
+                        <buildable id="techFuel2" btnText="unlock" unlocker="techFuel1" />
+                        <buildable id="techFuel3" btnText="unlock" unlocker="techFuel2" />
+                        <buildable id="techScience2" btnText="unlock" unlocker="techFuel1" />
+                        <buildable id="techScience3" btnText="unlock" unlocker="techScience2" />
+                        <buildable id="techScience4" btnText="unlock" unlocker="techScience3" />
+                        <buildable id="techEnergyStorage1" btnText="unlock" unlocker="upgradeEnergy2" />
+                        <buildable id="techEnergyStorage2" btnText="unlock" unlocker="techEnergyStorage1" />
+                        <buildable id="techEnergyStorage3" btnText="unlock" unlocker="techEnergyStorage2" />
+                        <buildable id="techEnergyStorage4" btnText="unlock" unlocker="techEnergyStorage4" />
+                        <buildable id="techPlasma1" btnText="unlock" unlocker="techPlasma0" />
+                        <buildable id="techPlasma2" btnText="unlock" unlocker="techPlasma1" />
+                        <buildable id="techPlasmaStorage1" btnText="unlock" unlocker="techPlasma1" />
+                        <buildable id="techPlasmaStorage2" btnText="unlock" unlocker="techPlasmaStorage1" />
+                        <buildable id="techEmc1" btnText="unlock" unlocker="techEmc0" />
+                        <buildable id="techMeteorite0" btnText="unlock" unlocker="techEmc1" />
+                        <buildable id="techMeteorite1" btnText="unlock" unlocker="wonderMeteorite1" />
+                        <buildable id="techMeteorite2" btnText="unlock" unlocker="techMeteorite1" />
+                        <buildable id="techDyson1" btnText="unlock" unlocker="techDyson0" />
+                        <buildable id="techDyson2" btnText="unlock" unlocker="techDyson1" />
+                        <buildable id="techNanoswarm1" btnText="unlock" unlocker="techNanoswarm0" />
+                        <buildable id="upgradeTier2" btnText="upgrade" unlocker="techTier2" />
+                        <buildable id="upgradeEnergy1" btnText="upgrade" unlocker="techEnergy1" />
+                        <buildable id="upgradeEnergy2" btnText="upgrade" unlocker="techEnergy2" />
                         <buildable id="boostProduction" btnText="boost" />
                         <buildable id="boostScience" btnText="boost" />
                         <buildable id="boostEnergy" btnText="boost" />
@@ -467,14 +467,14 @@
                     <pane id="fuelPane" icon="fuel.png" :descs="['fuelPane_desc']">
                         <resource id="fuel" />
                         <buildable id="fuelT1" btnText="build" />
-                        <buildable id="fuelT2" btnText="build" />
-                        <buildable id="fuelT3" btnText="build" />
+                        <buildable id="fuelT2" btnText="build" unlocker="techFuel2" />
+                        <buildable id="fuelT3" btnText="build" unlocker="techFuel3" />
                     </pane>
                     
                     <!-- ROCKET PANE -->
                     <pane id="rocketPane" icon="rocket.png" :descs="['rocketPane_desc']">
                         <buildable id="rocket1" btnText="build" />
-                        <buildable id="rocket2" btnText="launch" />
+                        <buildable id="rocket2" btnText="launch" unlocker="rocket1" />
                     </pane>
                     
                     <!-- INNER SOLAR SYSTEM PANE -->
@@ -484,7 +484,7 @@
                         <buildable id="venus" btnText="explore" />
                         <buildable id="mars" btnText="explore" />
                         <buildable id="asteroid" btnText="explore" />
-                        <buildable id="wonderStation" btnText="explore" />
+                        <buildable id="wonderStation" btnText="explore" unlocker="asteroid" />
                     </pane>
 
                     <!-- OUTER SOLAR SYSTEM PANE -->
@@ -494,8 +494,8 @@
                         <buildable id="uranus" btnText="explore" />
                         <buildable id="neptune" btnText="explore" />
                         <buildable id="pluto" btnText="explore" />
-                        <buildable id="solCenter0" btnText="explore" />
-                        <buildable id="solCenter1" btnText="explore" />
+                        <buildable id="solCenter0" btnText="explore" unlocker="pluto" />
+                        <buildable id="solCenter1" btnText="explore" unlocker="solCenter0" />
                     </pane>
 
                     <!-- WONDER STATION PANE -->
@@ -674,6 +674,15 @@
                             <div class="col-12">
                                 <div class="heading-6">{{ $t('dmSwarms') }} <span class="text-light">{{ getDMSwarms }}</span></div>
                                 <div class="small"><span>{{ $t('dmSwarms_desc') }}</span></div>
+                            </div>
+                        </card>
+                        <card id="rebirth" :descs="['rebirth_desc']">
+                            <div class="col-12">
+                                <div class="row g-1 justify-content-end">
+                                    <div class="col-auto">
+                                        <button class="btn btn-warning" @click="rebirthModal.show()">{{ $t('rebirth') }}</button>
+                                    </div>
+                                </div>
                             </div>
                         </card>
                     </pane>
@@ -978,7 +987,7 @@
                             <div class="row g-2">
                                 <div class="col small">
                                     <div class="text-normal">{{ $t('threat') }}</div>
-                                    <div class="text-light">{{ $t('threat') }}</div>
+                                    <div class="text-light">{{ $t('threat' + getThreat(activeStar)) }}</div>
                                 </div>
                                 <div class="col small">
                                     <div class="text-normal">{{ $t('power') }}</div>
@@ -1009,23 +1018,21 @@
                                 </div>
                                 <div class="col-auto">
                                     <div class="btn-group">
-                                        <button class="btn p-1" @click="setActiveShip('shipT1', 1)">
-                                            <i class="fas fa-fw fa-plus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:'shipT1', count:1 })">
+                                            +
                                         </button>
-                                        <button class="btn p-1" @click="setActiveShip('shipT1', 'max')">
-                                            <i class="fas fa-fw fa-plus small"></i>
-                                            <i class="fas fa-fw fa-plus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:'shipT1', count:'max' })">
+                                            ++
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-auto">
                                     <div class="btn-group">
-                                        <button class="btn p-1" @click="setActiveShip('shipT1', -1)">
-                                            <i class="fas fa-fw fa-minus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:'shipT1', count:-1 })">
+                                            -
                                         </button>
-                                        <button class="btn p-1" @click="setActiveShip('shipT1', 'none')">
-                                            <i class="fas fa-fw fa-minus small"></i>
-                                            <i class="fas fa-fw fa-minus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:'shipT1', count:'none' })">
+                                            --
                                         </button>
                                     </div>
                                 </div>
@@ -1034,7 +1041,7 @@
                         <div class="col-12">
                             <div class="row g-2 justify-content-end">
                                 <div class="col-auto">
-                                    <button class="btn" @click="spyStar(activeStar)" data-bs-dismiss="modal">
+                                    <button class="btn" @click="onSpy()" data-bs-dismiss="modal">
                                         {{ $t('spy') }}
                                     </button>
                                 </div>
@@ -1062,7 +1069,7 @@
                             <div class="row g-2">
                                 <div class="col small">
                                     <div class="text-normal">{{ $t('threat') }}</div>
-                                    <div class="text-light">{{ $t('threat') }}</div>
+                                    <div class="text-light">{{ $t('threat' + getThreat(activeStar)) }}</div>
                                 </div>
                                 <div class="col small">
                                     <div class="text-normal">{{ $t('power') }}</div>
@@ -1078,7 +1085,7 @@
                                 </div>
                                 <div class="col small">
                                     <div class="text-normal">{{ $t('chance') }}</div>
-                                    <div class="text-light">{{ numeralFormat(getInvadeChance(activeStar), '0') }}%</div>
+                                    <div class="text-light">{{ getInvadeChance(activeStar) * 100 }}%</div>
                                 </div>
                             </div>
                         </div>
@@ -1093,23 +1100,21 @@
                                 </div>
                                 <div class="col-auto">
                                     <div class="btn-group">
-                                        <button class="btn p-1" @click="setActiveShip(shipId, 1)">
-                                            <i class="fas fa-fw fa-plus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:shipId, count:1 })">
+                                            +
                                         </button>
-                                        <button class="btn p-1" @click="setActiveShip(shipId, 'max')">
-                                            <i class="fas fa-fw fa-plus small"></i>
-                                            <i class="fas fa-fw fa-plus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:shipId, count:'max' })">
+                                            ++
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-auto">
                                     <div class="btn-group">
-                                        <button class="btn p-1" @click="setActiveShip(shipId, -1)">
-                                            <i class="fas fa-fw fa-minus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:shipId, count:-1 })">
+                                            -
                                         </button>
-                                        <button class="btn p-1" @click="setActiveShip(shipId, 'none')">
-                                            <i class="fas fa-fw fa-minus small"></i>
-                                            <i class="fas fa-fw fa-minus small"></i>
+                                        <button class="btn p-1" @click="setActiveShip({ id:shipId, count:'none' })">
+                                            --
                                         </button>
                                     </div>
                                 </div>
@@ -1118,7 +1123,7 @@
                         <div class="col-12">
                             <div class="row g-2 justify-content-end">
                                 <div class="col-auto">
-                                    <button class="btn" @click="invadeStar(activeStar)" data-bs-dismiss="modal">
+                                    <button class="btn" @click="onInvade()" data-bs-dismiss="modal">
                                         {{ $t('invade') }}
                                     </button>
                                 </div>
@@ -1145,7 +1150,7 @@
                         <div class="col-12">
                             <div class="row g-2 justify-content-end">
                                 <div class="col-auto">
-                                    <button class="btn" @click="absorbStar(activeStar)" data-bs-dismiss="modal">
+                                    <button class="btn" @click="onAbsorb()" data-bs-dismiss="modal">
                                         {{ $t('absorb') }}
                                     </button>
                                 </div>
@@ -1156,6 +1161,28 @@
             </div>
         </div>
     </div>
+    
+    <!-- REBIRTH MODAL -->
+    <div v-if="loaded" id="rebirthModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('rebirth') }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <span class="text-normal">{{ $t('rebirth_confirm') }}</span>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-warning" @click="onRebirth()">{{ $t('rebirth') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 <script>
@@ -1175,7 +1202,7 @@ import Fleet from './components/Fleet.vue'
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
-import { Tooltip, Toast } from 'bootstrap'
+import { Tooltip, Toast, Modal } from 'bootstrap'
 
 export default {
     components: {
@@ -1213,18 +1240,25 @@ export default {
             
             compressed: null,
             newCompanyName: null,
+            
+            activeStar: 'star201',
+            spyModal: null,
+            invadeModal: null,
+            absorbModal: null,
+            
+            rebirthModal: null,
         }
     },
     computed: {
         ...mapState([
         
-            'data', 'companyName', 'locale', 'activePane', 'activeStar', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
+            'data', 'companyName', 'locale', 'activePane', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
         ]),
         ...mapGetters([
         
             'isNotif', 'hasNotif',
-            'getSpyChance', 'getInvadeChance', 'getStarPower', 'getStarDefense', 'getStarSpeed',
+            'getThreat', 'getSpyChance', 'getInvadeChance', 'getStarPower', 'getStarDefense', 'getStarSpeed',
             'getDMWonders', 'getDMSpheres', 'getDMResearches', 'getDMRank', 'getDMSwarms', 'getPotentialDM',
         ]),
     },
@@ -1240,6 +1274,8 @@ export default {
         
             'initialize', 'load',
             'computeProdValues', 'produceResources', 'updateTimers', 'checkBoosts', 'updateAchievements', 'save',
+            'setActiveShip', 'spy', 'invade', 'absorb',
+            'rebirth',
         ]),
         start() {
 
@@ -1255,30 +1291,42 @@ export default {
             
             this.$nextTick(() => {
             
-                let toastNode = null
+                let element = null
                 
-                toastNode = document.getElementById('toastAutoSave')
-                this.toastAutoSave = new Toast(toastNode)
+                element = document.getElementById('toastAutoSave')
+                this.toastAutoSave = new Toast(element)
                 
-                toastNode = document.getElementById('toastAchievement')
-                this.toastAchievement = new Toast(toastNode)
+                element = document.getElementById('toastAchievement')
+                this.toastAchievement = new Toast(element)
                 
-                toastNode = document.getElementById('toastSpySuccess')
-                this.toastSpySuccess = new Toast(toastNode)
+                element = document.getElementById('toastSpySuccess')
+                this.toastSpySuccess = new Toast(element)
                 
-                toastNode = document.getElementById('toastSpyFailed')
-                this.toastSpyFailed = new Toast(toastNode)
+                element = document.getElementById('toastSpyFailed')
+                this.toastSpyFailed = new Toast(element)
                 
-                toastNode = document.getElementById('toastInvadeSuccess')
-                this.toastInvadeSuccess = new Toast(toastNode)
+                element = document.getElementById('toastInvadeSuccess')
+                this.toastInvadeSuccess = new Toast(element)
                 
-                toastNode = document.getElementById('toastInvadeFailed')
-                this.toastInvadeFailed = new Toast(toastNode)
+                element = document.getElementById('toastInvadeFailed')
+                this.toastInvadeFailed = new Toast(element)
                 
-                toastNode = document.getElementById('toastAbsorbSuccess')
-                this.toastAbsorbSuccess = new Toast(toastNode)
+                element = document.getElementById('toastAbsorbSuccess')
+                this.toastAbsorbSuccess = new Toast(element)
             
                 Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(node => this.tooltips.push(new Tooltip(node)))
+                
+                element = document.getElementById('spyModal')
+                this.spyModal = new Modal(element)
+
+                element = document.getElementById('invadeModal')
+                this.invadeModal = new Modal(element)
+
+                element = document.getElementById('absorbModal')
+                this.absorbModal = new Modal(element)
+                
+                element = document.getElementById('rebirthModal')
+                this.rebirthModal = new Modal(element)
             })
         },
         fastUpdate() {
@@ -1318,7 +1366,6 @@ export default {
             if (!this.compressed || !this.compressed.trim()) return console.warn('No data to import')
             if (this.compressed.length % 4 !== 0) return console.warn('Data corrupted')
 
-            console.log(this.compressed)
             let text = LZString.decompressFromBase64(this.compressed)
             if (!text) return console.warn('Import failed')
             
@@ -1326,6 +1373,34 @@ export default {
             localStorage.setItem('ngsave', JSON.stringify(impdata))
 
             window.location.reload()
+        },
+        onSpy() {
+        
+            this.spy(this.activeStar).then(result => {
+                if (result == true) this.toastSpySuccess.show()
+                else this.toastSpyFailed.show()
+            })
+        },
+        onInvade() {
+        
+            this.invade(this.activeStar).then(result => {
+                if (result == true) this.toastInvadeSuccess.show()
+                else this.toastInvadeFailed.show()
+            })
+        },
+        onAbsorb() {
+        
+            this.absorb(this.activeStar).then(result => {
+                if (result == true) this.toastAbsorbSuccess.show()
+            })
+        },
+        onRebirth() {
+        
+            this.loaded = true
+            
+            this.rebirth().then(result => {
+                if (result == true) window.location.reload()
+            })
         },
     },
     beforeUnmount() {
@@ -1339,6 +1414,12 @@ export default {
         delete this.toastAbsorbSuccess
         
         delete this.tooltips
+        
+        delete this.spyModal
+        delete this.invadeModal
+        delete this.absorbModal
+        
+        delete this.rebirthModal
         
         clearInterval(this.fastInterval)
         clearInterval(this.slowInterval)

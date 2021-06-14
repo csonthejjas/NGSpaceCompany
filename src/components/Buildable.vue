@@ -82,16 +82,16 @@
                             
                                 <div v-if="data[id].stats" class="col-12">
                                     <div class="heading-6">{{ $t('stats') }}</div>
-                                    <div class="row g-1">
-                                        <div class="col-4">
+                                    <div class="row g-1 gx-3">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('power') }}</span>
                                             <span class="ms-2 text-light">{{ numeralFormat(data[id].stats.power, '0.[0]a') }}</span>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('defense') }}</span>
                                             <span class="ms-2 text-light">{{ numeralFormat(data[id].stats.defense, '0.[0]a') }}</span>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('speed') }}</span>
                                             <span class="ms-2 text-light">{{ numeralFormat(data[id].stats.speed, '0.[0]a') }}</span>
                                         </div>
@@ -124,8 +124,8 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="output.id == 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.02 * data['boostScience'].count)), '0.[0]a') }}</small>
-                                            <small v-if="output.id != 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count)), '0.[0]a') }}</small>
+                                            <small v-if="output.id == 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.01 * data['darkmatter'].count * data['boostDarkmatter'].count) + (0.02 * data['boostScience'].count)), '0.[0]a') }}</small>
+                                            <small v-if="output.id != 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.01 * data['darkmatter'].count * data['boostDarkmatter'].count)), '0.[0]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>

@@ -72,16 +72,16 @@
                                 
                                 <div v-if="data[id].count > 0" class="col-12">
                                     <div class="heading-6">{{ $t('stats') }}</div>
-                                    <div class="row g-1">
-                                        <div class="col-4">
+                                    <div class="row g-1 gx-3">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('power') }}</span>
                                             <span class="ms-2 text-light">{{ getStarPower(id) }}</span>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('defense') }}</span>
                                             <span class="ms-2 text-light">{{ getStarDefense(id) }}</span>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-auto">
                                             <span class="small text-normal">{{ $t('speed') }}</span>
                                             <span class="ms-2 text-light">{{ getStarSpeed(id) }}</span>
                                         </div>
@@ -91,9 +91,9 @@
                                 <div class="col-12">
                                     <div class="row gx-1 gy-3 justify-content-end">
                                         <div v-if="data[id].count == 0" class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t('explore') }}</button></div>
-                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn">{{ $t('spy') }}</button></div>
-                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn">{{ $t('invade') }}</button></div>
-                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn">{{ $t('absorb') }}</button></div>
+                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn" @click="$root.activeStar = id; $root.spyModal.show();">{{ $t('spy') }}</button></div>
+                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn" @click="$root.activeStar = id; $root.invadeModal.show();">{{ $t('invade') }}</button></div>
+                                        <div v-if="data[id].count > 0" class="col-auto"><button class="btn" @click="$root.activeStar = id; $root.absorbModal.show();">{{ $t('absorb') }}</button></div>
                                     </div>
                                 </div>
                                 

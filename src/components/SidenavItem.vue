@@ -23,7 +23,7 @@
                     <small v-if="potential >= 0" class="text-normal ms-1">({{ potential }})</small>
                 </div>
                 <div v-if="opinion != null" class="col-auto text-end">
-                    <small :class="{ 'text-light':opinion > 0, 'text-normal':opinion <= 0 }">{{ opinion }}</small>
+                    <small :class="{ 'text-light':opinion > 0, 'text-normal':opinion == 0, 'text-danger':opinion < 0 }">{{ opinion }}</small>
                 </div>
                 <div v-if="done" class="col-auto text-end small">
                     <small class="text-success text-uppercase">{{ $t(doneText) }}</small>

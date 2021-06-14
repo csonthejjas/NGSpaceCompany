@@ -857,10 +857,9 @@
     "dmRank_desc": "For every achievement rank attained, you will get 2 dark matter. Due to the easy difficulty in the first few achievement ranks, this will be your primary source of dark matter early in a run.",
     "dmSwarms": "Swarms",
     "dmSwarms_desc": "One of the more complex systems, your Dark Matter gained from swarms is judged on an old mathematical sequence: The triangle numbers. You will get 1 dark matter for passing each triangular number of swarms. For example: 1,3,6,10,15,21...",
-    "respec": "Respec",
-    "respec_desc": "When you have made a mistake or want to change your upgrades, you can respec and refund every upgrade for dark matter. Unfortunately, this huge amount of power can only be unleashed a finite number of times. The Overlord graciously gives you 3 free chances at redemption, but the rest will have to be earned through rebirth (1 extra every 3 times). NB: You will lose machines gained with these ugprades, including all T5 machines. You will also divide your storage by 128 if you have the starting storage. (6400/50 = 128).",
     "rebirth": "Rebirth",
     "rebirth_desc": "Stepping forth into a new life is a great undertaking and not something to be done on a whim. Once certain, you may start afresh, maintaining the knowledge and experience you have gained from your previous life and renew yourself, achieving greater and faster than before. You will keep any unspent dark matter, as well as your upgrades. Taking this step is a huge leap in not just this life, but every single rebirth you ever have. Once activated, you will never feel this powerless again. NB: You cannot rebirth without a sphere, even on second runs. NB: You will keep all upgrades purchased in your previous life.",
+    "rebirth_confirm": "Are you sure? This is non-reversible after you reset and save.",
     
     "stargazeCarnelianPane": "Carnelian Resistance",
     "stargazeCarnelianPane_desc": "A ruthless faction with a fierce anger towards the ones in power, most notable, the Prasnian Empire. They are incessant in their opposition and focus their whole force towards attacking their enemies. Because of this, what they offer comprises mostly of upgrades tending towards a more active gameplay.",
