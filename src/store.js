@@ -31,6 +31,7 @@ export const store = createStore({
         
             /*----------------------------------------------------------------*/
             data: {},
+            version: '1.0',
             /*----------------------------------------------------------------*/
             stars: [],
             ships: [],
@@ -56,6 +57,7 @@ export const store = createStore({
             companyName: 'NG Space',
             notifications: [],
             newAchievement: false,
+            notifAutoSave: true,
             /*----------------------------------------------------------------*/
             fleet: { power:0, defense:0, speed:0 },
             activeFleet: { power:0, defense:0, speed:0 },
@@ -111,6 +113,8 @@ export const store = createStore({
                 if (damage > starDamage) return Math.min(1, Math.round((damage / starDamage) - 0.5))
                 else if (damage != 0) return Math.min(1, Math.round(Math.max(0, 1.5 - (starDamage / damage))))
             }
+            
+            return 0
         },
         /*--------------------------------------------------------------------*/
         getDMWonders: (state) => {
@@ -191,6 +195,8 @@ export const store = createStore({
         /*--------------------------------------------------------------------*/
         setLocale(state, payload) { state.locale = payload },
         setCompanyName(state, payload) { state.companyName = payload },
+        setAutoSaveInterval(state, payload) { state.autoSaveInterval = payload * 1000 },
+        setNotifAutoSave(state, payload) { state.notifAutoSave = payload },
         /*--------------------------------------------------------------------*/
         setActivePane(state, payload) {
 
@@ -1281,13 +1287,14 @@ export const store = createStore({
         load({ state, commit, dispatch }) {
         
             var data = JSON.parse(localStorage.getItem('ngsave'))
-            if (data && data !== null && data.version && data.version == 'test.0.1') {
+            if (data && data !== null && data.version && data.version == state.version) {
             
                 state.locale = data.locale || 'en'
                 state.activePane = data.activePane || 'metalPane'
                 state.lastUpdateTime = data.lastUpdateTime || new Date().getTime()
                 state.autoSaveInterval = data.autoSaveInterval || 30 * 1000
                 state.companyName = data.companyName || 'NG Space'
+                state.notifAutoSave = data.notifAutoSave
                 
                 for (let i in data.entries) {
                     let item = data.entries[i]
@@ -1330,12 +1337,13 @@ export const store = createStore({
         
             let saveddata = {
                 
-                version: 'test.0.1',
+                version: state.version,
                 locale: state.locale,
                 activePane: state.activePane,
                 lastUpdateTime: state.lastUpdateTime,
                 autoSaveInterval: state.autoSaveInterval,
                 companyName: state.companyName,
+                notifAutoSave: state.notifAutoSave,
                 
                 entries: {},
             }
@@ -1374,6 +1382,13 @@ export const store = createStore({
             if (item.unlocked && item.count > 0) { boost += 0.01 * state.data['darkmatter'].count }
             item = state.data['boostCapital']
             if (item.unlocked && item.count > 0) { state.resources.forEach(res => { if ('storage' in res && res.count >= res.storage) boost += 0.05 }) }
+            
+            state.stars.forEach(item => {
+                if (item.status == 'owned') {
+                    temp[item.resource1].boost += 0.25
+                    temp[item.resource2].boost += 0.25
+                }
+            })
 
             state.producers.forEach(item => {
                 let canProduce = true
@@ -1403,9 +1418,16 @@ export const store = createStore({
                         item.outputs.forEach(output => {
                             let tempBoost = boost
                             if (item.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
-                            temp[output.id].prod += (output.count * item.active) * (1 + tempBoost)
+                            temp[output.id].prod += (output.count * item.active) * (1 + tempBoost) * (1 + temp[output.id].boost)
                         })
                     }
+                }
+                if ('outputs' in item) {
+                    item.outputs.forEach(output => {
+                        let tempBoost = boost
+                        if (item.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
+                        output.boost = tempBoost + temp[output.id].boost
+                    })
                 }
             })
 
@@ -1413,13 +1435,6 @@ export const store = createStore({
             if (item.unlocked && item.count > 0 && item.resource != null) { temp[item.resource].prod *= Math.pow(1.0718, item.count) }
 
             state.resources.forEach(item => { temp[item.id].boost = 1.0 })
-            
-            state.stars.forEach(item => {
-                if (item.status == 'owned') {
-                    temp[item.resource1].boost += 0.25
-                    temp[item.resource2].boost += 0.25
-                }
-            })
 
             state.resources.forEach(item => {
                 commit('setDataProd', { id:item.id, prod:temp[item.id].prod })
@@ -1540,10 +1555,6 @@ export const store = createStore({
                     let item = state.resources[i]
                     if ('gain' in item) {
                         item.gain = 20
-                        if ('baseCosts' in item) {
-                            item.baseCosts.forEach(cost => { cost.count *= 20 })
-                            commit('computeCosts', item.id)
-                        }
                     }
                 }
             }
@@ -1845,6 +1856,8 @@ export const store = createStore({
                 }
                 
                 let roll = Math.random()
+                        console.log(chance)
+                        console.log(roll)
                 if (chance >= roll) {
                 
                     result = true
@@ -1873,7 +1886,7 @@ export const store = createStore({
                 }
                 else {
                 
-                    for (let i in this.ships) {
+                    for (let i in state.ships) {
                         let item = state.ships[i]
                         item.count -= item.active
                         item.active = 0
@@ -1911,12 +1924,12 @@ export const store = createStore({
             
             let exludedList = [
                 'darkmatter',
-                'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
-                'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'techPlasma4', 'techPlasmaStorage3',
-                'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost', 
-                'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
-                'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
-                'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'
+                'carnelian', 'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
+                'prasnian', 'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'techPlasma4', 'techPlasmaStorage3',
+                'hyacinite', 'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost', 
+                'kitrinos', 'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
+                'moviton', 'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
+                'overlord', 'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'
             ]
             
             for (let i in state.data) {

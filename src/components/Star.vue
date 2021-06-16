@@ -17,7 +17,41 @@
                 </div>
                 
                 <div v-if="data[id].unlocked && data[id].status == 'owned'" class="card card-body">
-                    <span class="h6 text-light mb-0">{{ $t(data[id].id) }}</span>
+                    <div class="row g-1">
+                        <div class="col-12">
+                            <span class="h6 text-light mb-0">{{ $t(data[id].id) }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <div class="row gy-2 gx-3">
+                                <div class="col-auto text-light"> 
+                                    <div class="row g-1 align-items-center">
+                                        <div class="col-auto d-flex align-items-center">
+                                            <img :src="require(`../assets/interface/${data[id].resource1}.png`)" width="12" height="12" />
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="text-normal">{{ $t(data[id].resource1) }}</span>
+                                        </div>
+                                        <div class="col-auto small">
+                                            <span class="text-success">+25%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto text-light">
+                                    <div class="row g-1 align-items-center">
+                                        <div class="col-auto d-flex align-items-center">
+                                            <img :src="require(`../assets/interface/${data[id].resource2}.png`)" width="12" height="12" />
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="text-normal">{{ $t(data[id].resource2) }}</span>
+                                        </div>
+                                        <div class="col-auto small">
+                                            <span class="text-success">+25%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div v-if="data[id].unlocked && data[id].status != 'owned'" class="card card-body">
@@ -39,14 +73,14 @@
                                     </div>
                                 </div>
                                 <div class="col-12 small">
-                                    <div class="row g-2">
+                                    <div class="row gy-2 gx-3">
                                         <div class="col-auto text-light"> 
                                             <div class="row g-1">
                                                 <div class="col-auto d-flex align-items-center">
                                                     <img :src="require(`../assets/interface/${data[id].resource1}.png`)" width="12" height="12" />
                                                 </div>
                                                 <div class="col-auto">
-                                                    <span class="text-light">{{ $t(data[id].resource1) }}</span>
+                                                    <span class="text-normal">{{ $t(data[id].resource1) }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -56,7 +90,7 @@
                                                     <img :src="require(`../assets/interface/${data[id].resource2}.png`)" width="12" height="12" />
                                                 </div>
                                                 <div class="col-auto">
-                                                    <span class="text-light">{{ $t(data[id].resource2) }}</span>
+                                                    <span class="text-normal">{{ $t(data[id].resource2) }}</span>
                                                 </div>
                                             </div>
                                         </div>

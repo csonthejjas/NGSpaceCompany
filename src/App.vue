@@ -125,7 +125,7 @@
                 </div>
                 
                 <div class="col-auto ms-auto">
-                    <a href="https://discord.gg/3UkgeeT9CV" target="_blank" data-bs-toggle="tooltip" title="Discord">
+                    <a href="https://discord.gg/3UkgeeT9CV" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Discord">
                         <img :src="require('./assets/interface/discord.png')" width="16" height="16" />
                     </a>
                 </div>
@@ -135,7 +135,7 @@
                     <span class="ms-1 text-light">{{ $t('donatingPane') }}</span>
                 </div>
                 
-                <div class="col-auto cursor-hover position-relative" @click="setActivePane('achievementPane')" data-bs-toggle="tooltip" :title="$t('achievementPane')">
+                <div class="col-auto cursor-hover position-relative" @click="setActivePane('achievementPane')" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('achievementPane')">
                     <div v-if="isNotif('achievementPane')" class="position-absolute top-0 end-0" style="line-height:1">
                         <i class="fas fa-fw fa-certificate text-success small"></i>
                     </div>
@@ -191,11 +191,7 @@
                 
             </top-header>
             <inner-content data-simplebar>
-                <div class="tab-content">
-                    
-                    <div class="alert alert-danger">
-                        <small class="text-danger">You are playing a debugging version : game speed is increased by 100, all functionnalities are not implemented, bug could happen, data could be lost, etc ...</small>
-                    </div>
+                <div class="tab-content" style="padding-bottom: 65px;">
                     
                     <!-- ENERGY PANE -->
                     <pane id="energyPane" icon="energy.png" :descs="['energyPane_desc']">
@@ -478,7 +474,7 @@
                     </pane>
                     
                     <!-- INNER SOLAR SYSTEM PANE -->
-                    <pane id="innerSolarSystemPane" icon="innerSolarSystem.png" :descs="['innerSolarSystemPane_desc']">
+                    <pane id="innerSolarSystemPane" icon="innerSolarSystem.png">
                         <buildable id="moon" btnText="explore" />
                         <buildable id="mercury" btnText="explore" />
                         <buildable id="venus" btnText="explore" />
@@ -488,7 +484,7 @@
                     </pane>
 
                     <!-- OUTER SOLAR SYSTEM PANE -->
-                    <pane id="outerSolarSystemPane" icon="outerSolarSystem.png" :descs="['outerSolarSystemPane_desc']">
+                    <pane id="outerSolarSystemPane" icon="outerSolarSystem.png">
                         <buildable id="jupiter" btnText="explore" />
                         <buildable id="saturn" btnText="explore" />
                         <buildable id="uranus" btnText="explore" />
@@ -507,7 +503,7 @@
                     </pane>
 
                     <!-- FLOOR #1 PANE -->
-                    <pane id="floor1Pane" icon="floor1.png" :descs="['floor1Pane_desc']">
+                    <pane id="floor1Pane" icon="floor1.png">
                         <buildable id="wonderPrecious1" btnText="activate" />
                         <buildable id="wonderEnergetic1" btnText="activate" />
                         <buildable id="wonderTechnological1" btnText="activate" />
@@ -515,7 +511,7 @@
                     </pane>
 
                     <!-- FLOOR #2 PANE -->
-                    <pane id="floor2Pane" icon="floor2.png" :descs="['floor2Pane_desc']">
+                    <pane id="floor2Pane" icon="floor2.png">
                         <buildable id="wonderComm" btnText="activate" />
                         <buildable id="wonderSpaceship" btnText="activate" />
                         <buildable id="wonderAntimatter" btnText="activate" />
@@ -523,7 +519,7 @@
                     </pane>
 
                     <!-- FLOOR #3 PANE -->
-                    <pane id="floor3Pane" icon="floor3.png" :descs="['floor3Pane_desc']">
+                    <pane id="floor3Pane" icon="floor3.png">
                         <buildable id="wonderStargate" btnText="activate" />
                     </pane>
                     
@@ -568,7 +564,7 @@
                     </pane>
                     
                     <!-- NANOSWARM PANE -->
-                    <pane id="nanoswarmPane" icon="nanoswarm.png" :descs="['nanoswarmPane_desc']">
+                    <pane id="nanoswarmPane" icon="nanoswarm.png">
                         <buildable id="nanoswarm" btnText="build" />
                     </pane>
                     
@@ -787,7 +783,7 @@
                                                 <small class="text-normal">/{{ ach.brackets.length }}</small>
                                             </div>
                                         </div>
-                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('collect') + ' ' + numeralFormat(ach.brackets[ach.count], '0a') + ' ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
+                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('collect') + ' <span class=\'text-uppercase\'>' + numeralFormat(ach.brackets[ach.count], '0a') + '</span> ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
                                             <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
                                             <div class="text-center small" style="line-height:1;">
                                                 <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
@@ -865,6 +861,27 @@
                                 <span>{{ $t('importExport_desc') }}</span>
                             </div>
                         </card>
+                        <card id="saving">
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <small>{{ $t('autoSavingDuration') }}</small>
+                                </div>
+                                <div>
+                                    <select class="form-control" v-model="autoSavingDuration" @change="setAutoSaveInterval(autoSavingDuration)">
+                                        <option value="30">{{ $t('30seconds') }}</option>
+                                        <option value="120">{{ $t('2minutes') }}</option>
+                                        <option value="600">{{ $t('10minutes') }}</option>
+                                        <option value="-1">{{ $t('off') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkToastAutoSave" v-model="showToastAutoSave" @click="setNotifAutoSave(!showToastAutoSave)" />
+                                    <label class="form-check-label small" for="checkToastAutoSave">{{ $t('showToastAutoSave') }}</label>
+                                </div>
+                            </div>
+                        </card>
                     </pane>
                     
                     <!-- ABOUT PANE -->
@@ -899,6 +916,17 @@
                                         <a href="https://discord.gg/hgRUjVp" target="_blank">https://discord.gg/hgRUjVp</a>
                                     </li>
                                 </ul>
+                            </div>
+                        </card>
+                        <card id="about2">
+                            <div class="col-12">
+                                <div class="row gy-1 gx-3">
+                                    <div class="col-auto"><small class="text-timer">darklord192</small></div>
+                                    <div class="col-auto"><small class="text-timer">freeed</small></div>
+                                    <div class="col-auto"><small class="text-timer">Daffson</small></div>
+                                    <div class="col-auto"><small class="text-timer">PeterO</small></div>
+                                    <div class="col-auto"><small class="text-timer">Tamash</small></div>
+                                </div>
                             </div>
                         </card>
                         <card id="about3">
@@ -1238,8 +1266,11 @@ export default {
             toastInvadeFailed: null,
             toastAbsorbSuccess: null,
             
+            showToastAutoSave: true,
+            
             compressed: null,
             newCompanyName: null,
+            autoSavingDuration: null,
             
             activeStar: 'star201',
             spyModal: null,
@@ -1254,6 +1285,7 @@ export default {
         
             'data', 'companyName', 'locale', 'activePane', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
+            'notifAutoSave',
         ]),
         ...mapGetters([
         
@@ -1268,7 +1300,8 @@ export default {
     methods: {
         ...mapMutations([
         
-            'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName',
+            'setLocale', 'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName', 'setAutoSaveInterval',
+            'setNotifAutoSave',
         ]),
         ...mapActions([
         
@@ -1277,16 +1310,25 @@ export default {
             'setActiveShip', 'spy', 'invade', 'absorb',
             'rebirth',
         ]),
+        changeLocale(lang) {
+        
+            if (this.$i18n.locale !== lang) {
+                this.setLocale(lang)
+                this.$i18n.locale = lang
+            }
+        },
         start() {
 
             this.initialize()
             this.load()
             
+            this.changeLocale(this.locale)
             this.newCompanyName = this.companyName
+            this.autoSavingDuration = this.autoSaveInterval / 1000
             
             this.fastInterval = setInterval(() => { this.fastUpdate() }, 100)
             this.slowInterval = setInterval(() => { this.slowUpdate() }, 1000)
-
+            
             this.loaded = true
             
             this.$nextTick(() => {
@@ -1295,6 +1337,7 @@ export default {
                 
                 element = document.getElementById('toastAutoSave')
                 this.toastAutoSave = new Toast(element)
+                this.showToastAutoSave = this.notifAutoSave 
                 
                 element = document.getElementById('toastAchievement')
                 this.toastAchievement = new Toast(element)
@@ -1337,8 +1380,6 @@ export default {
             this.setLastUpdateTime(currentTime)
             this.setTimeSinceAutoSave(this.timeSinceAutoSave + delta)
             
-            delta *= 100
-            
             this.computeProdValues()
             this.produceResources(delta)
             this.updateTimers()
@@ -1350,10 +1391,11 @@ export default {
             if (this.newAchievement == true) this.toastAchievement.show()
             
             let timeLeft = this.autoSaveInterval - (this.timeSinceAutoSave * 1000)
+            if (this.autoSaveInterval < 0) timeLeft = 1000
             if (timeLeft < 100) {
                 this.save()
                 this.setTimeSinceAutoSave(1)
-                this.toastAutoSave.show()
+                if (this.showToastAutoSave) this.toastAutoSave.show()
             }
         },
         exportData() {

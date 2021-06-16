@@ -124,8 +124,7 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="output.id == 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.01 * data['darkmatter'].count * data['boostDarkmatter'].count) + (0.02 * data['boostScience'].count)), '0.[0]a') }}</small>
-                                            <small v-if="output.id != 'science'" class="text-success">+{{ numeralFormat(output.count * (1 + (0.01 * data['boostProduction'].count) + (0.01 * data['darkmatter'].count * data['boostDarkmatter'].count)), '0.[0]a') }}</small>
+                                            <small class="text-success text-uppercase">+{{ numeralFormat(output.count * (1 + output.boost), '0.[00]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
@@ -137,8 +136,8 @@
                                             <small class="text-light">{{ $t(input.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="input.id == 'energy'" class="text-warning">-{{ numeralFormat(input.count * (1 - (0.01 * data['boostEnergy'].count)), '0.[0]a') }}</small>
-                                            <small v-if="input.id != 'energy'" class="text-warning">-{{ numeralFormat(input.count, '0.[0]a') }}</small>
+                                            <small v-if="input.id == 'energy'" class="text-warning text-uppercase">-{{ numeralFormat(input.count * (1 - (0.01 * data['boostEnergy'].count)), '0.[00]a') }}</small>
+                                            <small v-if="input.id != 'energy'" class="text-warning text-uppercase">-{{ numeralFormat(input.count, '0.[00]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
@@ -188,6 +187,11 @@ export default {
     props: [ 'id', 'btnText', 'unlocker' ],
     components: {
         'costs': Costs,
+    },
+    data() {
+        return {
+            selected: null,
+        }
     },
     computed: mapState([
         'data',

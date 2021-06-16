@@ -1,6 +1,9 @@
 <template>
     <div v-if="costs" class="col-12">
-        <div class="heading-6">{{ $t('costs') }}</div>
+        <div class="heading-6">
+            {{ $t('costs') }}
+            <span v-if="mod && mod > 1" class="ms-2">(<span class="text-lowercase">x</span>{{ mod }})</span>
+        </div>
         <div v-for="cost in costs" :key="cost.id" class="row g-1">
             <div class="col-auto d-flex align-items-center">
                 <img :src="require(`../assets/interface/${cost.id}.png`)" width="12" height="12" />
@@ -9,8 +12,8 @@
                 <small class="text-light">{{ $t(cost.id) }}</small>
             </div>
             <div class="col-auto">
-                <small v-if="!cost.timer || cost.timer > -2" class="text-light">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
-                <small v-if="cost.timer <= -2" class="text-danger">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
+                <small v-if="!cost.timer || cost.timer > -2" class="text-uppercase text-light">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
+                <small v-if="cost.timer <= -2" class="text-uppercase text-danger">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
             </div>
             <div class="col-auto text-end" style="width:75px">
                 <small v-if="(!cost.timer && cost.timer != 0) || cost.timer < 0" class="text-normal">---</small>
@@ -24,6 +27,6 @@
 
 <script>
 export default {
-    props: [ 'costs' ],
+    props: [ 'costs', 'mod' ],
 }
 </script>
