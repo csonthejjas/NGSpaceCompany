@@ -1,6 +1,6 @@
 <template>
-    <div class="col">
-        <div class="row gx-2">
+    <div class="col" role="article">
+        <div class="row gx-2 flex-nowrap">
             <div class="col-auto">
                 <div class="timeline-marker">
                     <i class="fas fa-fw fa-lock-open"></i>

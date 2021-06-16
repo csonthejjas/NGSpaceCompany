@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div class="col" role="article">
         <div class="row gx-2">
             <div class="col-auto">
                 <div class="timeline-marker">

@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div class="col" role="article">
         <div class="row gx-2">
             <div class="col-auto">
                 <div class="timeline-marker">
@@ -28,7 +28,7 @@
                             <span class="h6 text-light mb-0">{{ $t(data[id].id) }}</span>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-fw fa-eye" data-bs-toggle="collapse" :data-bs-target="'#collapse' + data[id].id"></i>
+                            <i class="fas fa-fw fa-eye cursor-hover" data-bs-toggle="collapse" :data-bs-target="'#collapse' + data[id].id"></i>
                         </div>
                         <div :id="'collapse' + data[id].id" class="col-12 collapse small">
                             <span class="text-normal">{{ $t(data[id].id + '_desc') }}</span>

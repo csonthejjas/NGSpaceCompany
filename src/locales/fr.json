@@ -58,6 +58,10 @@
     
     "aboutPane": "A propos",
     "aboutPane_desc": "Ce jeu a été développé par moi, Freddec. C'est un remake du jeu original de Sparticle999. Bienspur j'ai reçu l'autorisation de Sparticle999 pour le faire. J'ai développé ce jeu pour apprendre à coder avec VueJS et pour appréhender les concepts des jeux dit 'incrémental'.",
+    "currentVersion": "Version actuelle",
+    "upToDate": "Version actuelle à jour",
+    "ghLatestVersion": "Dernière version disponible",
+    "update": "Mettre à jour",
     "about1": "Liens",
     "about1_desc1": "Tous les liens NG Space Company.",
     "about1_desc2": "Les liens du jeu d'origine.",

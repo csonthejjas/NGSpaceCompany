@@ -9,11 +9,11 @@
     </div>
 
     <div v-if="loaded" id="gameScreen">
-        <div id="sidebar" :class="{ 'open':sidebarOpen }">
+        <div id="sidebar" :class="{ 'open':sidebarOpen }" role="navigation">
             <top-header>
             
                 <div class="col-auto">
-                    <img :src="require('./assets/whiteLogo.png')" width="42" height="42" />
+                    <img :src="require('./assets/whiteLogo.png')" width="42" height="42" alt="Game logo" />
                 </div>
 
                 <div class="col text-truncate">
@@ -77,7 +77,7 @@
 
                     <sidenav-group id="wondersHeading" :unlocked="data['wonderPrecious0'].unlocked">
                         <sidenav-item id="wonderStationPane" icon="wonderStation.png" :unlocked="data['wonderPrecious0'].unlocked" :done="data['wonderPrecious0'].count > 0 && data['wonderEnergetic0'].count > 0 && data['wonderTechnological0'].count > 0 && data['wonderMeteorite0'].count > 0" doneText="done" />
-                        <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked" :done="data['wonderPrecious1'].count > 0 && data['wonderEnergetic1'].count > 0 && data['wonderTechnological1'].count > 0 && data['wonderMeteorite1'].count > 0" doneText="done" />
+                        <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked || data['wonderEnergetic1'].unlocked || data['wonderTechnological1'].unlocked || data['wonderMeteorite1'].unlocked" :done="data['wonderPrecious1'].count > 0 && data['wonderEnergetic1'].count > 0 && data['wonderTechnological1'].count > 0 && data['wonderMeteorite1'].count > 0" doneText="done" />
                         <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" :done="data['wonderPortal'].count > 0" doneText="done" />
                         <sidenav-item id="floor3Pane" icon="floor3.png" :unlocked="data['wonderStargate'].unlocked" :done="data['wonderStargate'].count > 0" doneText="done" />
                     </sidenav-group>
@@ -190,7 +190,14 @@
                 </div>
                 
             </top-header>
-            <inner-content data-simplebar>
+            <inner-content data-simplebar role="main">
+            
+                <div v-if="ghLatestRelease && ghLatestRelease != currentRelease" class="alert alert-warning text-end" role="alert">
+                    <small>{{ $t('ghLatestVersion') }}</small>
+                    <small class="mx-2">v{{ ghLatestRelease }}</small>
+                    <button class="btn" @click="onRefresh()">{{ $t('update') }}</button>
+                </div>
+                
                 <div class="tab-content" style="padding-bottom: 65px;">
                     
                     <!-- ENERGY PANE -->
@@ -886,32 +893,37 @@
                     
                     <!-- ABOUT PANE -->
                     <pane id="aboutPane" icon="about.png" :descs="['aboutPane_desc']">
+                        <card id="currentVersion">
+                            <div class="col-12 small">
+                                <span class="text-normal">v{{ currentRelease }}</span>
+                            </div>
+                        </card>
                         <card id="about1" :descs="['about1_desc1']">
                             <div class="col-12 small">
                                 <ul class="mb-2">
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">NG Site</span>
                                         <a href="https://ngspacecompany.exileng.com/">https://ngspacecompany.exileng.com/</a>
                                     </li>
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">NG Github</span>
                                         <a href="https://github.com/ExileNG/NGSpaceCompany" target="_blank">https://github.com/ExileNG/NGSpaceCompany</a>
                                     </li>
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">NG Discord</span>
                                         <a href="https://discord.gg/3UkgeeT9CV" target="_blank">https://discord.gg/3UkgeeT9CV</a>
                                     </li>
                                 </ul>
                                 <ul class="mb-0">
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">Original Site</span>
                                         <a href="https://sparticle999.github.io/spacecompany" target="_blank">https://sparticle999.github.io/spacecompany</a>
                                     </li>
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">Original Github</span>
                                         <a href="https://github.com/sparticle999/SpaceCompany" target="_blank">https://github.com/sparticle999/SpaceCompany</a>
                                     </li>
-                                    <li>
+                                    <li class="text-truncate">
                                         <span class="text-light me-2">Original Discord</span>
                                         <a href="https://discord.gg/hgRUjVp" target="_blank">https://discord.gg/hgRUjVp</a>
                                     </li>
@@ -945,7 +957,7 @@
         <div class="toast-container position-fixed bottom-0 end-0 me-2">
             
             <!-- SAVING TOAST -->
-            <div id="toastAutoSave" class="toast hide fade bg-info">
+            <div id="toastAutoSave" class="toast hide fade bg-info" role="alert">
                 <div class="toast-body text-dark">
                     <div><strong>{{ $t('toastAutoSave_title') }}</strong></div>
                     <div class="small">{{ $t('toastAutoSave_text') }}</div>
@@ -953,7 +965,7 @@
             </div>
             
             <!-- ACHIEVEMENT TOAST -->
-            <div id="toastAchievement" class="toast hide fade bg-success cursor-hover" @click="setActivePane('achievementPane')">
+            <div id="toastAchievement" class="toast hide fade bg-success cursor-hover" @click="setActivePane('achievementPane')" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastAchievement_title') }}</strong></div>
                     <div class="small">{{ $t('toastAchievement_text') }}</div>
@@ -961,13 +973,13 @@
             </div>
             
             <!-- SPY TOAST -->
-            <div id="toastSpySuccess" class="toast hide fade bg-success">
+            <div id="toastSpySuccess" class="toast hide fade bg-success" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastSpySuccess_title') }}</strong></div>
                     <div class="small">{{ $t('toastSpySuccess_text') }}</div>
                 </div>
             </div>
-            <div id="toastSpyFailed" class="toast hide fade bg-danger">
+            <div id="toastSpyFailed" class="toast hide fade bg-danger" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastSpyFailed_title') }}</strong></div>
                     <div class="small">{{ $t('toastSpyFailed_text') }}</div>
@@ -975,13 +987,13 @@
             </div>
             
             <!-- INVADE TOAST -->
-            <div id="toastInvadeSuccess" class="toast hide fade bg-success">
+            <div id="toastInvadeSuccess" class="toast hide fade bg-success" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastInvadeSuccess_title') }}</strong></div>
                     <div class="small">{{ $t('toastInvadeSuccess_text') }}</div>
                 </div>
             </div>
-            <div id="toastInvadeFailed" class="toast hide fade bg-danger">
+            <div id="toastInvadeFailed" class="toast hide fade bg-danger" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastInvadeFailed_title') }}</strong></div>
                     <div class="small">{{ $t('toastInvadeFailed_text') }}</div>
@@ -989,7 +1001,7 @@
             </div>
             
             <!-- ABSORB TOAST -->
-            <div id="toastAbsorbSuccess" class="toast hide fade bg-success">
+            <div id="toastAbsorbSuccess" class="toast hide fade bg-success" role="alert">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastAbsorbSuccess_title') }}</strong></div>
                     <div class="small">{{ $t('toastAbsorbSuccess_text') }}</div>
@@ -1001,7 +1013,7 @@
     
     <!-- SPY MODAL -->
     <div v-if="loaded" id="spyModal" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row g-2">
@@ -1083,7 +1095,7 @@
     
     <!-- INVADE MODAL -->
     <div v-if="loaded" id="invadeModal" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row g-2">
@@ -1165,7 +1177,7 @@
     
     <!-- ABSORB MODAL -->
     <div v-if="loaded" id="absorbModal" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row g-2">
@@ -1192,7 +1204,7 @@
     
     <!-- REBIRTH MODAL -->
     <div v-if="loaded" id="rebirthModal" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row g-2">
@@ -1232,6 +1244,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import { Tooltip, Toast, Modal } from 'bootstrap'
 
+import ghApi from './apis/ghApi.js'
+
 export default {
     components: {
         
@@ -1255,6 +1269,7 @@ export default {
             
             fastInterval: null,
             slowInterval: null,
+            ghInterval: null,
             
             tooltips: [],
             
@@ -1278,6 +1293,9 @@ export default {
             absorbModal: null,
             
             rebirthModal: null,
+            
+            currentRelease: '1.2.0',
+            ghLatestRelease: null,
         }
     },
     computed: {
@@ -1326,8 +1344,11 @@ export default {
             this.newCompanyName = this.companyName
             this.autoSavingDuration = this.autoSaveInterval / 1000
             
+            this.ghUpdate()
+            
             this.fastInterval = setInterval(() => { this.fastUpdate() }, 100)
             this.slowInterval = setInterval(() => { this.slowUpdate() }, 1000)
+            this.ghInterval = setInterval(() => { this.ghUpdate() }, 3600000)
             
             this.loaded = true
             
@@ -1398,6 +1419,12 @@ export default {
                 if (this.showToastAutoSave) this.toastAutoSave.show()
             }
         },
+        ghUpdate() {
+        
+            ghApi
+                .get('/repos/ExileNG/NGSpaceCompany/releases/latest')
+                .then((response) => { this.ghLatestRelease = response.data.tag_name })
+        },
         exportData() {
             
             let text = JSON.stringify(JSON.parse(localStorage.getItem('ngsave')))
@@ -1444,6 +1471,10 @@ export default {
                 if (result == true) window.location.reload()
             })
         },
+        onRefresh() {
+        
+            window.location.reload()
+        },
     },
     beforeUnmount() {
         
@@ -1465,6 +1496,7 @@ export default {
         
         clearInterval(this.fastInterval)
         clearInterval(this.slowInterval)
+        clearInterval(this.ghInterval)
     },
 }
 </script>

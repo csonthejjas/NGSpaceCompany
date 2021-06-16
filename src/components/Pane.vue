@@ -2,7 +2,7 @@
     <div class="tab-pane" :class="{ 'active':$root.activePane == id }">
         <div class="row row-cols-1 gx-2 gy-3">
             <div class="col">
-                <div class="row gx-2">
+                <div class="row gx-2" role="heading">
                     <div class="col-auto d-flex align-items-baseline">
                         <img :src="require(`../assets/interface/${icon}`)" class="mx-2 mt-1" width="19" height="19" />
                     </div>
