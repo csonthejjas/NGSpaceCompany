@@ -1,6 +1,6 @@
 module.exports = {
     devServer: {
-        host: "spacecompany.exileng.com",
-        public: "spacecompany.exileng.com",
+        host: "testspacecompany.exileng.com",
+        public: "testspacecompany.exileng.com",
     },
 }

@@ -939,6 +939,7 @@
     "storage": "Stockage",
     "production": "Production",
     "remainingTimeFullStorage": "Temps restant avant remplissage",
+    "remainingTimeEmptyStorage": "Temps restant avant vidage",
     "locked": "Bloqué",
     "by": "par",
     "costs": "Coûts",

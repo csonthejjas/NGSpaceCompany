@@ -944,6 +944,7 @@
     "storage": "Storage",
     "production": "Production",
     "remainingTimeFullStorage": "Remaining time until full storage",
+    "remainingTimeEmptyStorage": "Remaining time until empty storage",
     "locked": "Locked",
     "by": "by",
     "costs": "Costs",

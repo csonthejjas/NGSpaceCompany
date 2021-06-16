@@ -24,13 +24,18 @@
                                         <div v-if="data[id].storage" class="col-12">
                                             <div class="row g-1">
                                                 <div class="col small">
-                                                    <span>{{ $t('remainingTimeFullStorage') }}</span>
+                                                    <span v-if="data[id].prod >= 0">{{ $t('remainingTimeFullStorage') }}</span>
+                                                    <span v-if="data[id].prod < 0" class="text-danger">{{ $t('remainingTimeEmptyStorage') }}</span>
                                                 </div>
-                                                <div class="col-auto text-end" style="width:75px">
+                                                <div v-if="data[id].prod >= 0" class="col-auto text-end" style="width:75px">
                                                     <small v-if="data[id].storageTimer < 0" class="text-normal">---</small>
                                                     <small v-if="data[id].storageTimer == 0" class="text-success"><i class="fas fa-fw fa-check"></i></small>
                                                     <small v-if="data[id].storageTimer > 0 && data[id].storageTimer <= (3600 * 24 * 2)" class="text-timer">{{ numeralFormat(data[id].storageTimer, '00:00:00') }}</small>
                                                     <small v-if="data[id].storageTimer > (3600 * 24 * 2)" class="text-timer">{{ $t('bigTimer') }}</small>
+                                                </div>
+                                                <div v-if="data[id].prod < 0" class="col-auto text-end" style="width:75px">
+                                                    <small v-if="data[id].storageTimer > 0" class="text-timer">{{ numeralFormat(data[id].storageTimer, '00:00:00') }}</small>
+                                                    <small v-if="data[id].storageTimer <= 0" class="text-normal">---</small>
                                                 </div>
                                             </div>
                                         </div>

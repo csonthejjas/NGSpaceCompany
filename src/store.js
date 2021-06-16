@@ -410,7 +410,7 @@ export const store = createStore({
         
             // ENERGY
             /*----------------------------------------------------------------*/
-            state.data['energy'] = { id:'energy', unlocked:false, count:0, prod:0, boost:0, baseStorage:100000, toggle:'on', notifs:['energyPane'], }
+            state.data['energy'] = { id:'energy', unlocked:false, count:0, prod:0, boost:0, baseStorage:100000, toggle:'on', notifs:['energyPane', 'batteryPane'], }
             /*----------------------------------------------------------------*/
             state.data['energyT1'] = { id:'energyT1', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:50    }, { id:'gem',      count:25    }],                                outputs:[{ id:'energy', count:2   }], inputs:[{ id:'carbon',   count:1  }],                            notifs:['energyPane'], }
             state.data['energyT2'] = { id:'energyT2', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',    count:30    }, { id:'gem',      count:35    }],                                outputs:[{ id:'energy', count:1.5 }],                                                                  notifs:['energyPane'], }
@@ -1471,7 +1471,8 @@ export const store = createStore({
 
                     if ('storage' in item) {
                         if (item.count >= item.storage) item.storageTimer = 0
-                        else if (item.prod <= 0) item.storageTimer = -1
+                        else if (item.prod == 0) item.storageTimer = -1
+                        else if (item.prod < 0) item.storageTimer = -item.count / item.prod
                         else item.storageTimer = (item.storage - item.count) / item.prod
                     }
                 }
@@ -1537,13 +1538,11 @@ export const store = createStore({
                 for (let i = 0; i < list.length; i++) {
                     let item = state.data[list[i] + 'T2']
                     item.outputs.forEach(output => { output.count *= 2 })
-                    if ('inputs' in item) item.inputs.forEach(input => { input.count *= 2 })
                 }
             }
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeEnergy1') {
                 state.data['energyT1'].outputs.forEach(output => { output.count *= 2 })
-                state.data['energyT1'].inputs.forEach(input => { input.count *= 2 })
             }
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeEnergy2') {

@@ -891,7 +891,7 @@
                                 <ul class="mb-2">
                                     <li>
                                         <span class="text-light me-2">NG Site</span>
-                                        <a href="https://spacecompany.exileng.com/">https://spacecompany.exileng.com/</a>
+                                        <a href="https://ngspacecompany.exileng.com/">https://ngspacecompany.exileng.com/</a>
                                     </li>
                                     <li>
                                         <span class="text-light me-2">NG Github</span>
@@ -953,7 +953,7 @@
             </div>
             
             <!-- ACHIEVEMENT TOAST -->
-            <div id="toastAchievement" class="toast hide fade bg-success">
+            <div id="toastAchievement" class="toast hide fade bg-success cursor-hover" @click="setActivePane('achievementPane')">
                 <div class="toast-body text-light">
                     <div><strong>{{ $t('toastAchievement_title') }}</strong></div>
                     <div class="small">{{ $t('toastAchievement_text') }}</div>

@@ -23,7 +23,17 @@
                 </div>
                 
                 <div v-if="data[id].unlocked && data[id].max && data[id].count >= data[id].max" class="card card-body">
-                    <span class="h6 text-light mb-0">{{ $t(data[id].id) }}</span>
+                    <div class="row g-1">
+                        <div class="col">
+                            <span class="h6 text-light mb-0">{{ $t(data[id].id) }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-fw fa-eye" data-bs-toggle="collapse" :data-bs-target="'#collapse' + data[id].id"></i>
+                        </div>
+                        <div :id="'collapse' + data[id].id" class="col-12 collapse small">
+                            <span class="text-normal">{{ $t(data[id].id + '_desc') }}</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" class="card card-body">
