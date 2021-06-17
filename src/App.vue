@@ -142,6 +142,10 @@
                     <img :src="require('./assets/interface/trophy.png')" width="16" height="16" />
                 </div>
                 
+                <div class="col-auto cursor-hover position-relative" @click="setActivePane('rankPane')" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('rankPane')">
+                    <img :src="require('./assets/interface/rank.png')" width="16" height="16" />
+                </div>
+                
                 <div class="col-auto">
                     <a class="text-normal cursor-hover" data-bs-toggle="dropdown">
                         <span v-if="locale == 'en'" class="flag-icon flag-icon-gb rounded"></span>
@@ -950,6 +954,54 @@
                             </div>
                         </card>
                     </pane>
+                    
+                    <!-- RANK PANE -->
+                    <pane id="rankPane" icon="rank.png" :descs="['rankPane_desc']">
+                        <card id="account" :checked="token != null">
+                            <div v-if="token" class="col-12">
+                                <div class="row gx-3 gy-2 align-items-center">
+                                    <div class="col-12 col-md-auto small">
+                                        <span>{{ $t('connected') }} <span class="text-light">{{ username }}</span></span>
+                                    </div>
+                                    <div class="col-12 col-md-auto text-end">
+                                        <button class="btn" @click="onDisconnect()">{{ $t('disconnect') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="!token" class="col-12">
+                                <div class="row gx-3 gy-2 align-items-end">
+                                    <div class="col-12 small">
+                                        <span>{{ $t('account_desc') }}</span>
+                                    </div>
+                                    <div class="col-12 col-md-auto">
+                                        <small>{{ $t('login') }}</small>
+                                        <input type="text" class="form-control" v-model="login" />
+                                    </div>
+                                    <div class="col-12 col-md-auto">
+                                        <small>{{ $t('password') }}</small>
+                                        <input type="password" class="form-control" v-model="password" />
+                                    </div>
+                                    <div class="col-12 col-md-auto text-end">
+                                        <button class="btn" @click="onConnect(login, password)">{{ $t('connect') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                        <card v-if="leaderboard_ranks" :checked="token != null">
+                            <div class="row g-1">
+                                <div v-for="item in leaderboard_ranks" :key="item.user_id" class="col-12 col-md-3">
+                                    <div class="btn">
+                                        <div class="row g-0">
+                                            <div class="col-12 text-truncate">
+                                                <span class="h6 text-light">{{ item.username }}</span>
+                                            </div>
+                                            <div class="col-12"><small class="text-normal">{{ item.level }} - {{ $t('rank_' + item.level) }}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </card>
+                    </pane>
 
                 </div>
             </inner-content>
@@ -1246,6 +1298,8 @@ import { Tooltip, Toast, Modal } from 'bootstrap'
 
 import ghApi from './apis/ghApi.js'
 
+import axios from 'axios'
+
 export default {
     components: {
         
@@ -1294,8 +1348,13 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.2.0',
+            currentRelease: '1.3.0',
             ghLatestRelease: null,
+            
+            login: null,
+            password: null,
+            
+            leaderboard_ranks: null,
         }
     },
     computed: {
@@ -1304,6 +1363,7 @@ export default {
             'data', 'companyName', 'locale', 'activePane', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
             'notifAutoSave',
+            'username', 'token',
         ]),
         ...mapGetters([
         
@@ -1319,7 +1379,7 @@ export default {
         ...mapMutations([
         
             'setLocale', 'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName', 'setAutoSaveInterval',
-            'setNotifAutoSave',
+            'setNotifAutoSave', 'setUsername', 'setToken',
         ]),
         ...mapActions([
         
@@ -1343,6 +1403,7 @@ export default {
             this.changeLocale(this.locale)
             this.newCompanyName = this.companyName
             this.autoSavingDuration = this.autoSaveInterval / 1000
+            this.login = this.username
             
             this.ghUpdate()
             
@@ -1417,6 +1478,16 @@ export default {
                 this.save()
                 this.setTimeSinceAutoSave(1)
                 if (this.showToastAutoSave) this.toastAutoSave.show()
+                
+                if (this.token) {
+                    
+                    let data = {
+                        rank: this.rank,
+                    }
+                    axios.post('https://ngspacecompany.exileng.com/api/post/', data, { headers: { 'Authorization': 'Token ' +  this.token }})
+                    
+                    axios.get('https://ngspacecompany.exileng.com/api/ranks/').then((response) => { this.leaderboard_ranks = response.data })
+                }
             }
         },
         ghUpdate() {
@@ -1474,6 +1545,34 @@ export default {
         onRefresh() {
         
             window.location.reload()
+        },
+        onConnect(login, pwd) {
+            
+            if (login && login.trim().length > 4 && pwd && pwd.trim().length > 4)
+                axios.post('https://ngspacecompany.exileng.com/api/register/', { username:login.trim(), password:pwd.trim() })
+                    .then((response) => {
+                    
+                        this.setUsername(login.trim())
+                        this.setToken(response.data.token)
+                    })
+                    .catch(() => {
+                    
+                        axios.post('https://ngspacecompany.exileng.com/api/login/', { username:login.trim(), password:pwd.trim() })
+                            .then((response) => {
+                    
+                                this.setUsername(login.trim())
+                                this.setToken(response.data.token)
+                            })
+                            .catch((error) => {
+                            
+                                console.log(error.response.data)
+                            })
+                    })
+        },
+        onDisconnect() {
+        
+            this.setUsername(null)
+            this.setToken(null)
         },
     },
     beforeUnmount() {

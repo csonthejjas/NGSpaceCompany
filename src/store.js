@@ -62,6 +62,9 @@ export const store = createStore({
             fleet: { power:0, defense:0, speed:0 },
             activeFleet: { power:0, defense:0, speed:0 },
             /*----------------------------------------------------------------*/
+            username: null,
+            token: null,
+            /*----------------------------------------------------------------*/
         }
     },
     getters: {
@@ -197,6 +200,8 @@ export const store = createStore({
         setCompanyName(state, payload) { state.companyName = payload },
         setAutoSaveInterval(state, payload) { state.autoSaveInterval = payload * 1000 },
         setNotifAutoSave(state, payload) { state.notifAutoSave = payload },
+        setUsername(state, payload) { state.username = payload },
+        setToken(state, payload) { state.token = payload },
         /*--------------------------------------------------------------------*/
         setActivePane(state, payload) {
 
@@ -1295,6 +1300,8 @@ export const store = createStore({
                 state.autoSaveInterval = data.autoSaveInterval || 30 * 1000
                 state.companyName = data.companyName || 'NG Space'
                 state.notifAutoSave = data.notifAutoSave
+                state.username = data.username || null
+                state.token = data.token || null
                 
                 for (let i in data.entries) {
                     let item = data.entries[i]
@@ -1344,6 +1351,8 @@ export const store = createStore({
                 autoSaveInterval: state.autoSaveInterval,
                 companyName: state.companyName,
                 notifAutoSave: state.notifAutoSave,
+                username: state.username,
+                token: state.token,
                 
                 entries: {},
             }

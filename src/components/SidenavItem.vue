@@ -1,6 +1,6 @@
 <template>
     <div v-if="unlocked" class="col">
-        <button class="sidenav-item" :class="{ 'active':activePane == id }" @click="setActivePane(id);$root.sidebarOpen = false;" role="tab" :aria-selected="activePane == id" :aria-controls="id" >
+        <button class="sidenav-item" :class="{ 'active':activePane == id }" @click="setActivePane(id);$root.sidebarOpen = false;">
             <div v-if="isNotif(id)" class="position-absolute top-0 start-0" style="line-height:1">
                 <i class="fas fa-fw fa-certificate text-success small"></i>
             </div>

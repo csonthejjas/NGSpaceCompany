@@ -3,7 +3,8 @@
         <div class="row gx-2 flex-nowrap">
             <div class="col-auto">
                 <div class="timeline-marker">
-                    <i class="fas fa-fw fa-lock-open"></i>
+                    <i v-if="!checked" class="fas fa-fw fa-lock-open"></i>
+                    <i v-if="checked" class="fas fa-fw fa-check text-success"></i>
                 </div>
             </div>
             <div class="col">
@@ -25,6 +26,6 @@
 
 <script>
 export default {
-    props: [ 'id', 'descs', ],
+    props: [ 'id', 'descs', 'checked' ],
 }
 </script>

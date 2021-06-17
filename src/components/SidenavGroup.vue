@@ -1,9 +1,9 @@
 <template>
     <div v-if="unlocked" class="col">
-        <button class="sidenav-group" data-bs-toggle="collapse" :data-bs-target="'#collapse' + id" role="button" aria-expanded="true" :aria-controls="'collapse' + id">
+        <button class="sidenav-group" data-bs-toggle="collapse" :data-bs-target="'#collapse' + id" role="heading">
             {{ $t(id) }}
         </button>
-        <div :id="'collapse' + id" class="collapse show row gx-2 gy-1 row-cols-1" role="list">
+        <div :id="'collapse' + id" class="collapse show row gx-2 gy-1 row-cols-1">
             <slot></slot>
         </div>
     </div>

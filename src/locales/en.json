@@ -7,6 +7,13 @@
     
     "achievementPane": "Achievements",
     "achievementPane_desc": "This is where you can see your rank and all of your achievements.",
+    "account": "Account",
+    "connected": "Connected as",
+    "account_desc": "When connected, your achievement data will be sent to server database (during auto-saving) to be ranked against all other players. You could compare your progress in Leaderboard pane.",
+    "login": "Login",
+    "password": "Password",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
     "currentRank": "Current Rank",
     "rank_1": "Space Noob",
     "rank_2": "Space Explorer",
@@ -26,6 +33,9 @@
     "rank_16": "The Prestiged",
     "resources": "Resources",
     "producers": "Producers",
+    
+    "rankPane": "Ranking",
+    "rankPane_desc": "Here are the current player ranking. To be part of it, you just have to register an account then all is automated.",
     
     "helpPane": "Help",
     "helpPane_desc": "This guide will get you from starting the game to activating your first wonder and will be helpful to grasp everything you need to do.",

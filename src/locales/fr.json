@@ -7,6 +7,13 @@
     
     "achievementPane": "Trophées",
     "achievementPane_desc": "C'est ici que vous voyez tous vos trophées et votre grade.",
+    "account": "Compte serveur",
+    "connected": "Connecté en tant que",
+    "account_desc": "Une fois connecté, les données de vos trophées seront envoyées (pendant la sauvegarde automatique) vers la base de données serveur afin d'être classées par rapport aux données des autres joueurs. Vous pourrez ainsi comparer votre progression à celle des autres joueurs dans la page Classement.",
+    "login": "Pseudo",
+    "password": "Mot de passe",
+    "connect": "Se connecter",
+    "disconnect": "Se déconnecter",
     "currentRank": "Grade",
     "rank_1": "Noob de l'espace",
     "rank_2": "Explorateur spatial",
@@ -26,6 +33,9 @@
     "rank_16": "Prestige",
     "resources": "Ressources",
     "producers": "Bâtiments",
+    
+    "rankPane": "Classement",
+    "rankPane_desc": "Voici le classement des joueurs actuels. Pour faire parti du classement, vous devez juste enregistrer un compte et le reste est automatique.",
     
     "helpPane": "Aide",
     "helpPane_desc": "'Cette page vous aidera à démarrer le jeu. Elle vous permettra d'avanceer dans le jeu en vous fournissant les explications nécessaires à la compréhension des mécanismes du jeu.",
