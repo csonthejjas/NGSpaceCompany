@@ -1426,7 +1426,7 @@ export const store = createStore({
                     if ('outputs' in item) {
                         item.outputs.forEach(output => {
                             let tempBoost = boost
-                            if (item.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
+                            if (output.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
                             temp[output.id].prod += (output.count * item.active) * (1 + tempBoost) * (1 + temp[output.id].boost)
                         })
                     }
@@ -1434,7 +1434,7 @@ export const store = createStore({
                 if ('outputs' in item) {
                     item.outputs.forEach(output => {
                         let tempBoost = boost
-                        if (item.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
+                        if (output.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
                         output.boost = tempBoost + temp[output.id].boost
                     })
                 }

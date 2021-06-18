@@ -98,6 +98,11 @@ body {
 
 .opacity-1 { opacity: .25!important; }
 
+.bg-success { background-color: #00f500!important; }
+.bg-timer { background-color: #f5f500!important; }
+
+.border-success { border-color: #00f500!important; }
+
 /* -------------------------------------------------------------------------- */
 
 .dropdown-menu {
@@ -218,5 +223,9 @@ body {
 
 .alert-danger { color: #f50000; background-color: #4a0007; border-color: #f50000; }
 .alert-warning { color: #f5f5f5; background-color: #884f07; border-color: #ff9800; }
+
+/* -------------------------------------------------------------------------- */
+
+.progress { background-color: #6c757d; }
 
 /* -------------------------------------------------------------------------- */

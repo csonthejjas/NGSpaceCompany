@@ -786,19 +786,33 @@
                         <card id="resources">
                             <div class="col-12 mt-2">
                                 <div class="row g-1">
-                                    <div v-for="ach in resAchievements" :key="ach.id" class="col-auto">
-                                        <div v-if="!ach.unlocked" class="rounded px-3 py-1 opacity-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('locked') + '</div>'">
-                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
-                                            <div class="text-center small" style="line-height:1;">
-                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
-                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
-                                            </div>
-                                        </div>
-                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('collect') + ' <span class=\'text-uppercase\'>' + numeralFormat(ach.brackets[ach.count], '0a') + '</span> ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
-                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
-                                            <div class="text-center small" style="line-height:1;">
-                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
-                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                    <div v-for="ach in resAchievements" :key="ach.id" class="col-12 col-md-4">
+                                        <div class="rounded px-3 py-2" :class="{ 'opacity-1':!ach.unlocked }" style="background-color:rgba(255,255,255,.125);">
+                                            <div class="row g-1">
+                                                <div class="col-12 small">
+                                                    <div class="row gx-2">
+                                                        <div class="col-auto d-flex align-items-center">
+                                                            <img :src="require(`./assets/interface/${ach.icon}`)" width="16" height="16" />
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <span class="h6 text-light">{{ $t(ach.data) }}</span>
+                                                        </div>
+                                                        <div v-if="!ach.unlocked" class="col">
+                                                            <span class="text-normal">{{ $t('locked') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 small">
+                                                    <div class="row g-1 mb-2">
+                                                        <div v-for="(bracket, index) in ach.brackets" :key="bracket" class="col">
+                                                            <small class="text-uppercase" :class="{ 'text-success':ach.count > index, 'text-timer':ach.count == index, 'text-muted':ach.count < index }">{{ numeralFormat(bracket, '0a') }}</small>
+                                                            <div class="progress rounded" style="height:3px">
+                                                                <div v-if="ach.count > index" class="progress-bar bg-success" style="width:100%"></div>
+                                                                <div v-if="ach.count == index" class="progress-bar bg-timer" :style="'width:' + ach.progress + '%'"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -808,19 +822,33 @@
                         <card id="producers">
                             <div class="col-12 mt-2">
                                 <div class="row g-1">
-                                    <div v-for="ach in prodAchievements" :key="ach.id" class="col-auto">
-                                        <div v-if="!ach.unlocked" class="rounded px-3 py-1 opacity-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('locked') + '</div>'">
-                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
-                                            <div class="text-center small" style="line-height:1;">
-                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
-                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
-                                            </div>
-                                        </div>
-                                        <div v-if="ach.unlocked" class="rounded px-3 py-1" data-bs-toggle="tooltip" style="background-color:rgba(255,255,255,.125);" data-bs-html="true" :data-bs-original-title="'<div class=\'small text-center text-normal\'>' + $t('own') + ' ' + numeralFormat(ach.brackets[ach.count], '0a') + ' ' + $t(ach.data) + '</div><div class=\'small text-center text-light\'>' + numeralFormat(ach.progress, '0.[00]') + '%</div>'">
-                                            <div class="text-center mb-1"><img :src="require(`./assets/interface/${ach.icon}`)" width="24" height="24" /></div>
-                                            <div class="text-center small" style="line-height:1;">
-                                                <span :class="{ 'text-light':ach.count>0, 'text-normal':ach.count<=0 }">{{ ach.count }}</span>
-                                                <small class="text-normal">/{{ ach.brackets.length }}</small>
+                                    <div v-for="ach in prodAchievements" :key="ach.id" class="col-12 col-md-4">
+                                        <div class="rounded px-3 py-2" :class="{ 'opacity-1':!ach.unlocked }" style="background-color:rgba(255,255,255,.125);">
+                                            <div class="row g-1">
+                                                <div class="col-12 small">
+                                                    <div class="row gx-2">
+                                                        <div class="col-auto d-flex align-items-center">
+                                                            <img :src="require(`./assets/interface/${ach.icon}`)" width="16" height="16" />
+                                                        </div>
+                                                        <div class="col text-truncate">
+                                                            <span class="h6 text-light">{{ $t(ach.data) }}</span>
+                                                        </div>
+                                                        <div v-if="!ach.unlocked" class="col-auto">
+                                                            <span class="text-normal">{{ $t('locked') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 small">
+                                                    <div class="row g-1 mb-2">
+                                                        <div v-for="(bracket, index) in ach.brackets" :key="bracket" class="col">
+                                                            <small class="text-uppercase" :class="{ 'text-success':ach.count > index, 'text-timer':ach.count == index, 'text-muted':ach.count < index }">{{ numeralFormat(bracket, '0a') }}</small>
+                                                            <div class="progress rounded" style="height:3px">
+                                                                <div v-if="ach.count > index" class="progress-bar bg-success" style="width:100%"></div>
+                                                                <div v-if="ach.count == index" class="progress-bar bg-timer" :style="'width:' + ach.progress + '%'"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -987,15 +1015,27 @@
                                 </div>
                             </div>
                         </card>
+                        <card v-if="!leaderboard_ranks" :descs="['rankPane_nodata']">
+                        </card>
                         <card v-if="leaderboard_ranks" :checked="token != null">
                             <div class="row g-1">
-                                <div v-for="item in leaderboard_ranks" :key="item.user_id" class="col-12 col-md-3">
-                                    <div class="btn">
+                                <div v-for="(item, index) in leaderboard_ranks" :key="item.user_id" class="col-12 col-md-4">
+                                    <div class="btn text-start w-100" :class="{ 'border-success':item.username==username }">
                                         <div class="row g-0">
-                                            <div class="col-12 text-truncate">
-                                                <span class="h6 text-light">{{ item.username }}</span>
+                                            <div class="col-12">
+                                                <span class="text-light d-inline w-100 text-truncate">{{ index + 1 }}</span>
                                             </div>
-                                            <div class="col-12"><small class="text-normal">{{ item.level }} - {{ $t('rank_' + item.level) }}</small></div>
+                                            <div class="col-12">
+                                                <span class="h6 text-light d-inline w-100 text-truncate">{{ item.username }}</span>
+                                            </div>
+                                            <div class="col-12">
+                                                <span class="text-normal d-inline w-100 text-truncate">{{ $t('rank_' + item.level) }} ({{ item.level }})</span>
+                                            </div>
+                                            <div class="col-12 small text-end">
+                                                <span class="text-muted">{{ item.remaining }}</span>
+                                                <i class="fas fa-fw fa-long-arrow-alt-right text-muted"></i>
+                                                <span class="text-muted">{{ item.level + 1 }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1348,7 +1388,7 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.3.0',
+            currentRelease: '1.4.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1485,9 +1525,9 @@ export default {
                         rank: this.rank,
                     }
                     axios.post('https://ngspacecompany.exileng.com/api/post/', data, { headers: { 'Authorization': 'Token ' +  this.token }})
-                    
-                    axios.get('https://ngspacecompany.exileng.com/api/ranks/').then((response) => { this.leaderboard_ranks = response.data })
-                }
+                }   
+                
+                axios.get('https://ngspacecompany.exileng.com/api/ranks/').then((response) => { this.leaderboard_ranks = response.data })
             }
         },
         ghUpdate() {
