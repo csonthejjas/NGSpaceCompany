@@ -101,6 +101,7 @@ body {
 .bg-success { background-color: #00f500!important; }
 .bg-timer { background-color: #f5f500!important; }
 
+.border { border: 1px solid rgba(255,255,255,.25)!important; }
 .border-success { border-color: #00f500!important; }
 
 /* -------------------------------------------------------------------------- */

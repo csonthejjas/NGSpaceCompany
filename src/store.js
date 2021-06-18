@@ -65,6 +65,8 @@ export const store = createStore({
             username: null,
             token: null,
             /*----------------------------------------------------------------*/
+            emcAmount: 'max',
+            /*----------------------------------------------------------------*/
         }
     },
     getters: {
@@ -202,6 +204,7 @@ export const store = createStore({
         setNotifAutoSave(state, payload) { state.notifAutoSave = payload },
         setUsername(state, payload) { state.username = payload },
         setToken(state, payload) { state.token = payload },
+        setEmcAmount(state, payload) { state.emcAmount = payload },
         /*--------------------------------------------------------------------*/
         setActivePane(state, payload) {
 
@@ -1302,6 +1305,7 @@ export const store = createStore({
                 state.notifAutoSave = data.notifAutoSave
                 state.username = data.username || null
                 state.token = data.token || null
+                state.emcAmount = data.emcAmount || 'max'
                 
                 for (let i in data.entries) {
                     let item = data.entries[i]
@@ -1353,6 +1357,7 @@ export const store = createStore({
                 notifAutoSave: state.notifAutoSave,
                 username: state.username,
                 token: state.token,
+                emcAmount: state.emcAmount,
                 
                 entries: {},
             }
@@ -1800,7 +1805,12 @@ export const store = createStore({
         
             let item = state.data[id]
             
-            let amount = Math.floor(Math.min(Math.floor(state.data[item.source].count / item.rate), state.data[item.resource].storage - state.data[item.resource].count));
+            let amountMax =  Math.floor(Math.min(Math.floor(state.data[item.source].count / item.rate), state.data[item.resource].storage - state.data[item.resource].count))
+            
+            let amount
+            if (state.emcAmount == 'max') amount = amountMax
+            else amount = Math.min(amountMax, Math.floor(Math.min(state.emcAmount, state.data[item.resource].storage - state.data[item.resource].count)))
+            
             let required = amount * item.rate
             
             if (amount > 0 && state.data[item.source].count >= required) {

@@ -1,18 +1,39 @@
 <template>
-    <div class="col-6 col-md-2">
-        <button class="btn w-100 text-start" @click="convert(id)">
-            <div class="row g-1 align-items-center justify-content-center">
-                <div class="col-auto d-flex align-items-center"><img :src="require(`../assets/interface/${data[id].source}.png`)" width="12" height="12" /></div>
-                <div class="col-auto"><small class="text-normal ms-1">{{ numeralFormat(sourceCount, '0.[0]a') }}</small></div>
+    <div class="col-12 col-md-4">
+        <div class="rounded border px-2 py-2">
+            <div class="row g-1">
+                <div class="col">
+                    <div class="row g-1 align-items-baseline justify-content-center">
+                        <div class="col-auto d-flex align-items-center">
+                            <img :src="require(`../assets/interface/${data[id].source}.png`)" width="12" height="12" />
+                        </div>
+                        <div class="col-auto text-center">
+                            <div class="small">{{ $t(data[id].source) }}</div>
+                            <div class="text-light">{{ numeralFormat(sourceCount, '0.[0]a') }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-fw fa-long-arrow-alt-right"></i>
+                </div>
+                <div class="col">
+                    <div class="row g-1 align-items-baseline justify-content-center">
+                        <div class="col-auto d-flex align-items-center">
+                            <img :src="require(`../assets/interface/${data[id].resource}.png`)" width="12" height="12" />
+                        </div>
+                        <div class="col-auto text-center">
+                            <div class="small">{{ $t(data[id].resource) }}</div>
+                            <div class="text-light">{{ numeralFormat(destinationCount, '0.[0]a') }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn w-100" @click="convert(id)">
+                        {{ $t('convert') }}
+                    </button>
+                </div>
             </div>
-            <div class="small text-center ps-2" style="line-height:1;">
-                <i class="small text-normal fas fa-fw fa-caret-down"></i>
-            </div>
-            <div class="row g-1 align-items-center justify-content-center">
-                <div class="col-auto d-flex align-items-center"><img :src="require(`../assets/interface/${data[id].resource}.png`)" width="14" height="14" /></div>
-                <div class="col-auto"><span class="text-light ms-1">{{ numeralFormat(destinationCount, '0.[0]a') }}</span></div>
-            </div>
-        </button>
+        </div>
     </div>
 </template>
 
@@ -23,13 +44,15 @@ export default {
     props: [ 'id' ],
     computed: {
         ...mapState([
-            'data',
+            'data', 'emcAmount',
         ]),
         sourceCount: function() {
-            return Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate) * this.data[this.id].rate
+            if (this.emcAmount == 'max') return Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate) * this.data[this.id].rate
+            else return Math.min(this.emcAmount, Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate)) * this.data[this.id].rate
         },
         destinationCount: function() {
-            return Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate)
+            if (this.emcAmount == 'max') return Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate)
+            else return Math.floor(Math.min(this.emcAmount, this.data[this.data[this.id].source].count / this.data[this.id].rate))
         },
     },
     methods: {

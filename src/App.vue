@@ -543,25 +543,41 @@
                     
                     <!-- EMC PANE -->
                     <pane id="emcPane" icon="emc.png" :descs="['emcPane_desc']">
-                        <card>
-                            <div class="row g-1">
-                                <emc id="emcMeteorite" />
-                                <emc id="emcCarbon" />
-                                <emc id="emcOil" />
-                                <emc id="emcMetal" />
-                                <emc id="emcGem" />
-                                <emc id="emcWood" />
-                                <emc id="emcSilicon" />
-                                <emc id="emcUranium" />
-                                <emc id="emcLava" />
-                                <emc id="emcLunarite" />
-                                <emc id="emcMethane" />
-                                <emc id="emcTitanium" />
-                                <emc id="emcGold" />
-                                <emc id="emcSilver" />
-                                <emc id="emcHydrogen" />
-                                <emc id="emcHelium" />
-                                <emc id="emcIce" />
+                        <card checked="true">
+                            <div class="col-12">
+                                <div class="small">{{ $t('selectEmcAmount') }}</div>
+                                <select class="form-control" v-model="selectedEmcAmount" @change="setEmcAmount(selectedEmcAmount)">
+                                    <option value="max">Max</option>
+                                    <option value="1">1</option>
+                                    <option value="10">10</option>
+                                    <option value="100">100</option>
+                                    <option value="1000">{{ numeralFormat(1000, '0a') }}</option>
+                                    <option value="10000">{{ numeralFormat(10000, '0a') }}</option>
+                                    <option value="100000">{{ numeralFormat(100000, '0a') }}</option>
+                                </select>
+                            </div>
+                        </card>
+                        <card checked="true">
+                            <div class="col-12">
+                                <div class="row g-1">
+                                    <emc id="emcMeteorite" />
+                                    <emc id="emcCarbon" />
+                                    <emc id="emcOil" />
+                                    <emc id="emcMetal" />
+                                    <emc id="emcGem" />
+                                    <emc id="emcWood" />
+                                    <emc id="emcSilicon" />
+                                    <emc id="emcUranium" />
+                                    <emc id="emcLava" />
+                                    <emc id="emcLunarite" />
+                                    <emc id="emcMethane" />
+                                    <emc id="emcTitanium" />
+                                    <emc id="emcGold" />
+                                    <emc id="emcSilver" />
+                                    <emc id="emcHydrogen" />
+                                    <emc id="emcHelium" />
+                                    <emc id="emcIce" />
+                                </div>
                             </div>
                         </card>
                     </pane>
@@ -1388,13 +1404,15 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.4.0',
+            currentRelease: '1.5.0',
             ghLatestRelease: null,
             
             login: null,
             password: null,
             
             leaderboard_ranks: null,
+            
+            selectedEmcAmount: null,
         }
     },
     computed: {
@@ -1404,6 +1422,7 @@ export default {
             'resAchievements', 'prodAchievements', 'newAchievement',
             'notifAutoSave',
             'username', 'token',
+            'emcAmount',
         ]),
         ...mapGetters([
         
@@ -1419,7 +1438,7 @@ export default {
         ...mapMutations([
         
             'setLocale', 'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName', 'setAutoSaveInterval',
-            'setNotifAutoSave', 'setUsername', 'setToken',
+            'setNotifAutoSave', 'setUsername', 'setToken', 'setEmcAmount',
         ]),
         ...mapActions([
         
@@ -1444,6 +1463,7 @@ export default {
             this.newCompanyName = this.companyName
             this.autoSavingDuration = this.autoSaveInterval / 1000
             this.login = this.username
+            this.selectedEmcAmount = this.emcAmount
             
             this.ghUpdate()
             
