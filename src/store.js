@@ -39,6 +39,13 @@ export const store = createStore({
             producers: [],
             achievements: [],
             /*----------------------------------------------------------------*/
+            machineT1: [],
+            machineT2: [],
+            machineT3: [],
+            machineT4: [],
+            machineT5: [],
+            machineT6: [],
+            /*----------------------------------------------------------------*/
             resAchievements: [],
             prodAchievements: [],
             /*----------------------------------------------------------------*/
@@ -66,6 +73,22 @@ export const store = createStore({
             token: null,
             /*----------------------------------------------------------------*/
             emcAmount: 'max',
+            /*----------------------------------------------------------------*/
+            stats: {
+                startDate: new Date().getTime(),
+                lastRebirthDate: new Date().getTime(),
+                rebirthCount : 0,
+                allTimeDarkmatter: 0,
+                manualGain: { current:0, allTime:0 },
+                machineT1: { current:0, allTime:0 },
+                machineT2: { current:0, allTime:0 },
+                machineT3: { current:0, allTime:0 },
+                machineT4: { current:0, allTime:0 },
+                machineT5: { current:0, allTime:0 },
+                machineT6: { current:0, allTime:0 },
+                ships: { current:0, allTime:0 },
+                starOwned: { current:0, allTime:0 },
+            },
             /*----------------------------------------------------------------*/
         }
     },
@@ -1287,6 +1310,15 @@ export const store = createStore({
                 state.data['shipT1'], state.data['shipT2'], state.data['shipT3'], state.data['shipT4'], state.data['shipT5'],
                 /*------------------------------------------------------------*/
             ]
+            
+            // MACHINE LIST
+            /*----------------------------------------------------------------*/            
+            state.machineT1 = ['energyT1', 'plasmaT1', 'meteoriteT1', 'carbonT1', 'oilT1', 'metalT1', 'gemT1', 'woodT1', 'siliconT1', 'uraniumT1', 'lavaT1', 'lunariteT1', 'methaneT1', 'titaniumT1', 'goldT1', 'silverT1', 'hydrogenT1', 'heliumT1', 'iceT1', 'scienceT1', 'fuelT1']
+            state.machineT2 = ['energyT2', 'plasmaT2', 'meteoriteT2', 'carbonT2', 'oilT2', 'metalT2', 'gemT2', 'woodT2', 'siliconT2', 'uraniumT2', 'lavaT2', 'lunariteT2', 'methaneT2', 'titaniumT2', 'goldT2', 'silverT2', 'hydrogenT2', 'heliumT2', 'iceT2', 'scienceT2', 'fuelT2']
+            state.machineT3 = ['energyT3', 'plasmaT3', 'meteoriteT3', 'carbonT3', 'oilT3', 'metalT3', 'gemT3', 'woodT3', 'siliconT3', 'uraniumT3', 'lavaT3', 'lunariteT3', 'methaneT3', 'titaniumT3', 'goldT3', 'silverT3', 'hydrogenT3', 'heliumT3', 'iceT3', 'scienceT3', 'fuelT3']
+            state.machineT4 = ['energyT4', 'plasmaT4', 'meteoriteT4', 'carbonT4', 'oilT4', 'metalT4', 'gemT4', 'woodT4', 'siliconT4', 'uraniumT4', 'lavaT4', 'lunariteT4', 'methaneT4', 'titaniumT4', 'goldT4', 'silverT4', 'hydrogenT4', 'heliumT4', 'iceT4', 'scienceT4']
+            state.machineT5 = ['energyT5', 'carbonT5', 'oilT5', 'metalT5', 'gemT5', 'woodT5', 'siliconT5', 'uraniumT5', 'lavaT5', 'lunariteT5', 'methaneT5', 'titaniumT5', 'goldT5', 'silverT5', 'hydrogenT5', 'heliumT5', 'iceT5', 'scienceT5']
+            state.machineT6 = ['energyT6']
         },
         /*--------------------------------------------------------------------*/
         
@@ -1307,6 +1339,8 @@ export const store = createStore({
                 state.token = data.token || null
                 state.emcAmount = data.emcAmount || 'max'
                 
+                if (data.stats) state.stats = data.stats
+                
                 for (let i in data.entries) {
                     let item = data.entries[i]
                     
@@ -1320,7 +1354,7 @@ export const store = createStore({
                     if ('spy' in item) state.data[i].spy = item.spy
                 }
             }
-            
+
             let ownedStarCount = 0
             
             for (let i in state.data) {
@@ -1336,11 +1370,38 @@ export const store = createStore({
                 if ('baseStorage' in item) commit('computeStorage', i)
                 
                 if ('status' in item && item.status == 'owned') ownedStarCount += 1
+                
+                if (!data.stats) {
+                    
+                    if (state.machineT1.includes(item.id)) state.stats.machineT1.current += item.count
+                    if (state.machineT2.includes(item.id)) state.stats.machineT2.current += item.count
+                    if (state.machineT3.includes(item.id)) state.stats.machineT3.current += item.count
+                    if (state.machineT4.includes(item.id)) state.stats.machineT4.current += item.count
+                    if (state.machineT5.includes(item.id)) state.stats.machineT5.current += item.count
+                    if (state.machineT6.includes(item.id)) state.stats.machineT6.current += item.count
+                    if (state.ships.includes(item.id)) state.stats.ships.current += item.count
+                }
             }
             
             if (ownedStarCount > 0) {
+            
                 state.data['dysonT3'].max += ownedStarCount
                 state.data['antimatter'].storage += ownedStarCount * 100000
+                
+                if (!data.stats) state.stats.starOwned.current = ownedStarCount
+            }
+            
+            if (!data.stats) {
+                
+                state.stats.allTimeDarkmatter = state.data['darkmatter'].count
+                state.stats.machineT1.allTime = state.stats.machineT1.current
+                state.stats.machineT2.allTime = state.stats.machineT2.current
+                state.stats.machineT3.allTime = state.stats.machineT3.current
+                state.stats.machineT4.allTime = state.stats.machineT4.current
+                state.stats.machineT5.allTime = state.stats.machineT5.current
+                state.stats.machineT6.allTime = state.stats.machineT6.current
+                state.stats.ships.allTime = state.stats.ships.current
+                state.stats.starOwned.allTime = state.stats.starOwned.current
             }
         },
         /*--------------------------------------------------------------------*/
@@ -1358,6 +1419,7 @@ export const store = createStore({
                 username: state.username,
                 token: state.token,
                 emcAmount: state.emcAmount,
+                stats: state.stats,
                 
                 entries: {},
             }
@@ -1424,7 +1486,7 @@ export const store = createStore({
                 if (canProduce) {
                     if ('inputs' in item) {
                         item.inputs.forEach(input => {
-                            if (input.id == 'energy' && state.data['boostEnergy'].unlocked && state.data['boostEnergy'].count > 0) temp[input.id].prod -= (input.count - (0.01 * state.data['boostEnergy'].count)) * item.active
+                            if (input.id == 'energy' && state.data['boostEnergy'].unlocked && state.data['boostEnergy'].count > 0) temp[input.id].prod -= (input.count * (1 - 0.01 * state.data['boostEnergy'].count)) * item.active
                             else temp[input.id].prod -= input.count * item.active
                         })
                     }
@@ -1717,7 +1779,12 @@ export const store = createStore({
                             })
                         }
                         
-                        item.count = Math.max(0, Math.min(item.count + 1, item.storage * state.storageExcess))
+                        if (item.count < (item.storage * state.storageExcess)) {
+                            state.manualGain.current += 1
+                            state.manualGain.allTime += 1
+                        }
+                        
+                        item.count = Math.max(0, Math.min(item.count + 1, item.storage * state.storageExcess))                        
                     }
                 }
             }
@@ -1776,6 +1843,14 @@ export const store = createStore({
                     if ('faction' in item && 'opinion' in item) state.data[item.faction].opinion += item.opinion
 
                     dispatch('onBuild', item.id)
+                    
+                    if (state.machineT1.includes(item.id)) { state.stats.machineT1.current += 1; state.stats.machineT1.allTime += 1; }
+                    if (state.machineT2.includes(item.id)) { state.stats.machineT2.current += 1; state.stats.machineT2.allTime += 1; }
+                    if (state.machineT3.includes(item.id)) { state.stats.machineT3.current += 1; state.stats.machineT3.allTime += 1; }
+                    if (state.machineT4.includes(item.id)) { state.stats.machineT4.current += 1; state.stats.machineT4.allTime += 1; }
+                    if (state.machineT5.includes(item.id)) { state.stats.machineT5.current += 1; state.stats.machineT5.allTime += 1; }
+                    if (state.machineT6.includes(item.id)) { state.stats.machineT6.current += 1; state.stats.machineT6.allTime += 1; }
+                    if (state.ships.includes(item.id)) { state.stats.ships.current += 1; state.stats.ships.allTime += 1; }
                 }
                 else break
             }
@@ -1883,6 +1958,9 @@ export const store = createStore({
                     state.data['dysonT3'].max += 1
                     state.data['antimatter'].storage += 100000
                     
+                    state.stats.starOwned.current += 1
+                    state.stats.starOwned.allTime += 1
+                    
                     let random = Math.random() * chance
                     if (random < 1) {
                         for (let i in state.ships) {
@@ -1928,6 +2006,9 @@ export const store = createStore({
                 state.data['dysonT3'].max += 1
                 state.data['antimatter'].storage += 100000
                 
+                state.stats.starOwned.current += 1
+                state.stats.starOwned.allTime += 1
+                
                 return true
             }
             
@@ -1939,6 +2020,7 @@ export const store = createStore({
             if (state.data['dysonT3'].count < 1) return false
             
             state.data['darkmatter'].count += getters.getPotentialDM
+            state.stats.allTimeDarkmatter += getters.getPotentialDM
             
             let exludedList = [
                 'darkmatter',
@@ -1963,6 +2045,18 @@ export const store = createStore({
                     if ('spy' in item) item.spy = 0
                 }
             }
+            
+            state.stats.lastRebirthDate = new Date().getTime()
+            state.stats.rebirthCount += 1
+            state.stats.manualGain.current = 0
+            state.stats.machineT1.current = 0
+            state.stats.machineT2.current = 0
+            state.stats.machineT3.current = 0
+            state.stats.machineT4.current = 0
+            state.stats.machineT5.current = 0
+            state.stats.machineT6.current = 0
+            state.stats.ships.current = 0
+            state.stats.starOwned.current = 0
             
             dispatch('save')
             

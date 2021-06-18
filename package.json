@@ -1,6 +1,6 @@
 {
   "name": "NGSpaceCompany",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,6 +12,7 @@
     "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
     "lz-string": "^1.4.4",
+    "moment": "^2.29.1",
     "vue": "^3.0.0",
     "vue-gtag": "^2.0.1",
     "vue-i18n": "^9.1.6",
