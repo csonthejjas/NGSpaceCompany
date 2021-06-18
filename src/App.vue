@@ -1596,7 +1596,7 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.6.0',
+            currentRelease: '1.6.1',
             ghLatestRelease: null,
             
             login: null,

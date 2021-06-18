@@ -1780,8 +1780,8 @@ export const store = createStore({
                         }
                         
                         if (item.count < (item.storage * state.storageExcess)) {
-                            state.manualGain.current += 1
-                            state.manualGain.allTime += 1
+                            state.stats.manualGain.current += 1
+                            state.stats.manualGain.allTime += 1
                         }
                         
                         item.count = Math.max(0, Math.min(item.count + 1, item.storage * state.storageExcess))                        
