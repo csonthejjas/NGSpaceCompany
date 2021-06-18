@@ -345,6 +345,7 @@ export const store = createStore({
             state.data['achPlasmaT1'] =    { id:'achPlasmaT1',    icon:'plasma.png',    data:'plasmaT1',    unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
             state.data['achPlasmaT2'] =    { id:'achPlasmaT2',    icon:'plasma.png',    data:'plasmaT2',    unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
             state.data['achPlasmaT3'] =    { id:'achPlasmaT3',    icon:'plasma.png',    data:'plasmaT3',    unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
+            state.data['achPlasmaT4'] =    { id:'achPlasmaT4',    icon:'plasma.png',    data:'plasmaT4',    unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
             state.data['achMeteoriteT1'] = { id:'achMeteoriteT1', icon:'meteorite.png', data:'meteoriteT1', unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
             state.data['achMeteoriteT2'] = { id:'achMeteoriteT2', icon:'meteorite.png', data:'meteoriteT2', unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
             state.data['achMeteoriteT3'] = { id:'achMeteoriteT3', icon:'meteorite.png', data:'meteoriteT3', unlocked:false, count:0, progress:0, brackets:[5, 25, 75, 150, 250], }
@@ -1371,7 +1372,7 @@ export const store = createStore({
                 
                 if ('status' in item && item.status == 'owned') ownedStarCount += 1
                 
-                if (!data.stats) {
+                if (data && !data.stats) {
                     
                     if (state.machineT1.includes(item.id)) state.stats.machineT1.current += item.count
                     if (state.machineT2.includes(item.id)) state.stats.machineT2.current += item.count
@@ -1391,7 +1392,7 @@ export const store = createStore({
                 if (!data.stats) state.stats.starOwned.current = ownedStarCount
             }
             
-            if (!data.stats) {
+            if (data && !data.stats) {
                 
                 state.stats.allTimeDarkmatter = state.data['darkmatter'].count
                 state.stats.machineT1.allTime = state.stats.machineT1.current
