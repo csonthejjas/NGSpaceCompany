@@ -13,13 +13,13 @@
                 </div>
                 <div v-if="prod != null" class="col-auto text-end">
                     <small class="text-uppercase" :class="{ 'text-danger':(prod * boost) < 0, 'text-normal':(prod * boost) == 0, 'text-success':(prod * boost) > 0 }">
-                        <span v-if="(prod * boost) > 0">+</span>{{ numeralFormat(prod * boost, '0.[0]a') }}
+                        <span v-if="(prod * boost) > 0">+</span>{{ numeralFormat((prod * boost).toPrecision(4), '0.[000]a') }}
                     </small>
                     <small class="text-normal ms-1">/s</small>
                 </div>
                 <div v-if="count != null" class="col-auto text-end" style="width:110px;">
                     <small class="text-uppercase" :class="{ 'text-light':(count > 0 && (!storage || count < storage)), 'text-normal':count == 0, 'text-danger':count < 0, 'text-success':storage && count >= storage }">{{ numeralFormat(count, '0.[0]a') }}</small>
-                    <small v-if="storage" class="text-uppercase text-normal ms-1">/{{ numeralFormat(storage, '0.[0]a') }}</small>
+                    <small v-if="storage" class="text-uppercase text-normal ms-1">/{{ numeralFormat(storage.toPrecision(4), '0.[000]a') }}</small>
                     <small v-if="potential >= 0" class="text-normal ms-1">({{ potential }})</small>
                 </div>
                 <div v-if="opinion != null" class="col-auto text-end">

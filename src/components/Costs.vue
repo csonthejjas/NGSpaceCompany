@@ -12,8 +12,8 @@
                 <small class="text-light">{{ $t(cost.id) }}</small>
             </div>
             <div class="col-auto">
-                <small v-if="!cost.timer || cost.timer > -2" class="text-uppercase text-light">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
-                <small v-if="cost.timer <= -2" class="text-uppercase text-danger">{{ numeralFormat(cost.count, '0.[0]a') }}</small>
+                <small v-if="!cost.timer || cost.timer > -2" class="text-uppercase text-light">{{ numeralFormat(cost.count.toPrecision(4), '0.[000]a') }}</small>
+                <small v-if="cost.timer <= -2" class="text-uppercase text-danger">{{ numeralFormat(cost.count.toPrecision(4), '0.[000]a') }}</small>
             </div>
             <div class="col-auto text-end" style="width:75px">
                 <small v-if="(!cost.timer && cost.timer != 0) || cost.timer < 0" class="text-normal">---</small>

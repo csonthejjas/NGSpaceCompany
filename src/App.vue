@@ -16,8 +16,12 @@
                     <img :src="require('./assets/whiteLogo.png')" width="42" height="42" alt="Game logo" />
                 </div>
 
-                <div class="col text-truncate">
-                    <span class="h5 text-light">{{ companyName }} Company</span>
+                <div class="col text-truncate px-0">
+                    <span class="h5 text-light mb-0">{{ companyName }} Company</span>
+                </div>
+                
+                <div class="col-auto px-0">
+                    <small class="small">v{{ currentRelease }}</small>
                 </div>
 
                 <div class="col-auto d-lg-none" @click="sidebarOpen = false;">
@@ -1596,7 +1600,7 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.6.2',
+            currentRelease: '1.7.0',
             ghLatestRelease: null,
             
             login: null,

@@ -118,8 +118,8 @@
                                             <small class="text-light">{{ $t(data[id].storage.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="data[id].storage.id != 'energy'" class="text-success">+{{ numeralFormat(data[id].storage.count, '0.[0]a') }}</small>
-                                            <small v-if="data[id].storage.id == 'energy'" class="text-success">+{{ numeralFormat(data[id].storage.count * (1 + (0.01 * data['boostEnergyStorage'].count)), '0.[0]a') }}</small>
+                                            <small v-if="data[id].storage.id != 'energy'" class="text-success">+{{ numeralFormat(data[id].storage.count.toPrecision(4), '0.[000]a') }}</small>
+                                            <small v-if="data[id].storage.id == 'energy'" class="text-success">+{{ numeralFormat((data[id].storage.count * (1 + (0.01 * data['boostEnergyStorage'].count))).toPrecision(4), '0.[000]a') }}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small class="text-success text-uppercase">+{{ numeralFormat(output.count * (1 + output.boost), '0.[00]a') }}</small>
+                                            <small class="text-success text-uppercase">+{{ numeralFormat((output.count * (1 + output.boost)).toPrecision(4), '0.[000]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
@@ -146,8 +146,8 @@
                                             <small class="text-light">{{ $t(input.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small v-if="input.id == 'energy'" class="text-warning text-uppercase">-{{ numeralFormat(input.count * (1 - (0.01 * data['boostEnergy'].count)), '0.[00]a') }}</small>
-                                            <small v-if="input.id != 'energy'" class="text-warning text-uppercase">-{{ numeralFormat(input.count, '0.[00]a') }}</small>
+                                            <small v-if="input.id == 'energy'" class="text-warning text-uppercase">-{{ numeralFormat((input.count * (1 - (0.01 * data['boostEnergy'].count))).toPrecision(4), '0.[000]a') }}</small>
+                                            <small v-if="input.id != 'energy'" class="text-warning text-uppercase">-{{ numeralFormat(input.count.toPrecision(4), '0.[000]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>

@@ -1137,7 +1137,7 @@ export const store = createStore({
             state.data['upgradeTier1'] =       { id:'upgradeTier1',       unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:8  }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:4,  }
             state.data['techEnergyStorage5'] = { id:'techEnergyStorage5', unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:14 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:17, unlocks:['energyS5'], }
             state.data['boostCapital'] =       { id:'boostCapital',       unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:30 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:18, }
-            state.data['techTier5'] =          { id:'techTier5',          unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:35 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:20, unlocks:['carbonT5', 'achCarbonT5', 'oilT5', 'achOilT5', 'metalT5', 'achMetalT5', 'gemT5', 'achGemT5', 'woodT5', 'achWoodT5', 'siliconT5', 'achSiliconT5', 'uraniumT5', 'achUraniumT5', 'lavaT5', 'achLavaT5', 'lunariteT5', 'achLunariteT5', 'methaneT5', 'achMethaneT5', 'titaniumT5', 'achTitaniumT5', 'goldT5', 'achGoldT5', 'silverT5', 'achSilverT5', 'hydrogenT5', 'achHydrogenT5', 'heliumT5', 'achHeliumT5', 'iceT5', 'achIceT5'], }
+            state.data['techTier5'] =          { id:'techTier5',          unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:35 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:20, }
             /*----------------------------------------------------------------*/
             
             // DM MOVITON
@@ -1452,13 +1452,23 @@ export const store = createStore({
             let temp = {}
             state.resources.forEach(item => { temp[item.id] = { prod:0, boost:0 } })
 
-            let boost = 0
+            let prodBoost = 0
             item = state.data['boostProduction']
-            if (item.unlocked && item.count > 0) { boost += 0.01 * item.count }
+            if (item.unlocked && item.count > 0) { prodBoost += 0.01 * item.count }
+            
+            let dmBoost = 0
             item = state.data['boostDarkmatter']
-            if (item.unlocked && item.count > 0) { boost += 0.01 * state.data['darkmatter'].count }
+            if (item.unlocked && item.count > 0) { dmBoost += 0.01 * state.data['darkmatter'].count }
+            
+            let capitalBoost = 0
             item = state.data['boostCapital']
-            if (item.unlocked && item.count > 0) { state.resources.forEach(res => { if ('storage' in res && res.count >= res.storage) boost += 0.05 }) }
+            if (item.unlocked && item.count > 0) { state.resources.forEach(res => { if ('storage' in res && res.count >= res.storage) capitalBoost += 0.05 }) }
+            
+            let boost = 1
+            boost *= 1 + prodBoost
+            boost *= 1 + dmBoost
+            boost *= 1 + capitalBoost
+            boost -= 1
             
             state.stars.forEach(item => {
                 if (item.status == 'owned') {
@@ -1624,6 +1634,13 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeEnergy2') {
                 state.data['energyT2'].outputs.forEach(output => { output.count *= 2 })
+            }
+            /*----------------------------------------------------------------*/
+            else if (id == 'wonderMeteorite1') {
+                if (state.data['techTier5'].count > 0) {
+                    let list = ['carbonT5', 'achCarbonT5', 'oilT5', 'achOilT5', 'metalT5', 'achMetalT5', 'gemT5', 'achGemT5', 'woodT5', 'achWoodT5', 'siliconT5', 'achSiliconT5', 'uraniumT5', 'achUraniumT5', 'lavaT5', 'achLavaT5', 'lunariteT5', 'achLunariteT5', 'methaneT5', 'achMethaneT5', 'titaniumT5', 'achTitaniumT5', 'goldT5', 'achGoldT5', 'silverT5', 'achSilverT5', 'hydrogenT5', 'achHydrogenT5', 'heliumT5', 'achHeliumT5', 'iceT5', 'achIceT5']
+                    list.forEach(unlock => { dispatch('unlock', unlock) })
+                }
             }
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeGain') {

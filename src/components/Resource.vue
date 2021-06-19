@@ -18,8 +18,8 @@
                                             <span class="h6 text-light">{{ $t('overview') }}</span>
                                         </div>
                                         <div class="col-auto">
-                                            <span class="text-uppercase" :class="{ 'text-light':(data[id].count > 0 && (!data[id].storage || data[id].count < data[id].storage)), 'text-normal':data[id].count <= 0, 'text-success':data[id].storage && data[id].count >= data[id].storage }">{{ numeralFormat(data[id].count, '0.[0]a') }}</span>
-                                            <small v-if="data[id].storage" class="text-uppercase text-normal ms-1">/{{ numeralFormat(data[id].storage, '0.[0]a') }}</small>
+                                            <span class="text-uppercase" :class="{ 'text-light':(data[id].count > 0 && (!data[id].storage || data[id].count < data[id].storage)), 'text-normal':data[id].count <= 0, 'text-success':data[id].storage && data[id].count >= data[id].storage }">{{ numeralFormat(data[id].count.toPrecision(4), '0.[000]a') }}</span>
+                                            <small v-if="data[id].storage" class="text-uppercase text-normal ms-1">/{{ numeralFormat(data[id].storage.toPrecision(4), '0.[000]a') }}</small>
                                         </div>
                                         <div v-if="data[id].storage" class="col-12">
                                             <div class="row g-1">
