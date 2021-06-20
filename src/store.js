@@ -1696,7 +1696,10 @@ export const store = createStore({
                 let list = ['wonderPrecious0', 'wonderEnergetic0', 'wonderTechnological0', 'wonderMeteorite0']
                 for (let i = 0; i < list.length; i++) {
                     let item = state.data[list[i]]
-                    if (item.count < 1) item.count = 1
+                    if (item.count < 1) {
+                        item.count = 1
+                        if ('unlocks' in item) item.unlocks.forEach(unlock => { dispatch('unlock', unlock) })
+                    }
                 }
             }
             /*----------------------------------------------------------------*/

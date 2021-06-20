@@ -82,7 +82,7 @@
                     <sidenav-group id="wondersHeading" :unlocked="data['wonderPrecious0'].unlocked">
                         <sidenav-item id="wonderStationPane" icon="wonderStation.png" :unlocked="data['wonderPrecious0'].unlocked" :done="data['wonderPrecious0'].count > 0 && data['wonderEnergetic0'].count > 0 && data['wonderTechnological0'].count > 0 && data['wonderMeteorite0'].count > 0" doneText="done" />
                         <sidenav-item id="floor1Pane" icon="floor1.png" :unlocked="data['wonderPrecious1'].unlocked || data['wonderEnergetic1'].unlocked || data['wonderTechnological1'].unlocked || data['wonderMeteorite1'].unlocked" :done="data['wonderPrecious1'].count > 0 && data['wonderEnergetic1'].count > 0 && data['wonderTechnological1'].count > 0 && data['wonderMeteorite1'].count > 0" doneText="done" />
-                        <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" :done="data['wonderPortal'].count > 0" doneText="done" />
+                        <sidenav-item id="floor2Pane" icon="floor2.png" :unlocked="data['wonderComm'].unlocked" :done="data['wonderComm'].count > 0 && data['wonderSpaceship'].count > 0 && data['wonderAntimatter'].count > 0 && data['wonderPortal'].count > 0" doneText="done" />
                         <sidenav-item id="floor3Pane" icon="floor3.png" :unlocked="data['wonderStargate'].unlocked" :done="data['wonderStargate'].count > 0" doneText="done" />
                     </sidenav-group>
 
@@ -805,194 +805,85 @@
                         </card>
                         <card id="statistics">
                             <div class="col-12">
-                                <div class="row g-1">
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-normal">{{ $t('startDate') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ numeralFormat(stats.startDate) }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-normal">{{ $t('lastRebirthDate') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ numeralFormat(stats.lastRebirthDate) }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-normal">{{ $t('rebirthCount') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ numeralFormat(stats.rebirthCount, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('darkmatter') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(data['darkmatter'].count, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.allTimeDarkmatter, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('manualGain') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.manualGain.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.manualGain.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT1') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT1.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT1.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT2') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT2.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT2.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT3') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT3.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT3.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT4') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT4.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT4.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT5') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT5.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT5.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('machineT6') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT6.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.machineT6.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('ships') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.ships.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.ships.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="rounded px-3 py-2" style="background-color:rgba(255,255,255,.125);">
-                                            <div class="row g-0">
-                                                <div class="col-12 small">
-                                                    <span class="text-light">{{ $t('starOwned') }}</span>
-                                                </div>
-                                                <div class="col-12 small">
-                                                    <small>{{ $t('current') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.starOwned.current, '0a') }}</span>
-                                                    <small class="ms-3">{{ $t('allTime') }}</small>
-                                                    <span class="ms-1 text-light">{{ numeralFormat(stats.starOwned.allTime, '0a') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('startDate') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ momentFormat(stats.startDate, 'YYYY-MM-DD') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('lastRebirthDate') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ momentFormat(stats.lastRebirthDate, 'YYYY-MM-DD') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('rebirthCount') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.rebirthCount, '0a') }}</small></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td width="1%" nowrap class="text-end"><small>{{ $t('current') }}</small></td>
+                                            <td width="1%" nowrap class="text-end"><small>{{ $t('allTime') }}</small></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('darkmatter') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(data['darkmatter'].count.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.allTimeDarkmatter.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('manualGain') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.manualGain.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.manualGain.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT1') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT1.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT1.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT2') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT2.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT2.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT3') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT3.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT3.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT4') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT4.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT4.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT5') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT5.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT5.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('machineT6') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT6.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.machineT6.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('ships') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.ships.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.ships.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td><small class="text-normal">{{ $t('starOwned') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.starOwned.current.toPrecision(4), '0.[000]a') }}</small></td>
+                                            <td class="text-end"><small class="text-light">{{ numeralFormat(stats.starOwned.allTime.toPrecision(4), '0.[000]a') }}</small></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </card>
                         <card id="resources">
@@ -1551,6 +1442,7 @@ import { Tooltip, Toast, Modal } from 'bootstrap'
 import ghApi from './apis/ghApi.js'
 
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
     components: {
@@ -1600,7 +1492,7 @@ export default {
             
             rebirthModal: null,
             
-            currentRelease: '1.7.0',
+            currentRelease: '1.8.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1643,6 +1535,9 @@ export default {
             'setActiveShip', 'spy', 'invade', 'absorb',
             'rebirth',
         ]),
+        momentFormat(date, fmt) {
+            return moment(date).format(fmt)
+        },
         changeLocale(lang) {
         
             if (this.$i18n.locale !== lang) {
