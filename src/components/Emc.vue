@@ -28,9 +28,18 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <button class="btn w-100" @click="convert(id)">
-                        {{ $t('convert') }}
-                    </button>
+                    <div class="row gx-3 align-items-center">
+                        <div v-if="data['autoEmc'].count > 0" class="col-auto">
+                            <button class="btn" :class="{ 'btn-outline':autoResource!=id, 'btn-success':autoResource==id }" @click="setAutoEmc(id)">
+                                {{ $t('auto') }}
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn w-100" @click="convert(id)">
+                                {{ $t('convert') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,13 +47,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
     props: [ 'id' ],
     computed: {
         ...mapState([
-            'data', 'emcAmount',
+            'data', 'emcAmount', 'autoResource'
         ]),
         sourceCount: function() {
             if (this.emcAmount == 'max') return Math.floor(this.data[this.data[this.id].source].count / this.data[this.id].rate) * this.data[this.id].rate
@@ -56,9 +65,17 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            'setAutoResource',
+        ]),
         ...mapActions([
             'convert',
         ]),
+        setAutoEmc(id) {
+        
+            if (this.autoResource == id) this.setAutoResource(null)
+            else this.setAutoResource(id)
+        },
     },
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
     <div v-if="unlocked" class="col">
-        <button class="sidenav-group" data-bs-toggle="collapse" :data-bs-target="'#collapse' + id" role="heading">
+        <button class="sidenav-group" :class="{ 'collapsed':isCollapsed(id) }" data-bs-toggle="collapse" :data-bs-target="'#collapse' + id" role="heading" @click="toggleCollapsed(id)">
             {{ $t(id) }}
         </button>
-        <div :id="'collapse' + id" class="collapse show row gx-2 gy-1 row-cols-1">
+        <div :id="'collapse' + id" class="collapse row gx-2 gy-1 row-cols-1" :class="{ 'show':!isCollapsed(id) }">
             <slot></slot>
         </div>
     </div>
@@ -35,7 +35,19 @@
 </style>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
     props: [ 'id', 'unlocked' ],
+    computed: {
+        ...mapGetters([
+            'isCollapsed'
+        ]),
+    },
+    methods: {
+        ...mapMutations([
+            'toggleCollapsed',
+        ]),
+    },
 }
 </script>

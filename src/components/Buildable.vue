@@ -2,13 +2,25 @@
     <div class="col" role="article">
         <div class="row gx-2">
             <div class="col-auto">
-                <div class="timeline-marker">
+            
+                <div v-if="!data[id].unlocked" class="timeline-marker">
+                    <i class="fas fa-fw fa-lock text-muted"></i>
+                </div>
                 
-                    <i v-if="!data[id].unlocked" class="fas fa-fw fa-lock text-muted"></i>
-                    <i v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" class="fas fa-fw fa-lock-open"></i>
-                    <i v-if="data[id].unlocked && data[id].max && data[id].count >= data[id].max" class="fas fa-fw fa-check text-success"></i>
+                <div v-if="data[id].unlocked && data[id].max && data[id].count >= data[id].max" class="timeline-marker">
+                    <i class="fas fa-fw fa-check text-success"></i>
+                </div>
+                
+                <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" class="timeline-marker">                
+                    
+                    <i v-if="!collapse" class="fas fa-fw fa-lock-open"></i>
+                    
+                    <button v-if="collapse" :class="{ 'collapsed':isCollapsed(id) }" data-bs-toggle="collapse" :data-bs-target="'#card' + id" @click="toggleCollapsed(id)">
+                        <i class="fas fa-fw fa-lock-open"></i>
+                    </button>
                     
                 </div>
+                
             </div>
             <div class="col">
             
@@ -36,7 +48,7 @@
                     </div>
                 </div>
                 
-                <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" class="card card-body">
+                <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" :id="'card' + id" class="card card-body" :class="{ 'collapse':collapse, 'show':collapse && !isCollapsed(id) }">
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <div class="row g-3">
@@ -191,10 +203,10 @@
 <script>
 import Costs from './Costs.vue'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
-    props: [ 'id', 'btnText', 'unlocker' ],
+    props: [ 'id', 'btnText', 'unlocker', 'collapse' ],
     components: {
         'costs': Costs,
     },
@@ -203,12 +215,20 @@ export default {
             selected: null,
         }
     },
-    computed: mapState([
-        'data',
-    ]),
+    computed: {
+        ...mapState([
+            'data',
+        ]),
+        ...mapGetters([
+            'isCollapsed'
+        ]),
+    },
     methods: {
         ...mapActions([
             'build', 'destroy', 'switchNano',
+        ]),
+        ...mapMutations([
+            'toggleCollapsed',
         ]),
     },
 }

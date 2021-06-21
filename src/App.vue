@@ -21,7 +21,9 @@
                 </div>
                 
                 <div class="col-auto px-0">
-                    <small class="small">v{{ currentRelease }}</small>
+                    <button class="btn p-1" @click="changeLogModal.show();">
+                        <small class="small text-normal">v{{ currentRelease }}</small>
+                    </button>
                 </div>
 
                 <div class="col-auto d-lg-none" @click="sidebarOpen = false;">
@@ -277,7 +279,7 @@
                     <pane id="metalPane" icon="metal.png" :descs="['metalPane_desc']">
                         <resource id="metal" />
                         <buildable id="metalS1" btnText="upgrade" unlocker="techStorage" />
-                        <buildable id="metalT1" btnText="build" />
+                        <buildable id="metalT1" btnText="build" collapse="true" />
                         <buildable id="metalT2" btnText="build" unlocker="techTier2" />
                         <buildable id="metalT3" btnText="build" unlocker="wonderTechnological1" />
                         <buildable id="metalT4" btnText="build" unlocker="wonderMeteorite1" />
@@ -549,16 +551,28 @@
                     <pane id="emcPane" icon="emc.png" :descs="['emcPane_desc']">
                         <card checked="true">
                             <div class="col-12">
-                                <div class="small">{{ $t('selectEmcAmount') }}</div>
-                                <select class="form-control" v-model="selectedEmcAmount" @change="setEmcAmount(selectedEmcAmount)">
-                                    <option value="max">Max</option>
-                                    <option value="1">1</option>
-                                    <option value="10">10</option>
-                                    <option value="100">100</option>
-                                    <option value="1000">{{ numeralFormat(1000, '0a') }}</option>
-                                    <option value="10000">{{ numeralFormat(10000, '0a') }}</option>
-                                    <option value="100000">{{ numeralFormat(100000, '0a') }}</option>
-                                </select>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="small">{{ $t('selectEmcAmount') }}</div>
+                                        <select class="form-control" v-model="selectedEmcAmount" @change="setEmcAmount(selectedEmcAmount)">
+                                            <option value="max">Max</option>
+                                            <option value="1">1</option>
+                                            <option value="10">10</option>
+                                            <option value="100">100</option>
+                                            <option value="1000">{{ numeralFormat(1000, '0a') }}</option>
+                                            <option value="10000">{{ numeralFormat(10000, '0a') }}</option>
+                                            <option value="100000">{{ numeralFormat(100000, '0a') }}</option>
+                                        </select>
+                                    </div>
+                                    <div v-if="data['autoEmc'].count > 0" class="col">
+                                        <div class="small">{{ $t('selectAutoEmcInterval') }}</div>
+                                        <select class="form-control" v-model="selectedAutoEmcInterval" @change="setAutoEmcInterval(selectedAutoEmcInterval)">
+                                            <option value="1">{{ $t('1second') }}</option>
+                                            <option value="10">{{ $t('10second') }}</option>
+                                            <option value="60">{{ $t('1minute') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </card>
                         <card checked="true">
@@ -727,10 +741,11 @@
                     <pane id="stargazePrasnianPane" icon="prasnian.png" :descs="['stargazePrasnianPane_desc']">
                         <buildable id="techPlasma3" btnText="activate" />
                         <buildable id="upgradeWonder1" btnText="activate" />
+                        <buildable id="techPlasmaStorage3" btnText="activate" />
                         <buildable id="upgradeWonder2" btnText="activate" />
                         <buildable id="upgradeWonder3" btnText="activate" />
+                        <buildable id="autoEmc" btnText="activate" />
                         <buildable id="techPlasma4" btnText="activate" />
-                        <buildable id="techPlasmaStorage3" btnText="activate" />
                     </pane>
                     
                     <!-- STARGAZE HYACINITE PANE -->
@@ -766,7 +781,7 @@
                         
                     <!-- DONATING PANE -->
                     <pane id="donatingPane" icon="donating.png" :descs="['donatingPane_desc1', 'donatingPane_desc2']">
-                        <card id="donatingPane_desc3">
+                        <card id="donatingPane_desc3" checked="true">
                             <div class="col-12">
                                 <form class="row g-2 justify-content-end align-items-end" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -789,7 +804,7 @@
                     
                     <!-- ACHIEVEMENTS PANE -->
                     <pane id="achievementPane" icon="trophy.png" :descs="['achievementPane_desc']">
-                        <card id="currentRank">
+                        <card id="currentRank" checked="true">
                             <div class="col-12">
                                 <small>{{ rank.level }} - {{ $t('rank_' + rank.level) }}</small>
                                 <div class="progress">
@@ -803,7 +818,7 @@
                                 </div>
                             </div>
                         </card>
-                        <card id="statistics">
+                        <card id="statistics" checked="true">
                             <div class="col-12">
                                 <table class="table">
                                     <tbody>
@@ -886,7 +901,7 @@
                                 </table>
                             </div>
                         </card>
-                        <card id="resources">
+                        <card id="resources" checked="true">
                             <div class="col-12 mt-2">
                                 <div class="row g-1">
                                     <div v-for="ach in resAchievements" :key="ach.id" class="col-12 col-md-4">
@@ -922,7 +937,7 @@
                                 </div>
                             </div>
                         </card>
-                        <card id="producers">
+                        <card id="producers" checked="true">
                             <div class="col-12 mt-2">
                                 <div class="row g-1">
                                     <div v-for="ach in prodAchievements" :key="ach.id" class="col-12 col-md-4">
@@ -962,15 +977,15 @@
                     
                     <!-- HELP PANE -->
                     <pane id="helpPane" icon="help.png" :descs="['helpPane_desc']">
-                        <card id="help1" :descs="['help1_desc1']" />
-                        <card id="help2" :descs="['help2_desc1', 'help2_desc2']" />
-                        <card id="help3" :descs="['help3_desc1']" />
-                        <card id="help4" :descs="['help4_desc1']" />
+                        <card id="help1" :descs="['help1_desc1']" checked="true" />
+                        <card id="help2" :descs="['help2_desc1', 'help2_desc2']" checked="true" />
+                        <card id="help3" :descs="['help3_desc1']" checked="true" />
+                        <card id="help4" :descs="['help4_desc1']" checked="true" />
                     </pane>
                     
                     <!-- OPTIONS PANE -->
                     <pane id="settingsPane" icon="cog.png" :descs="['settingsPane_desc']">
-                        <card id="companyName">
+                        <card id="companyName" checked="true">
                             <div class="col-12">
                                 <div class="row g-1">
                                     <div class="col">
@@ -982,7 +997,7 @@
                                 </div>
                             </div>
                         </card>
-                        <card id="importExport">
+                        <card id="importExport" checked="true">
                             <div class="col-12">
                                 <div class="row g-1">
                                     <div class="col-auto">
@@ -1003,7 +1018,21 @@
                                 <span>{{ $t('importExport_desc') }}</span>
                             </div>
                         </card>
-                        <card id="saving">
+                        <card id="notifications" checked="true">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkToastAutoSave" v-model="showToastAutoSave" @click="setNotifAutoSave(!showToastAutoSave)" />
+                                    <label class="form-check-label small" for="checkToastAutoSave">{{ $t('showToastAutoSave') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkToastAchievement" v-model="showToastAchievement" @click="setNotifAchievement(!showToastAchievement)" />
+                                    <label class="form-check-label small" for="checkToastAchievement">{{ $t('showToastAchievement') }}</label>
+                                </div>
+                            </div>
+                        </card>
+                        <card id="saving" checked="true">
                             <div class="col-12">
                                 <div class="mb-1">
                                     <small>{{ $t('autoSavingDuration') }}</small>
@@ -1017,23 +1046,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="checkToastAutoSave" v-model="showToastAutoSave" @click="setNotifAutoSave(!showToastAutoSave)" />
-                                    <label class="form-check-label small" for="checkToastAutoSave">{{ $t('showToastAutoSave') }}</label>
-                                </div>
+                            <div class="col-12 text-end">
+                                <button class="btn btn-danger" @click="hardResetModal.show();">
+                                    <span class="text-danger">{{ $t('hardReset') }}</span>
+                                </button>
                             </div>
                         </card>
                     </pane>
                     
                     <!-- ABOUT PANE -->
                     <pane id="aboutPane" icon="about.png" :descs="['aboutPane_desc']">
-                        <card id="currentVersion">
-                            <div class="col-12 small">
-                                <span class="text-normal">v{{ currentRelease }}</span>
-                            </div>
-                        </card>
-                        <card id="about1" :descs="['about1_desc1']">
+                        <card id="about1" :descs="['about1_desc1']" checked="true">
                             <div class="col-12 small">
                                 <ul class="mb-2">
                                     <li class="text-truncate">
@@ -1065,7 +1088,7 @@
                                 </ul>
                             </div>
                         </card>
-                        <card id="about2">
+                        <card id="about2" checked="true">
                             <div class="col-12">
                                 <div class="row gy-1 gx-3">
                                     <div class="col-auto"><small class="text-timer">darklord192</small></div>
@@ -1076,7 +1099,7 @@
                                 </div>
                             </div>
                         </card>
-                        <card id="about3">
+                        <card id="about3" checked="true">
                             <div class="col-12 small">{{ $t('about3_desc1') }} <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                             <div class="col-12 small">
                                 <ul class="mb-0">
@@ -1418,6 +1441,127 @@
         </div>
     </div>
     
+    <!-- HARD RESET MODAL -->
+    <div v-if="loaded" id="hardResetModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-scrollable" role="dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('hardReset') }}</span>
+                        </div>
+                        <div class="col-12 small">
+                            <span class="text-normal">{{ $t('hardReset_confirm') }}</span>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-danger" @click="onHardReset()"><span class="text-danger">{{ $t('hardReset') }}</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CHANGELOG MODAL -->
+    <div v-if="loaded" id="changeLogModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-scrollable" role="dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('changeLog') }}</span>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.9.0 - 2021-06-21</div>
+                            <ul class="small">
+                                <li>NEW: add 'Auto EMC' as Prasnian Empire upgrade</li>
+                                <li>NEW: display change log modal when you click on current version number on left side top bar</li>
+                                <li>NEW: add 'Hard Reset' functionnality in 'Options' pane</li>
+                                <li>NEW: save left side menu group collapse state</li>
+                                <li>NEW: make machine card collaspable and save collaspe state</li>
+                                <li>NEW: new option to activate/dactivate achievement notification</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.8.0 - 2021-06-20</div>
+                            <ul class="small">
+                                <li>NEW: better displaying of statictics</li>
+                                <li>FIX: display "DONE" on "Floor #2" only when all wonders are activated</li>
+                                <li>FIX: "Mystery Wonder Construction" unlocks "Floor #2"</li>
+                                <li>FIX: left side resource production displaying is rounding as storage</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.7.0 - 2021-06-19</div>
+                            <ul class="small">
+                                <li>FIX: Make resource boosts multiplicative, rather than additive</li>
+                                <li>FIX : Unlock T5 machines only when Wonder Meteorite is activated</li>
+                                <li>NEW: better precision in number displaying (4 digits)</li>
+                                <li>NEW: current version number displaying on left side top bar</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.6.0 - 2021-06-18</div>
+                            <ul class="small">
+                                <li>FIX: fix Energy Efficiency boost (again)</li>
+                                <li>NEW : remove dependendy between Wonder Station Floor #2 and Dyson Sphere</li>
+                                <li>NEW : add statistics in Achievements pane</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.5.0 - 2021-06-18</div>
+                            <ul class="small">
+                                <li>NEW : add EMC amount selector</li>
+                                <li>NEW : change EMC pane displaying</li>
+                                <li>NEW : make Wonder Station Floor #2 available only if you have 1 Dyson Sphere at least (for those who already build wonders on floor #2, you don't loose anything, you will recover your wonders after the first Dyson Sphere)</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.4.0 - 2021-06-18</div>
+                            <ul class="small">
+                                <li>FIX: fix Energy Efficiency boost</li>
+                                <li>FIX: fix Science Efficiency boost</li>
+                                <li>NEW: change Ranking pane displaying</li>
+                                <li>NEW: change Achievements pane displaying</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.3.0 - 2021-06-17</div>
+                            <ul class="small">
+                                <li>NEW: add backend to save player current rank data and new pane to display player ranks (leaderboard first tentative)</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.2.0 - 2021-06-16</div>
+                            <ul class="small">
+                                <li>FIX: to unlock "Floor #1" whatever the wonder you decide to achieve first</li>
+                                <li>NEW : make site more compatible with screenreaders</li>
+                                <li>NEW : display current version number of the game</li>
+                                <li>NEW : every hour check latest version on Github and propose to update the game if current version is not up to date</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.1.0 - 2021-06-16</div>
+                            <ul class="small">
+                                <li>FIX : do not double the consumption for "Upgrade Resource Technology" & "Upgrade Engine Technology"</li>
+                                <li>NEW : display timer to tell when item storage will be empty</li>
+                                <li>NEW : display item description even when it is done</li>
+                                <li>NEW : display different button style when you hover/click on it</li>
+                                <li>NEW : make new achievement toast clickable to achivevement pane</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.0.0 - 2021-06-16</div>
+                            <ul class="small">
+                                <li>Initial release</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 <script>
@@ -1480,6 +1624,7 @@ export default {
             toastAbsorbSuccess: null,
             
             showToastAutoSave: true,
+            showToastAchievement: true,
             
             compressed: null,
             newCompanyName: null,
@@ -1489,10 +1634,11 @@ export default {
             spyModal: null,
             invadeModal: null,
             absorbModal: null,
-            
             rebirthModal: null,
+            changeLogModal: null,
+            hardResetModal: null,
             
-            currentRelease: '1.8.0',
+            currentRelease: '1.9.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1501,6 +1647,7 @@ export default {
             leaderboard_ranks: null,
             
             selectedEmcAmount: null,
+            selectedAutoEmcInterval: null,
         }
     },
     computed: {
@@ -1508,9 +1655,10 @@ export default {
         
             'data', 'companyName', 'locale', 'activePane', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
-            'notifAutoSave',
+            'notifAutoSave', 'notifAchievement',
             'username', 'token',
-            'emcAmount', 'stats',
+            'emcAmount', 'autoEmcInterval', 'timeSinceAutoEmc',
+            'stats',
         ]),
         ...mapGetters([
         
@@ -1526,14 +1674,14 @@ export default {
         ...mapMutations([
         
             'setLocale', 'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName', 'setAutoSaveInterval',
-            'setNotifAutoSave', 'setUsername', 'setToken', 'setEmcAmount',
+            'setNotifAutoSave', 'setNotifAchievement', 'setUsername', 'setToken', 'setEmcAmount', 'setTimeSinceAutoEmc', 'setAutoEmcInterval',
         ]),
         ...mapActions([
         
             'initialize', 'load',
             'computeProdValues', 'produceResources', 'updateTimers', 'checkBoosts', 'updateAchievements', 'save',
             'setActiveShip', 'spy', 'invade', 'absorb',
-            'rebirth',
+            'rebirth', 'autoEmc',
         ]),
         momentFormat(date, fmt) {
             return moment(date).format(fmt)
@@ -1555,6 +1703,7 @@ export default {
             this.autoSavingDuration = this.autoSaveInterval / 1000
             this.login = this.username
             this.selectedEmcAmount = this.emcAmount
+            this.selectedAutoEmcInterval = this.autoEmcInterval / 1000
             
             this.ghUpdate()
             
@@ -1571,6 +1720,7 @@ export default {
                 element = document.getElementById('toastAutoSave')
                 this.toastAutoSave = new Toast(element)
                 this.showToastAutoSave = this.notifAutoSave 
+                this.showToastAchievement = this.notifAchievement 
                 
                 element = document.getElementById('toastAchievement')
                 this.toastAchievement = new Toast(element)
@@ -1603,6 +1753,12 @@ export default {
                 
                 element = document.getElementById('rebirthModal')
                 this.rebirthModal = new Modal(element)
+                
+                element = document.getElementById('changeLogModal')
+                this.changeLogModal = new Modal(element)
+                
+                element = document.getElementById('hardResetModal')
+                this.hardResetModal = new Modal(element)
             })
         },
         fastUpdate() {
@@ -1612,6 +1768,7 @@ export default {
 
             this.setLastUpdateTime(currentTime)
             this.setTimeSinceAutoSave(this.timeSinceAutoSave + delta)
+            this.setTimeSinceAutoEmc(this.timeSinceAutoEmc + delta)
             
             this.computeProdValues()
             this.produceResources(delta)
@@ -1621,7 +1778,7 @@ export default {
         slowUpdate() {
             
             this.updateAchievements()
-            if (this.newAchievement == true) this.toastAchievement.show()
+            if (this.newAchievement == true && this.showToastAchievement == true) this.toastAchievement.show()
             
             let timeLeft = this.autoSaveInterval - (this.timeSinceAutoSave * 1000)
             if (this.autoSaveInterval < 0) timeLeft = 1000
@@ -1639,6 +1796,13 @@ export default {
                 }   
                 
                 axios.get('https://ngspacecompany.exileng.com/api/ranks/').then((response) => { this.leaderboard_ranks = response.data })
+            }
+            
+            timeLeft = this.autoEmcInterval - (this.timeSinceAutoEmc * 1000)
+            if (this.autoEmcInterval < 0) timeLeft = 1000
+            if (timeLeft < 100) {
+                this.autoEmc()
+                this.setTimeSinceAutoEmc(1)
             }
         },
         ghUpdate() {
@@ -1725,6 +1889,13 @@ export default {
             this.setUsername(null)
             this.setToken(null)
         },
+        onHardReset() {
+        
+            this.loaded = true
+            
+            localStorage.removeItem('ngsave')
+            window.location.reload()
+        },
     },
     beforeUnmount() {
         
@@ -1741,8 +1912,9 @@ export default {
         delete this.spyModal
         delete this.invadeModal
         delete this.absorbModal
-        
         delete this.rebirthModal
+        delete this.changeLogModal
+        delete this.hardResetModal
         
         clearInterval(this.fastInterval)
         clearInterval(this.slowInterval)

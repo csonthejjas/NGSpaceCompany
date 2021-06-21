@@ -65,6 +65,8 @@ export const store = createStore({
             notifications: [],
             newAchievement: false,
             notifAutoSave: true,
+            notifAchievement: true,
+            collapsed: [],
             /*----------------------------------------------------------------*/
             fleet: { power:0, defense:0, speed:0 },
             activeFleet: { power:0, defense:0, speed:0 },
@@ -73,6 +75,9 @@ export const store = createStore({
             token: null,
             /*----------------------------------------------------------------*/
             emcAmount: 'max',
+            autoResource: null,
+            autoEmcInterval: 1 * 1000,
+            timeSinceAutoEmc: 0,
             /*----------------------------------------------------------------*/
             stats: {
                 startDate: new Date().getTime(),
@@ -102,6 +107,8 @@ export const store = createStore({
             if (state.notifications.length > 0 && !state.notifications.includes('achievementPane')) return true
             return false
         },
+        /*--------------------------------------------------------------------*/
+        isCollapsed: (state) => (id) => { return state.collapsed.includes(id) },
         /*--------------------------------------------------------------------*/
         getThreat: (state) => (id) => {
             
@@ -225,9 +232,12 @@ export const store = createStore({
         setCompanyName(state, payload) { state.companyName = payload },
         setAutoSaveInterval(state, payload) { state.autoSaveInterval = payload * 1000 },
         setNotifAutoSave(state, payload) { state.notifAutoSave = payload },
+        setNotifAchievement(state, payload) { state.notifAchievement = payload },
         setUsername(state, payload) { state.username = payload },
         setToken(state, payload) { state.token = payload },
         setEmcAmount(state, payload) { state.emcAmount = payload },
+        setAutoResource(state, payload) { state.autoResource = payload },
+        setAutoEmcInterval(state, payload) { state.autoEmcInterval = payload * 1000; console.log(payload); },
         /*--------------------------------------------------------------------*/
         setActivePane(state, payload) {
 
@@ -239,6 +249,7 @@ export const store = createStore({
         /*--------------------------------------------------------------------*/
         setLastUpdateTime(state, payload) { state.lastUpdateTime = payload },
         setTimeSinceAutoSave(state, payload) { state.timeSinceAutoSave = payload },
+        setTimeSinceAutoEmc(state, payload) { state.timeSinceAutoEmc = payload },
         /*--------------------------------------------------------------------*/
         addNotif(state, payload) { if (!(state.notifications.includes(payload))) state.notifications.push(payload) },
         /*--------------------------------------------------------------------*/
@@ -302,6 +313,13 @@ export const store = createStore({
             
             activeStats.speed = Math.floor(activeStats.speed / activeTotal)
             state.activeFleet = JSON.parse(JSON.stringify(activeStats))
+        },
+        /*--------------------------------------------------------------------*/
+        toggleCollapsed(state, id) {
+            
+            let index = state.collapsed.indexOf(id)
+            if (index >= 0) state.collapsed.splice(index, 1)
+            else state.collapsed.push(id)
         },
         /*--------------------------------------------------------------------*/
     },
@@ -846,7 +864,7 @@ export const store = createStore({
             state.data['dysonT2'] = { id:'dysonT2', unlocked:false, count:0, active:0,        costType:'FIXED', baseCosts:[{ id:'segment',  count:100    }, { id:'fuel', count:250000  }], outputs:[{ id:'energy', count:25000   }],                                                  notifs:['dysonPane'], }
             state.data['dysonT3'] = { id:'dysonT3', unlocked:false, count:0, active:0, max:1, costType:'FIXED', baseCosts:[{ id:'segment',  count:250    }, { id:'fuel', count:1000000 }], outputs:[{ id:'energy', count:1000000 }],                                                  notifs:['dysonPane'], unlocks:['darkmatter',
                                                                                                                                                                                                                                                                                                                      'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
-                                                                                                                                                                                                                                                                                                                     'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'techPlasma4', 'techPlasmaStorage3',
+                                                                                                                                                                                                                                                                                                                     'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
                                                                                                                                                                                                                                                                                                                      'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost',
                                                                                                                                                                                                                                                                                                                      'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
                                                                                                                                                                                                                                                                                                                      'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
@@ -1118,10 +1136,11 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             state.data['techPlasma3'] =        { id:'techPlasma3',        unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:11 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:4,  unlocks:['plasmaT3', 'achPlasmaT3'], }
             state.data['upgradeWonder1'] =     { id:'upgradeWonder1',     unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:13 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:10, }
+            state.data['techPlasmaStorage3'] = { id:'techPlasmaStorage3', unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:15 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:12, unlocks:['plasmaS3'], }
             state.data['upgradeWonder2'] =     { id:'upgradeWonder2',     unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:16 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:15, }
             state.data['upgradeWonder3'] =     { id:'upgradeWonder3',     unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:19 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:11, }
+            state.data['autoEmc'] =            { id:'autoEmc',            unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:24 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:17, }
             state.data['techPlasma4'] =        { id:'techPlasma4',        unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:25 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:17, unlocks:['plasmaT4', 'achPlasmaT4'], }
-            state.data['techPlasmaStorage3'] = { id:'techPlasmaStorage3', unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:15 }], notifs:['stargazePrasnianPane'], faction:'prasnian', opinion:12, unlocks:['plasmaS3'], }
             /*----------------------------------------------------------------*/
             
             // DM HYACINITE
@@ -1336,9 +1355,13 @@ export const store = createStore({
                 state.autoSaveInterval = data.autoSaveInterval || 30 * 1000
                 state.companyName = data.companyName || 'NG Space'
                 state.notifAutoSave = data.notifAutoSave
+                state.notifAchievement = data.notifAchievement
                 state.username = data.username || null
                 state.token = data.token || null
                 state.emcAmount = data.emcAmount || 'max'
+                state.autoResource = data.autoResource
+                state.autoEmcInterval = data.autoEmcInterval || 1 * 1000
+                state.collapsed = data.collapsed || []
                 
                 if (data.stats) state.stats = data.stats
                 
@@ -1417,10 +1440,13 @@ export const store = createStore({
                 autoSaveInterval: state.autoSaveInterval,
                 companyName: state.companyName,
                 notifAutoSave: state.notifAutoSave,
+                notifAchievement: state.notifAchievement,
                 username: state.username,
                 token: state.token,
                 emcAmount: state.emcAmount,
+                autoResource: state.autoResource,
                 stats: state.stats,
+                collapsed: state.collapsed,
                 
                 entries: {},
             }
@@ -1602,6 +1628,13 @@ export const store = createStore({
             state.rank.current = state.rank.xpNeeded - state.rank.xpLeft
             
             if (state.rank.xpLeft <= 0) state.rank.level += 1
+        },
+        /*--------------------------------------------------------------------*/
+        autoEmc({ state, dispatch }) {
+        
+            if (state.autoResource != null) {
+                dispatch('convert', state.autoResource)
+            }
         },
         /*--------------------------------------------------------------------*/
         
@@ -2046,7 +2079,7 @@ export const store = createStore({
             let exludedList = [
                 'darkmatter',
                 'carnelian', 'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
-                'prasnian', 'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'techPlasma4', 'techPlasmaStorage3',
+                'prasnian', 'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
                 'hyacinite', 'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost', 
                 'kitrinos', 'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
                 'moviton', 'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',

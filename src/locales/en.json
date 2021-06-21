@@ -74,13 +74,17 @@
     "import": "Import Save",
     "copy": "Copy To Clipboard",
     "importExport_desc": "Copy and paste this onto a file somewhere so that you can import it into the game at a later date. You can also use this to create multiple 'savefiles' of the game by storing multiple instances separately.",
+    "notifications": "Notifications",
+    "showToastAutoSave": "Display autosave notifications",
+    "showToastAchievement": "Display achievement notifications",
     "saving": "Saving",
     "autoSavingDuration": "Auto-Save Duration",
     "30seconds": "30 seconds",
     "2minutes": "2 minutes",
     "10minutes": "10 minutes",
     "off": "Off",
-    "showToastAutoSave": "Display autosave notifications",
+    "hardReset": "Hard Reset",
+    "hardReset_confirm": "Are you sure? This is non-reversible after you reset.",
     
     "aboutPane": "About",
     "aboutPane_desc": "This game is made by me, Freddec, as a remake of the original game from Sparticle999. Of course I have the authorization from Sparticle999 to do it. I made this game to improve my skills in VueJS and to get knowledge about incremental games.",
@@ -614,6 +618,11 @@
     
     "emcPane": "Energy-Mass Conversion",
     "emcPane_desc": "EMC is a technology only dreamt about back on Earth. Here, it's a reality. You can turn energy and plasma into regular resources, or, with large amounts, you can turn it into rare ones, which you are unable to find and have to make to acquire.",
+    "auto": "Auto",
+    "selectAutoEmcInterval": "Auto Frequency",
+    "1second": "1 second",
+    "10second": "10 seconds",
+    "1minute": "1 minute",
     
     "dysonPane": "Dyson",
     "dysonPane_desc": "This technology, unheard of previously, is now a reality, thanks to those in the Sol Scientific Center. The Sphere can provide much energy for millions of years, but at what cost? NB: Dyson Sections' costs are based on the number you have, and are thus reset, when you use them all, or lowered if only partially spent.",
@@ -926,6 +935,8 @@
     "techPlasma4_desc": "Unlock the Quasar Redirection System. Improves relationship by 17.",
     "techPlasmaStorage3": "Tier 3 Plasma Storage",
     "techPlasmaStorage3_desc": "Unlock the Localised Vacuum Caster PSU. Improves relationship by 12.",
+    "autoEmc": "Automated EMC",
+    "autoEmc_desc": "Activate it on an EMC resource and have that resource be 'EMCed' according to frequency. Improves relationship by 17.",
     
     "stargazeHyacinitePane": "Hyacinite Congregation",
     "stargazeHyacinitePane_desc": "The Hyacinite Congregationg is a science loving society, proud of all advances in technology and always looking to the future. They fight for the truth and are welcoming to anyone who shares their beliefs.",
@@ -980,6 +991,7 @@
     "costs": "Costs",
     "bigTimer": "> 48h",
     "selectEmcAmount": "Select Amount",
+    "changeLog": "Change Log",
     
     "launched": "Launched",
     "explored": "Explored",

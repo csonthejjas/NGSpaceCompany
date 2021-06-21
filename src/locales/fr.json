@@ -74,13 +74,17 @@
     "import": "Importer les données",
     "copy": "Copier en mémoire",
     "importExport_desc": "Copier-coller dans un fichier quelque part afin de pouvoir l'importer dans le jeu à une date ultérieure. Vous pouvez également l'utiliser pour créer plusieurs 'sauvegardes' du jeu en stockant plusieurs instances séparément.",
+    "notifications": "Notifications",
+    "showToastAutoSave": "Afficher la notification de sauvegarde automatique",
+    "showToastAchievement": "Afficher la notification d'un nouveau trophée",
     "saving": "Sauvegarde",
     "autoSavingDuration": "Durée entre 2 sauvegardes automatiques",
     "30seconds": "30 secondes",
     "2minutes": "2 minutes",
     "10minutes": "10 minutes",
     "off": "Off",
-    "showToastAutoSave": "Afficher la notification de sauvegarde automatique",
+    "hardReset": "Hard Reset",
+    "hardReset_confirm": "Êtes-vous sûr ? Cette action est irréversible.",
     
     "aboutPane": "A propos",
     "aboutPane_desc": "Ce jeu a été développé par moi, Freddec. C'est un remake du jeu original de Sparticle999. Bienspur j'ai reçu l'autorisation de Sparticle999 pour le faire. J'ai développé ce jeu pour apprendre à coder avec VueJS et pour appréhender les concepts des jeux dit 'incrémental'.",
@@ -610,6 +614,12 @@
     
     "emcPane": "Conversion Energie-Masse",
     "emcPane_desc": "CEM est une technologie dont on rêvait sur Terre. Ici, c'est une réalité. Vous pouvez transformer l'énergie et le plasma en ressources régulières, ou, avec de grandes quantités, vous pouvez les transformer en ressources rares que vous ne pouvez pas trouver.",
+    "auto": "Auto",
+    "selectAutoEmcInterval": "Fréquence auto",
+    "1second": "1 seconde",
+    "10second": "10 secondes",
+    "1minute": "1 minute",
+
     
     "dysonPane": "Dyson",
     "dysonPane_desc": "Cette technologie, impossible auparavant, est désormais une réalité, grâce à ceux du Centre Solaire. La Sphère peut fournir beaucoup d'énergie pendant des millions d'années, mais à quel prix ? NB: Les coûts des segments Dyson sont basés sur le nombre dont vous disposez, et sont donc réinitialisés lorsque vous les utilisez tous, ou réduits s'ils ne sont que partiellement dépensés.",
@@ -921,7 +931,9 @@
     "techPlasma4_desc": "Débloque Quasar Redirection System. Améliore la relation de 17 points.",
     "techPlasmaStorage3": "Stockage du plasma niveau 3",
     "techPlasmaStorage3_desc": "Débloque les unités de stockage de plasma niveau 3. Améliore la relation de 12 points.",
-    
+    "autoEmc": "EMC Automatique",
+    "autoEmc_desc": "Activer le mode 'Auto' sur une ressource et cette ressource sera convertie automatiquement selon la fréquence. Améliore la relation de 17 points.",
+
     "stargazeHyacinitePane": "Congrégation Hyacinite",
     "stargazeHyacinitePane_desc": "La Congrégation Hyacinite est une société aimant la science, fière de toutes les avancées technologiques et toujours tournée vers l'avenir. Ils se battent pour la vérité et accueillent tous ceux qui partagent leurs croyances.",
     "upgradeScience1": "Kit de départ",
@@ -975,6 +987,7 @@
     "costs": "Coûts",
     "bigTimer": "> 48h",
     "selectEmcAmount": "Choisissez un montant",
+    "changeLog": "Change Log",
     
     "launched": "Lancé",
     "explored": "Exploré",
