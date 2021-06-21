@@ -49,7 +49,7 @@ export const store = createStore({
             resAchievements: [],
             prodAchievements: [],
             /*----------------------------------------------------------------*/
-            storagePrice: 2,
+            storagePrice: 1,
             storageExcess: 1,
             /*----------------------------------------------------------------*/
             lastUpdateTime: new Date().getTime(),
@@ -282,7 +282,7 @@ export const store = createStore({
             item.costs.forEach(cost => {
                 if (item.costType == 'EXPONENTIAL') cost.count = Math.floor(cost.count * Math.pow(1.1, item.count))
                 else if (item.costType == 'DYSON') cost.count = Math.floor(cost.count * Math.pow(1.02, item.count))
-                else if (item.costType == 'DOUBLE') cost.count = cost.count * Math.pow(state.storagePrice, item.count)
+                else if (item.costType == 'DOUBLE') cost.count = cost.count * Math.pow(2.0, item.count) * state.storagePrice
             })
         },
         /*--------------------------------------------------------------------*/
@@ -1692,11 +1692,14 @@ export const store = createStore({
             }
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeStorage1') {
-                for (let i = 0; i < state.resources.length; i++) {
-                    let item = state.resources[i]
-                    if ('baseStorage' in item && item.baseStorage == 50) {
-                        item.baseStorage = 6400
-                        commit('computeStorage', item.id)
+                for (let i in state.data) {
+                    let item = state.data[i]
+                    console.log(item)
+                    if ('storage' in item && 'baseCosts' in item && item.costType == 'DOUBLE' && state.data[item.storage.id].baseStorage == 50 && item.count < 7) {
+                        item.count = 7
+                        console.log(item)
+                        commit('computeStorage', item.storage.id)
+                        commit('computeCosts', item.id)
                     }
                 }
             }
