@@ -1472,6 +1472,13 @@
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
                         </div>
                         <div class="col-12 border-top">
+                            <div class="text-light">v1.9.1 - 2021-06-21</div>
+                            <ul class="small">
+                                <li>FIX: make all machine cards collaspable</li>
+                                <li>FIX: display 'Auto EMC' as unlocked</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
                             <div class="text-light">v1.9.0 - 2021-06-21</div>
                             <ul class="small">
                                 <li>NEW: add 'Auto EMC' as Prasnian Empire upgrade</li>
@@ -1638,7 +1645,7 @@ export default {
             changeLogModal: null,
             hardResetModal: null,
             
-            currentRelease: '1.9.0',
+            currentRelease: '1.9.1',
             ghLatestRelease: null,
             
             login: null,
@@ -1681,7 +1688,7 @@ export default {
             'initialize', 'load',
             'computeProdValues', 'produceResources', 'updateTimers', 'checkBoosts', 'updateAchievements', 'save',
             'setActiveShip', 'spy', 'invade', 'absorb',
-            'rebirth', 'autoEmc',
+            'rebirth', 'performAutoEmc',
         ]),
         momentFormat(date, fmt) {
             return moment(date).format(fmt)
@@ -1801,7 +1808,7 @@ export default {
             timeLeft = this.autoEmcInterval - (this.timeSinceAutoEmc * 1000)
             if (this.autoEmcInterval < 0) timeLeft = 1000
             if (timeLeft < 100) {
-                this.autoEmc()
+                this.performAutoEmc()
                 this.setTimeSinceAutoEmc(1)
             }
         },

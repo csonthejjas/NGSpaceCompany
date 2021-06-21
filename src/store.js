@@ -237,7 +237,7 @@ export const store = createStore({
         setToken(state, payload) { state.token = payload },
         setEmcAmount(state, payload) { state.emcAmount = payload },
         setAutoResource(state, payload) { state.autoResource = payload },
-        setAutoEmcInterval(state, payload) { state.autoEmcInterval = payload * 1000; console.log(payload); },
+        setAutoEmcInterval(state, payload) { state.autoEmcInterval = payload * 1000 },
         /*--------------------------------------------------------------------*/
         setActivePane(state, payload) {
 
@@ -1120,7 +1120,13 @@ export const store = createStore({
             
             // DARKMATTER
             /*----------------------------------------------------------------*/
-            state.data['darkmatter'] = { id:'darkmatter', unlocked:false, count:0, notifs:['darkmatterPane'], unlocks:['carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }
+            state.data['darkmatter'] = { id:'darkmatter', unlocked:false, count:0, notifs:['darkmatterPane'], unlocks:['upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
+                                                                                                                       'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
+                                                                                                                       'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost',
+                                                                                                                       'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
+                                                                                                                       'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
+                                                                                                                       'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction',
+                                                                                                                       'carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }
             /*----------------------------------------------------------------*/
             
             // DM CARNELIAN
@@ -1630,7 +1636,7 @@ export const store = createStore({
             if (state.rank.xpLeft <= 0) state.rank.level += 1
         },
         /*--------------------------------------------------------------------*/
-        autoEmc({ state, dispatch }) {
+        performAutoEmc({ state, dispatch }) {
         
             if (state.autoResource != null) {
                 dispatch('convert', state.autoResource)
@@ -2003,8 +2009,6 @@ export const store = createStore({
                 }
                 
                 let roll = Math.random()
-                        console.log(chance)
-                        console.log(roll)
                 if (chance >= roll) {
                 
                     result = true
