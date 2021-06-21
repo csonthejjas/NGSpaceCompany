@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
 
-                                <costs :costs="data[id].costs" />
+                                <costs :costs="data[id].costs" :id="id" />
                                 
                                 <div class="col-12">
                                     <div class="row gx-1 gy-3">
@@ -181,10 +181,10 @@
                                         </div>
                                         <div v-if="id == 'segment'" class="ms-auto col-auto">
                                             <div class="row g-1">
-                                                <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">+1</button></div>
-                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:50})">=50</button></div>
-                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:100})">=100</button></div>
-                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:250})">=250</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t(btnText) }} 1</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:50})">= 50</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:100})">= 100</button></div>
+                                                <div class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
                                             </div>
                                         </div>
                                     </div>

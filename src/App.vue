@@ -95,7 +95,7 @@
                         <sidenav-item id="nanoswarmPane" icon="nanoswarm.png" :unlocked="data['nanoswarm'].unlocked" />
                     </sidenav-group>
 
-                    <sidenav-group id="interstellarHeading" :unlocked="data['radarT1'].unlocked">
+                    <sidenav-group id="interstellarHeading" :unlocked="data['radarT1'].unlocked || data['antimatter'].unlocked || data['spaceship'].unlocked || data['shipT1'].unlocked">
                         <sidenav-item id="antimatterPane" icon="antimatter.png" :unlocked="data['antimatter'].unlocked" :prod="data['antimatter'].prod" :boost="data['antimatter'].boost" :count="data['antimatter'].count" :storage="data['antimatter'].storage" />
                         <sidenav-item id="communicationPane" icon="communication.png" :unlocked="data['radarT1'].unlocked" />
                         <sidenav-item id="spaceshipPane" icon="spaceship.png" :unlocked="data['spaceship'].unlocked" :done="data['spaceship'].count > 0" doneText="built" />
@@ -1462,6 +1462,24 @@
         </div>
     </div>
     
+    <!-- SEGMENT MODAL -->
+    <div v-if="loaded" id="segmentModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-scrollable" role="dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <span class="h6 text-light">{{ $t('segmentModal') }}</span>
+                        </div>
+                        <div class="col-12">
+                            <calc-segment />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- CHANGELOG MODAL -->
     <div v-if="loaded" id="changeLogModal" class="modal fade">
         <div class="modal-dialog modal-dialog-scrollable" role="dialog">
@@ -1470,6 +1488,12 @@
                     <div class="row g-2">
                         <div class="col-12">
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.10.0 - 2021-06-21</div>
+                            <ul class="small">
+                                <li>NEW: add Dyson Segment calculator</li>
+                            </ul>
                         </div>
                         <div class="col-12 border-top">
                             <div class="text-light">v1.9.2 - 2021-06-21</div>
@@ -1592,6 +1616,7 @@ import Buildable from './components/Buildable.vue'
 import Emc from './components/Emc.vue'
 import Star from './components/Star.vue'
 import Fleet from './components/Fleet.vue'
+import CalcSegment from './components/CalcSegment.vue'
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -1616,6 +1641,7 @@ export default {
         'emc': Emc,
         'star': Star,
         'fleet': Fleet,
+        'calc-segment': CalcSegment,
     },
     data() {
         return {
@@ -1651,8 +1677,9 @@ export default {
             rebirthModal: null,
             changeLogModal: null,
             hardResetModal: null,
+            segmentModal: null,
             
-            currentRelease: '1.9.2',
+            currentRelease: '1.10.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1773,6 +1800,9 @@ export default {
                 
                 element = document.getElementById('hardResetModal')
                 this.hardResetModal = new Modal(element)
+                
+                element = document.getElementById('segmentModal')
+                this.segmentModal = new Modal(element)
             })
         },
         fastUpdate() {
@@ -1929,6 +1959,7 @@ export default {
         delete this.rebirthModal
         delete this.changeLogModal
         delete this.hardResetModal
+        delete this.segmentModal
         
         clearInterval(this.fastInterval)
         clearInterval(this.slowInterval)

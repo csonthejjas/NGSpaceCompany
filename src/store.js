@@ -1694,7 +1694,6 @@ export const store = createStore({
             else if (id == 'upgradeStorage1') {
                 for (let i in state.data) {
                     let item = state.data[i]
-                    console.log(item)
                     if ('storage' in item && 'baseCosts' in item && item.costType == 'DOUBLE' && state.data[item.storage.id].baseStorage == 50 && item.count < 7) {
                         item.count = 7
                         console.log(item)
