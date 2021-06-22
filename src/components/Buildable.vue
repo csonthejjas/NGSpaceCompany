@@ -76,7 +76,7 @@
                                                 <span class="text-danger">{{ $t('destroy') }}</span>
                                             </button>
                                         </div>
-                                        <div v-if="multibuy" class="col-auto">
+                                        <div v-if="multibuy == true" class="col-auto">
                                             <button class="btn btn-danger" @click="destroy({id:id, count:10000})">
                                                 <span class="text-danger">{{ $t('nukeAll') }}</span>
                                             </button>
@@ -189,10 +189,10 @@
                                                 {{ $t(btnText) }}
                                             </button>
                                         </div>
-                                        <div v-if="multibuy" class="col-auto"><button class="btn" @click="build({id:id, upto:5})">= 5</button></div>
-                                        <div v-if="multibuy" class="col-auto"><button class="btn" @click="build({id:id, upto:25})">= 25</button></div>
-                                        <div v-if="multibuy" class="col-auto"><button class="btn" @click="build({id:id, upto:75})">= 75</button></div>
-                                        <div v-if="multibuy" class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
+                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:5})">= 5</button></div>
+                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:25})">= 25</button></div>
+                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:75})">= 75</button></div>
+                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
                                     </div>
                                     <div v-if="id == 'segment'" class="row g-1 justify-content-end">
                                         <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t(btnText) }} 1</button></div>

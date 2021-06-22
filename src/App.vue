@@ -213,12 +213,12 @@
                     <!-- ENERGY PANE -->
                     <pane id="energyPane" icon="energy.png" :descs="['energyPane_desc']">
                         <resource id="energy" />
-                        <buildable id="energyT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="energyT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techEnergy2" />
-                        <buildable id="energyT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="venus" />
-                        <buildable id="energyT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderPrecious1" />
-                        <buildable id="energyT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderEnergetic1" />
-                        <buildable id="energyT6" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="jupiter" />
+                        <buildable id="energyT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="energyT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techEnergy2" />
+                        <buildable id="energyT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="venus" />
+                        <buildable id="energyT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderPrecious1" />
+                        <buildable id="energyT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderEnergetic1" />
+                        <buildable id="energyT6" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="jupiter" />
                     </pane>
                     
                     <!-- BATTERY PANE -->
@@ -234,10 +234,10 @@
                     <!-- PLASMA PANE -->
                     <pane id="plasmaPane" icon="plasma.png" :descs="['plasmaPane_desc']">
                         <resource id="plasma" />
-                        <buildable id="plasmaT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techPlasma1" />
-                        <buildable id="plasmaT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techPlasma2" />
-                        <buildable id="plasmaT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techPlasma3" />
-                        <buildable id="plasmaT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techPlasma4" />
+                        <buildable id="plasmaT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techPlasma1" />
+                        <buildable id="plasmaT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techPlasma2" />
+                        <buildable id="plasmaT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techPlasma3" />
+                        <buildable id="plasmaT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techPlasma4" />
                         <buildable id="plasmaS1" btnText="build" collapse="true" unlocker="techPlasmaStorage1" />
                         <buildable id="plasmaS2" btnText="build" collapse="true" unlocker="techPlasmaStorage2" />
                         <buildable id="plasmaS3" btnText="build" collapse="true" unlocker="techPlasmaStorage3" />
@@ -247,195 +247,195 @@
                     <pane id="meteoritePane" icon="meteorite.png" :descs="['meteoritePane_desc']">
                         <resource id="meteorite" />
                         <buildable id="meteoriteS1" btnText="upgrade" collapse="true" />
-                        <buildable id="meteoriteT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite1" />
-                        <buildable id="meteoriteT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite2" />
-                        <buildable id="meteoriteT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite3" />
-                        <buildable id="meteoriteT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite4" />
+                        <buildable id="meteoriteT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite1" />
+                        <buildable id="meteoriteT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite2" />
+                        <buildable id="meteoriteT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite3" />
+                        <buildable id="meteoriteT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techMeteorite4" />
                     </pane>
                     
                     <!-- CARBON PANE -->
                     <pane id="carbonPane" icon="carbon.png" :descs="['carbonPane_desc']">
                         <resource id="carbon" />
                         <buildable id="carbonS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="carbonT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="carbonT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="carbonT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="carbonT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="carbonT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="carbonT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="carbonT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="carbonT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="carbonT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="carbonT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- OIL PANE -->
                     <pane id="oilPane" icon="oil.png" :descs="['oilPane_desc']">
                         <resource id="oil" />
                         <buildable id="oilS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="oilT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="oilT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="oilT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="oilT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="oilT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="oilT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="oilT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="oilT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="oilT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="oilT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- METAL PANE -->
                     <pane id="metalPane" icon="metal.png" :descs="['metalPane_desc']">
                         <resource id="metal" />
                         <buildable id="metalS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="metalT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="metalT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="metalT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="metalT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="metalT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="metalT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="metalT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="metalT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="metalT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="metalT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- GEM PANE -->
                     <pane id="gemPane" icon="gem.png" :descs="['gemPane_desc']">
                         <resource id="gem" />
                         <buildable id="gemS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="gemT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="gemT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="gemT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="gemT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="gemT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="gemT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="gemT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="gemT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="gemT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="gemT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- WOOD PANE -->
                     <pane id="woodPane" icon="wood.png" :descs="['woodPane_desc']">
                         <resource id="wood" />
                         <buildable id="woodS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="woodT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="woodT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="woodT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="woodT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="woodT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="woodT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="woodT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="woodT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="woodT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="woodT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SILICON PANE -->
                     <pane id="siliconPane" icon="silicon.png" :descs="['siliconPane_desc']">
                         <resource id="silicon" />
                         <buildable id="siliconS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="siliconT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="siliconT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="siliconT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="siliconT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="siliconT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="siliconT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="siliconT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="siliconT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="siliconT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="siliconT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- URANIUM PANE -->
                     <pane id="uraniumPane" icon="uranium.png" :descs="['uraniumPane_desc']">
                         <resource id="uranium" />
                         <buildable id="uraniumS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="uraniumT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="uraniumT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="uraniumT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="uraniumT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="uraniumT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="uraniumT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="uraniumT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="uraniumT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="uraniumT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="uraniumT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- LAVA PANE -->
                     <pane id="lavaPane" icon="lava.png" :descs="['lavaPane_desc']">
                         <resource id="lava" />
                         <buildable id="lavaS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="lavaT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="lavaT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="lavaT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="lavaT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="lavaT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="lavaT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="lavaT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="lavaT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="lavaT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="lavaT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- LUNARITE PANE -->
                     <pane id="lunaritePane" icon="lunarite.png" :descs="['lunaritePane_desc']">
                         <resource id="lunarite" />
                         <buildable id="lunariteS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="lunariteT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="lunariteT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="lunariteT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="lunariteT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="lunariteT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="lunariteT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="lunariteT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="lunariteT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="lunariteT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="lunariteT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- METHANE PANE -->
                     <pane id="methanePane" icon="methane.png" :descs="['methanePane_desc']">
                         <resource id="methane" />
                         <buildable id="methaneS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="methaneT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="methaneT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="methaneT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="methaneT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="methaneT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="methaneT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="methaneT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="methaneT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="methaneT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="methaneT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- TITANIUM PANE -->
                     <pane id="titaniumPane" icon="titanium.png" :descs="['titaniumPane_desc']">
                         <resource id="titanium" />
                         <buildable id="titaniumS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="titaniumT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="titaniumT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="titaniumT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="titaniumT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="titaniumT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="titaniumT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="titaniumT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="titaniumT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="titaniumT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="titaniumT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- GOLD PANE -->
                     <pane id="goldPane" icon="gold.png" :descs="['goldPane_desc']">
                         <resource id="gold" />
                         <buildable id="goldS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="goldT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="goldT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="goldT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="goldT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="goldT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="goldT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="goldT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="goldT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="goldT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="goldT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SILVER PANE -->
                     <pane id="silverPane" icon="silver.png" :descs="['silverPane_desc']">
                         <resource id="silver" />
                         <buildable id="silverS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="silverT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="silverT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="silverT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="silverT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="silverT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="silverT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="silverT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="silverT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="silverT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="silverT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- HYDROGEN PANE -->
                     <pane id="hydrogenPane" icon="hydrogen.png" :descs="['hydrogenPane_desc']">
                         <resource id="hydrogen" />
                         <buildable id="hydrogenS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="hydrogenT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="hydrogenT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="hydrogenT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="hydrogenT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="hydrogenT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="hydrogenT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="hydrogenT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="hydrogenT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="hydrogenT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="hydrogenT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- HELIUM PANE -->
                     <pane id="heliumPane" icon="helium.png" :descs="['heliumPane_desc']">
                         <resource id="helium" />
                         <buildable id="heliumS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="heliumT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="heliumT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="heliumT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="heliumT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="heliumT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="heliumT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="heliumT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="heliumT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="heliumT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="heliumT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- ICE PANE -->
                     <pane id="icePane" icon="ice.png" :descs="['icePane_desc']">
                         <resource id="ice" />
                         <buildable id="iceS1" btnText="upgrade" collapse="true" unlocker="techStorage" />
-                        <buildable id="iceT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="iceT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
-                        <buildable id="iceT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
-                        <buildable id="iceT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
-                        <buildable id="iceT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
+                        <buildable id="iceT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="iceT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier2" />
+                        <buildable id="iceT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderTechnological1" />
+                        <buildable id="iceT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="wonderMeteorite1" />
+                        <buildable id="iceT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techTier5" />
                     </pane>
                     
                     <!-- SCIENCE PANE -->
                     <pane id="sciencePane" icon="science.png" :descs="['sciencePane_desc']">
-                        <buildable id="scienceT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="scienceT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techScience2" />
-                        <buildable id="scienceT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techScience3" />
-                        <buildable id="scienceT4" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techScience4" />
-                        <buildable id="scienceT5" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techScience5" />
+                        <buildable id="scienceT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="scienceT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techScience2" />
+                        <buildable id="scienceT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techScience3" />
+                        <buildable id="scienceT4" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techScience4" />
+                        <buildable id="scienceT5" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techScience5" />
                     </pane>
                     
                     <!-- TECHNOLOGIES PANE -->
@@ -479,9 +479,9 @@
                     <!-- FUEL PANE -->
                     <pane id="fuelPane" icon="fuel.png" :descs="['fuelPane_desc']">
                         <resource id="fuel" />
-                        <buildable id="fuelT1" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" />
-                        <buildable id="fuelT2" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techFuel2" />
-                        <buildable id="fuelT3" btnText="build" collapse="true" multibuy="data['multiBuy'].count > 0" unlocker="techFuel3" />
+                        <buildable id="fuelT1" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" />
+                        <buildable id="fuelT2" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techFuel2" />
+                        <buildable id="fuelT3" btnText="build" collapse="true" :multibuy="data['multiBuy'].count > 0" unlocker="techFuel3" />
                     </pane>
                     
                     <!-- ROCKET PANE -->
@@ -1687,7 +1687,7 @@ export default {
             hardResetModal: null,
             segmentModal: null,
             
-            currentRelease: '1.11.0',
+            currentRelease: '1.11.1',
             ghLatestRelease: null,
             
             login: null,
