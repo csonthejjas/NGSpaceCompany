@@ -991,6 +991,11 @@
     "selectEmcAmount": "Choisissez un montant",
     "changeLog": "Change Log",
     
+    "total": "Total",
+    "totalProduction": "Production",
+    "totalConsumption": "Consommation",
+    "totalBalance": "Balance",
+    
     "launched": "Lancé",
     "explored": "Exploré",
     "done": "Fait",

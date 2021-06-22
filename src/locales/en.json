@@ -930,7 +930,7 @@
     "upgradeWonder2": "Floor 2 & 3 Discount",
     "upgradeWonder2_desc": "All Wonders on the Second and Third Floor recieve a 20% price reduction for activation. Improves relationship by 15.",
     "upgradeWonder3": "Mystery Wonder Construction",
-    "upgradeWonder3_desc": "First floor wonders are myusteriously pre-built for you every run. They still need to be activated. Improves relationship by 11.",
+    "upgradeWonder3_desc": "First floor wonders are mysteriously pre-built for you every run. They still need to be activated. Improves relationship by 11.",
     "techPlasma4": "Tier 4 Plasma",
     "techPlasma4_desc": "Unlock the Quasar Redirection System. Improves relationship by 17.",
     "techPlasmaStorage3": "Tier 3 Plasma Storage",
@@ -994,6 +994,11 @@
     "bigTimer": "> 48h",
     "selectEmcAmount": "Select Amount",
     "changeLog": "Change Log",
+    
+    "total": "Total",
+    "totalProduction": "Production",
+    "totalConsumption": "Consumption",
+    "totalBalance": "Balance",
     
     "launched": "Launched",
     "explored": "Explored",

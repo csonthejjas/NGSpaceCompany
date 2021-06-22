@@ -50,12 +50,53 @@
                                 
                             </div>
                         </div>
-                        <div v-if="data[id].gain" class="col-12 col-md-6">
+                        <div class="col-12 col-md-6">
                             <div class="row g-3">
-                            
-                                <costs :costs="data[id].costs" :mod="data[id].gain" />
                                 
                                 <div class="col-12">
+                                    <div class="heading-6">{{ $t('total') }}</div>
+                                    <div class="row g-1">
+                                        <div class="col-12">
+                                            <div class="row g-1">
+                                                <div class="col">
+                                                    <small>{{ $t('totalProduction') }}</small>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <small class="text-uppercase text-success">+{{ numeralFormat(data[id].production.toPrecision(4), '0.[000]a') }}</small>
+                                                    <small class="text-normal ms-1">/s</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row g-1">
+                                                <div class="col">
+                                                    <small>{{ $t('totalConsumption') }}</small>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <small class="text-uppercase text-warning">-{{ numeralFormat(data[id].consumption.toPrecision(4), '0.[000]a') }}</small>
+                                                    <small class="text-normal ms-1">/s</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row g-1">
+                                                <div class="col">
+                                                    <small>{{ $t('totalBalance') }}</small>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <small class="text-uppercase" :class="{ 'text-danger':data[id].prod < 0, 'text-normal':data[id].prod == 0, 'text-success':data[id].prod > 0 }">
+                                                        <span v-if="data[id].prod > 0">+</span>{{ numeralFormat(data[id].prod.toPrecision(4), '0.[000]a') }}
+                                                    </small>
+                                                    <small class="text-normal ms-1">/s</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <costs v-if="data[id].gain" :costs="data[id].costs" :mod="data[id].gain" />
+                                
+                                <div v-if="data[id].gain" class="col-12">
                                     <div class="row g-1">
                                         <div class="ms-auto col-auto">
                                             <button class="btn" @click="gain(id)">

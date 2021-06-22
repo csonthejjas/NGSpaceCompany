@@ -12,8 +12,8 @@
                     {{ $t(id) }}
                 </div>
                 <div v-if="prod != null" class="col-auto text-end">
-                    <small class="text-uppercase" :class="{ 'text-danger':(prod * boost) < 0, 'text-normal':(prod * boost) == 0, 'text-success':(prod * boost) > 0 }">
-                        <span v-if="(prod * boost) > 0">+</span>{{ numeralFormat((prod * boost).toPrecision(4), '0.[000]a') }}
+                    <small class="text-uppercase" :class="{ 'text-danger':prod < 0, 'text-normal':prod == 0, 'text-success':prod > 0 }">
+                        <span v-if="prod > 0">+</span>{{ numeralFormat(prod.toPrecision(4), '0.[000]a') }}
                     </small>
                     <small class="text-normal ms-1">/s</small>
                 </div>
@@ -53,7 +53,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
-    props: [ 'id', 'unlocked', 'icon', 'prod', 'boost', 'count', 'storage', 'opinion', 'done', 'doneText', 'potential' ],
+    props: [ 'id', 'unlocked', 'icon', 'prod', 'count', 'storage', 'opinion', 'done', 'doneText', 'potential' ],
     computed: {
         ...mapState([        
             'activePane',

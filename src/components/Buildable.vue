@@ -161,7 +161,7 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small class="text-success text-uppercase">+{{ numeralFormat((output.count * (1 + output.boost)).toPrecision(4), '0.[000]a') }}</small>
+                                            <small class="text-success text-uppercase">+{{ numeralFormat(output.count.toPrecision(4), '0.[000]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
