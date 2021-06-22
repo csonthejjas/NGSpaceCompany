@@ -1491,7 +1491,14 @@
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
                         </div>
                         <div class="col-12 border-top">
-                            <div class="text-light">v1.11.0 - 2021-06-21</div>
+                            <div class="text-light">v1.11.2 - 2021-06-22</div>
+                            <ul class="small">
+                                <li>FIX: 'Auto-EMC' frequency issue fixed</li>
+                                <li>FIX: 'Multi-Buy' description fixed</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.11.0 - 2021-06-22</div>
                             <ul class="small">
                                 <li>NEW: Dyson Segment calculator takes into account current resource count to compute timers</li>
                                 <li>NEW: add 'Multi-Buy' as Corporation Kitrinos upgrade</li>
@@ -1687,7 +1694,7 @@ export default {
             hardResetModal: null,
             segmentModal: null,
             
-            currentRelease: '1.11.1',
+            currentRelease: '1.11.2',
             ghLatestRelease: null,
             
             login: null,
@@ -1826,6 +1833,12 @@ export default {
             this.produceResources(delta)
             this.updateTimers()
             this.checkBoosts()
+            
+            let timeLeft = this.autoEmcInterval - (this.timeSinceAutoEmc * 1000)
+            if (timeLeft < 100) {
+                this.performAutoEmc()
+                this.setTimeSinceAutoEmc(0)
+            }
         },
         slowUpdate() {
             
@@ -1848,14 +1861,7 @@ export default {
                 }   
                 
                 axios.get('https://ngspacecompany.exileng.com/api/ranks/').then((response) => { this.leaderboard_ranks = response.data })
-            }
-            
-            timeLeft = this.autoEmcInterval - (this.timeSinceAutoEmc * 1000)
-            if (this.autoEmcInterval < 0) timeLeft = 1000
-            if (timeLeft < 100) {
-                this.performAutoEmc()
-                this.setTimeSinceAutoEmc(1)
-            }
+            }            
         },
         ghUpdate() {
         

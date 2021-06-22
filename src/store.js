@@ -1945,11 +1945,9 @@ export const store = createStore({
         
             let item = state.data[id]
             
-            let amountMax =  Math.floor(Math.min(Math.floor(state.data[item.source].count / item.rate), state.data[item.resource].storage - state.data[item.resource].count))
-            
             let amount
-            if (state.emcAmount == 'max') amount = amountMax
-            else amount = Math.min(amountMax, Math.floor(Math.min(state.emcAmount, state.data[item.resource].storage - state.data[item.resource].count)))
+            if (state.emcAmount == 'max') amount = Math.floor(Math.min(Math.floor(state.data[item.source].count / item.rate), state.data[item.resource].storage - state.data[item.resource].count))
+            else amount = Math.floor(Math.min(state.emcAmount, state.data[item.resource].storage - state.data[item.resource].count))
             
             let required = amount * item.rate
             
