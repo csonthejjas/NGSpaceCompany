@@ -209,6 +209,13 @@ button {
 
 .btn-success:hover, .btn-success:focus { color: #f5f5f5; }
 
+.btn-danger {
+    color: #f50000;
+    background-color: #343c4a; border-color: #343c4a;
+}
+
+.btn-danger:hover, .btn-danger:focus { color: #f5f5f5!important; }
+
 /* -------------------------------------------------------------------------- */
 
 .form-control {

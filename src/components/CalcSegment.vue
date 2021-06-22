@@ -313,11 +313,11 @@ export default {
             let costIce       = this.computeCost(this.data['segment'].baseCosts[4].count, 50) - this.computeCost(this.data['segment'].baseCosts[4].count, this.data['segment'].count)
             
             return {
-                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? costTitanium / this.data['titanium'].prod : 0    },
-                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? costGold / this.data['gold'].prod : 0                },
-                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? costSilicon / this.data['silicon'].prod : 0       },
-                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? costMeteorite / this.data['meteorite'].prod : 0 },
-                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? costIce / this.data['ice'].prod : 0                   },
+                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? (costTitanium - this.data['titanium'].count) / this.data['titanium'].prod : 0    },
+                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? (costGold - this.data['gold'].count) / this.data['gold'].prod : 0                },
+                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? (costSilicon - this.data['silicon'].count) / this.data['silicon'].prod : 0       },
+                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? (costMeteorite - this.data['meteorite'].count) / this.data['meteorite'].prod : 0 },
+                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? (costIce - this.data['ice'].count) / this.data['ice'].prod : 0                   },
             }
         },
         costTo100: function() {
@@ -329,11 +329,11 @@ export default {
             let costIce       = this.computeCost(this.data['segment'].baseCosts[4].count, 100) - this.computeCost(this.data['segment'].baseCosts[4].count, this.data['segment'].count)
             
             return {
-                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? costTitanium / this.data['titanium'].prod : 0    },
-                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? costGold / this.data['gold'].prod : 0                },
-                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? costSilicon / this.data['silicon'].prod : 0       },
-                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? costMeteorite / this.data['meteorite'].prod : 0 },
-                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? costIce / this.data['ice'].prod : 0                   },
+                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? (costTitanium - this.data['titanium'].count) / this.data['titanium'].prod : 0    },
+                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? (costGold - this.data['gold'].count) / this.data['gold'].prod : 0                },
+                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? (costSilicon - this.data['silicon'].count) / this.data['silicon'].prod : 0       },
+                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? (costMeteorite - this.data['meteorite'].count) / this.data['meteorite'].prod : 0 },
+                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? (costIce - this.data['ice'].count) / this.data['ice'].prod : 0                   },
             }
         },
         costTo250: function() {
@@ -345,11 +345,11 @@ export default {
             let costIce       = this.computeCost(this.data['segment'].baseCosts[4].count, 250) - this.computeCost(this.data['segment'].baseCosts[4].count, this.data['segment'].count)
             
             return {
-                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? costTitanium / this.data['titanium'].prod : 0    },
-                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? costGold / this.data['gold'].prod : 0                },
-                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? costSilicon / this.data['silicon'].prod : 0       },
-                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? costMeteorite / this.data['meteorite'].prod : 0 },
-                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? costIce / this.data['ice'].prod : 0                   },
+                titanium:  { count: costTitanium,  timer: this.data['titanium'].prod > 0 ? (costTitanium - this.data['titanium'].count) / this.data['titanium'].prod : 0    },
+                gold:      { count: costGold,      timer: this.data['gold'].prod > 0 ? (costGold - this.data['gold'].count) / this.data['gold'].prod : 0                },
+                silicon:   { count: costSilicon,   timer: this.data['silicon'].prod > 0 ? (costSilicon - this.data['silicon'].count) / this.data['silicon'].prod : 0       },
+                meteorite: { count: costMeteorite, timer: this.data['meteorite'].prod > 0 ? (costMeteorite - this.data['meteorite'].count) / this.data['meteorite'].prod : 0 },
+                ice:       { count: costIce,       timer: this.data['ice'].prod > 0 ? (costIce - this.data['ice'].count) / this.data['ice'].prod : 0                   },
             }
         },
     },

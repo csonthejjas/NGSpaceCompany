@@ -866,7 +866,7 @@ export const store = createStore({
                                                                                                                                                                                                                                                                                                                      'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
                                                                                                                                                                                                                                                                                                                      'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
                                                                                                                                                                                                                                                                                                                      'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost',
-                                                                                                                                                                                                                                                                                                                     'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
+                                                                                                                                                                                                                                                                                                                     'upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5',
                                                                                                                                                                                                                                                                                                                      'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
                                                                                                                                                                                                                                                                                                                      'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction',
                                                                                                                                                                                                                                                                                                                      'carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }            
@@ -1123,7 +1123,7 @@ export const store = createStore({
             state.data['darkmatter'] = { id:'darkmatter', unlocked:false, count:0, notifs:['darkmatterPane'], unlocks:['upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
                                                                                                                        'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
                                                                                                                        'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost',
-                                                                                                                       'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
+                                                                                                                       'upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5',
                                                                                                                        'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
                                                                                                                        'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction',
                                                                                                                        'carnelian', 'prasnian', 'hyacinite', 'kitrinos', 'moviton', 'overlord'], }
@@ -1161,6 +1161,7 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             state.data['upgradeTier1'] =       { id:'upgradeTier1',       unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:8  }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:4,  }
             state.data['techEnergyStorage5'] = { id:'techEnergyStorage5', unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:14 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:17, unlocks:['energyS5'], }
+            state.data['multiBuy'] =           { id:'multiBuy',           unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:17 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:20, }
             state.data['boostCapital'] =       { id:'boostCapital',       unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:30 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:18, }
             state.data['techTier5'] =          { id:'techTier5',          unlocked:false, count:0, max:1, costType:'FIXED', baseCosts:[{ id:'darkmatter', count:35 }], notifs:['stargazeKitrinosPane'], faction:'kitrinos', opinion:20, }
             /*----------------------------------------------------------------*/
@@ -1223,7 +1224,7 @@ export const store = createStore({
             state.prodAchievements = [
                 /*------------------------------------------------------------*/
                 state.data['achEnergyT1'],    state.data['achEnergyT2'],    state.data['achEnergyT3'],    state.data['achEnergyT4'],    state.data['achEnergyT5'],   state.data['achEnergyT6'],
-                state.data['achPlasmaT1'],    state.data['achPlasmaT2'],    state.data['achPlasmaT3'],
+                state.data['achPlasmaT1'],    state.data['achPlasmaT2'],    state.data['achPlasmaT3'],    state.data['achPlasmaT4'],
                 state.data['achMeteoriteT1'], state.data['achMeteoriteT2'], state.data['achMeteoriteT3'], state.data['achMeteoriteT4'],
                 state.data['achCarbonT1'],    state.data['achCarbonT2'],    state.data['achCarbonT3'],    state.data['achCarbonT4'],    state.data['achCarbonT5'],
                 state.data['achOilT1'],       state.data['achOilT2'],       state.data['achOilT3'],       state.data['achOilT4'],       state.data['achOilT5'],
@@ -1696,7 +1697,6 @@ export const store = createStore({
                     let item = state.data[i]
                     if ('storage' in item && 'baseCosts' in item && item.costType == 'DOUBLE' && state.data[item.storage.id].baseStorage == 50 && item.count < 7) {
                         item.count = 7
-                        console.log(item)
                         commit('computeStorage', item.storage.id)
                         commit('computeCosts', item.id)
                     }
@@ -1918,7 +1918,10 @@ export const store = createStore({
             }
         },
         /*--------------------------------------------------------------------*/
-        destroy({ state, commit }, id, count) {
+        destroy({ state, commit }, payload) {
+            
+            let id = payload.id
+            let count = payload.count || 1
             
             let item = state.data[id]
             for (let i = 0; i < (count || 1); i++) {
@@ -2087,7 +2090,7 @@ export const store = createStore({
                 'carnelian', 'upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3',
                 'prasnian', 'techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3',
                 'hyacinite', 'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost', 
-                'kitrinos', 'upgradeTier1', 'techEnergyStorage5', 'boostCapital', 'techTier5',
+                'kitrinos', 'upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5',
                 'moviton', 'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
                 'overlord', 'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'
             ]
