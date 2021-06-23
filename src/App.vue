@@ -26,8 +26,10 @@
                     </button>
                 </div>
 
-                <div class="col-auto d-lg-none" @click="sidebarOpen = false;">
-                    <i class="fas fa-fw fa-times"></i>
+                <div class="col-auto d-lg-none">
+                    <button @click="sidebarOpen = false;">
+                        <i class="fas fa-fw fa-times"></i>
+                    </button>
                 </div>
                 
             </top-header>
@@ -123,11 +125,13 @@
         <div id="page">
             <top-header>
             
-                <div class="col-auto d-lg-none position-relative" @click="sidebarOpen = true;">
-                    <div v-if="hasNotif" class="position-absolute top-0 end-0" style="line-height:1">
-                        <i class="fas fa-fw fa-certificate text-success small"></i>
-                    </div>
-                    <img :src="require('./assets/whiteLogo.png')" width="36" height="36" />
+                <div class="col-auto d-lg-none position-relative">
+                    <button @click="sidebarOpen = true;">
+                        <div v-if="hasNotif" class="position-absolute top-0 end-0" style="line-height:1">
+                            <i class="fas fa-fw fa-certificate text-success small"></i>
+                        </div>
+                        <img :src="require('./assets/whiteLogo.png')" width="36" height="36" />
+                    </button>
                 </div>
                 
                 <div class="col-auto ms-auto">
@@ -136,65 +140,71 @@
                     </a>
                 </div>
                 
-                <div class="col-auto cursor-hover" @click="setActivePane('donatingPane')">
-                    <img :src="require('./assets/interface/donating.png')" width="16" height="16" />
-                    <span class="ms-1 text-light">{{ $t('donatingPane') }}</span>
+                <div class="col-auto cursor-hover">
+                    <button @click="setActivePane('donatingPane')">
+                        <img :src="require('./assets/interface/donating.png')" width="16" height="16" />
+                        <span class="ms-1 text-light">{{ $t('donatingPane') }}</span>
+                    </button>
                 </div>
                 
-                <div class="col-auto cursor-hover position-relative" @click="setActivePane('achievementPane')" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('achievementPane')">
-                    <div v-if="isNotif('achievementPane')" class="position-absolute top-0 end-0" style="line-height:1">
-                        <i class="fas fa-fw fa-certificate text-success small"></i>
-                    </div>
-                    <img :src="require('./assets/interface/trophy.png')" width="16" height="16" />
+                <div class="col-auto cursor-hover position-relative" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('achievementPane')">
+                    <button @click="setActivePane('achievementPane')">
+                        <div v-if="isNotif('achievementPane')" class="position-absolute top-0 end-0" style="line-height:1">
+                            <i class="fas fa-fw fa-certificate text-success small"></i>
+                        </div>
+                        <img :src="require('./assets/interface/trophy.png')" width="16" height="16" />
+                    </button>
                 </div>
                 
-                <div class="col-auto cursor-hover position-relative" @click="setActivePane('rankPane')" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('rankPane')">
-                    <img :src="require('./assets/interface/rank.png')" width="16" height="16" />
+                <div class="col-auto cursor-hover position-relative" data-bs-toggle="tooltip" data-bs-placement="left" :title="$t('rankPane')">
+                    <button @click="setActivePane('rankPane')">
+                        <img :src="require('./assets/interface/rank.png')" width="16" height="16" />
+                    </button>
                 </div>
                 
                 <div class="col-auto">
-                    <a class="text-normal cursor-hover" data-bs-toggle="dropdown">
+                    <button class="text-normal cursor-hover" data-bs-toggle="dropdown">
                         <span v-if="locale == 'en'" class="flag-icon flag-icon-gb rounded"></span>
                         <span v-if="locale == 'fr'" class="flag-icon flag-icon-fr rounded"></span>
-                    </a>
+                    </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item cursor-hover" @click="changeLocale('en')">
+                            <button class="dropdown-item cursor-hover" @click="changeLocale('en')">
                                 <span class="flag-icon flag-icon-gb rounded me-2"></span>
                                 English
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a class="dropdown-item cursor-hover" @click="changeLocale('fr')">
+                            <button class="dropdown-item cursor-hover" @click="changeLocale('fr')">
                                 <span class="flag-icon flag-icon-fr rounded me-2"></span>
                                 Français
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
                 
                 <div class="col-auto">
-                    <a class="text-light cursor-hover" data-bs-toggle="dropdown">
+                    <button class="text-light cursor-hover" data-bs-toggle="dropdown">
                         <i class="fas fa-fw fa-ellipsis-v"></i>
-                    </a>
+                    </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item cursor-hover" @click="setActivePane('helpPane')">
+                            <button class="dropdown-item cursor-hover" @click="setActivePane('helpPane')">
                                 <img :src="require('./assets/interface/help.png')" width="16" height="16" class="me-2">
                                 {{ $t('helpPane') }}
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a class="dropdown-item cursor-hover" @click="setActivePane('settingsPane')">
+                            <button class="dropdown-item cursor-hover" @click="setActivePane('settingsPane')">
                                 <img :src="require('./assets/interface/cog.png')" width="16" height="16" class="me-2">
                                 {{ $t('settingsPane') }}
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a class="dropdown-item cursor-hover" @click="setActivePane('aboutPane')">
+                            <button class="dropdown-item cursor-hover" @click="setActivePane('aboutPane')">
                                 <img :src="require('./assets/interface/about.png')" width="16" height="16" class="me-2">
                                 {{ $t('aboutPane') }}
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -1025,8 +1035,6 @@
                                     <input class="form-check-input" type="checkbox" id="checkToastAutoSave" v-model="showToastAutoSave" @click="setNotifAutoSave(!showToastAutoSave)" />
                                     <label class="form-check-label small" for="checkToastAutoSave">{{ $t('showToastAutoSave') }}</label>
                                 </div>
-                            </div>
-                            <div class="col-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="checkToastAchievement" v-model="showToastAchievement" @click="setNotifAchievement(!showToastAchievement)" />
                                     <label class="form-check-label small" for="checkToastAchievement">{{ $t('showToastAchievement') }}</label>
@@ -1034,6 +1042,17 @@
                             </div>
                         </card>
                         <card id="saving" checked="true">
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <small>{{ $t('manualSaving') }}</small>
+                                </div>
+                                <div class="row g-1">
+                                    <div class="col-auto">
+                                        <button>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="mb-1">
                                     <small>{{ $t('autoSavingDuration') }}</small>
@@ -1491,6 +1510,17 @@
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
                         </div>
                         <div class="col-12 border-top">
+                            <div class="text-light">v1.13.0 - 2021-06-??</div>
+                            <ul class="small">
+                                <li>FIX: exit game loop when last update is later than now</li>
+                                <li>FIX: reflect boosts in machine cards production/consumptions values</li>
+                                <li>FIX: display green mark on 'Batteries' menu item instead of 'Energy' menu item</li>
+                                <li>NEW: un-collapse all on 'Rebirth'</li>
+                                <li>NEW: display real 'Max' amount of plasma/energy to be converted</li>
+                                <li>NEW: when card is minimized, display name + current count</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
                             <div class="text-light">v1.12.0 - 2021-06-22</div>
                             <ul class="small">
                                 <li>FIX: 'Auto-EMC' consumption issue fixed</li>
@@ -1701,7 +1731,7 @@ export default {
             hardResetModal: null,
             segmentModal: null,
             
-            currentRelease: '1.12.0',
+            currentRelease: '1.13.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1831,7 +1861,11 @@ export default {
         
             let currentTime = new Date().getTime()
             let delta = (currentTime - this.lastUpdateTime) / 1000
-
+            if (delta <= 0) {
+                this.setLastUpdateTime(currentTime)
+                return
+            }
+            
             this.setLastUpdateTime(currentTime)
             this.setTimeSinceAutoSave(this.timeSinceAutoSave + delta)
             this.setTimeSinceAutoEmc(this.timeSinceAutoEmc + delta)
@@ -1855,6 +1889,7 @@ export default {
             let timeLeft = this.autoSaveInterval - (this.timeSinceAutoSave * 1000)
             if (this.autoSaveInterval < 0) timeLeft = 1000
             if (timeLeft < 100) {
+
                 this.save()
                 this.setTimeSinceAutoSave(1)
                 if (this.showToastAutoSave) this.toastAutoSave.show()

@@ -15,7 +15,7 @@
                     
                     <i v-if="!collapse" class="fas fa-fw fa-lock-open"></i>
                     
-                    <button v-if="collapse" :class="{ 'collapsed':isCollapsed(id) }" data-bs-toggle="collapse" :data-bs-target="'#card' + id" @click="toggleCollapsed(id)">
+                    <button v-if="collapse" @click="toggleCollapsed(id)">
                         <i class="fas fa-fw fa-lock-open"></i>
                     </button>
                     
@@ -48,8 +48,22 @@
                     </div>
                 </div>
                 
-                <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" :id="'card' + id" class="card card-body" :class="{ 'collapse':collapse, 'show':collapse && !isCollapsed(id) }">
-                    <div class="row g-3">
+                <div v-if="(data[id].unlocked && data[id].max && data[id].count < data[id].max) || (data[id].unlocked && !data[id].max)" class="card card-body">
+                    <div v-if="isCollapsed(id)" class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="row g-1">
+                                <div class="col">
+                                    <span class="h6 text-light">{{ $t(data[id].id) }}</span>
+                                </div>
+                                <div v-if="!data[id].max || data[id].max > 1" class="col-auto">
+                                    <small class="text-normal me-1">x</small>
+                                    <span :class="{ 'text-light':data[id].count > 0, 'text-normal':data[id].count <= 0 }">{{ numeralFormat(data[id].count, '0.[0]a') }}</span>
+                                    <small v-if="data[id].max && data[id].max > 1" class="ms-1 text-normal">/{{ data[id].max }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="!isCollapsed(id)" class="row g-3">
                         <div class="col-12 col-md-6">
                             <div class="row g-3">
                             
@@ -161,7 +175,7 @@
                                             <small class="text-light">{{ $t(output.id) }}</small>
                                         </div>
                                         <div class="col-auto">
-                                            <small class="text-success text-uppercase">+{{ numeralFormat(output.count.toPrecision(4), '0.[000]a') }}</small>
+                                            <small class="text-success text-uppercase">+{{ numeralFormat((output.count * data[output.id].boost).toPrecision(4), '0.[000]a') }}</small>
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>

@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div v-if="data[id].consumption != 0" class="col-12">
                                             <div class="row g-1">
                                                 <div class="col">
                                                     <small>{{ $t('totalConsumption') }}</small>
@@ -78,7 +78,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div v-if="data[id].consumption != 0" class="col-12">
                                             <div class="row g-1">
                                                 <div class="col">
                                                     <small>{{ $t('totalBalance') }}</small>

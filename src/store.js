@@ -254,6 +254,7 @@ export const store = createStore({
         addNotif(state, payload) { if (!(state.notifications.includes(payload))) state.notifications.push(payload) },
         /*--------------------------------------------------------------------*/
         setDataProd(state, payload) { if (payload.prod  != state.data[payload.id].prod) state.data[payload.id].prod  = payload.prod },
+        setDataBoost(state, payload) { if (payload.boost  != state.data[payload.id].boost) state.data[payload.id].boost = payload.boost },
         setDataCount(state, payload) { if (payload.count != state.data[payload.id].count) state.data[payload.id].count = payload.count },
         setDataProduction(state, payload) { if (payload.production  != state.data[payload.id].production) state.data[payload.id].production = payload.production },
         setDataConsumption(state, payload) { if (payload.consumption != state.data[payload.id].consumption) state.data[payload.id].consumption = payload.consumption },
@@ -470,12 +471,12 @@ export const store = createStore({
             state.data['energyT5'] = { id:'energyT5', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'lunarite', count:25000 }, { id:'gem',      count:30000 }, { id:'silver',  count:20000 }], outputs:[{ id:'energy', count:191 }], inputs:[{ id:'lava',     count:11 }],                            notifs:['energyPane'], }
             state.data['energyT6'] = { id:'energyT6', unlocked:false, count:0, active:0, destroyable:true, costType:'EXPONENTIAL', baseCosts:[{ id:'lunarite', count:30000 }, { id:'titanium', count:20000 }, { id:'silicon', count:15000 }], outputs:[{ id:'energy', count:273 }], inputs:[{ id:'hydrogen', count:10 }, { id:'helium', count:10 }], notifs:['energyPane'], }
             /*----------------------------------------------------------------*/
-            state.data['energyS1'] = { id:'energyS1', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:50000      }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:550000      }, { id:'gem',  count:550000      }, { id:'lunarite', count:330000      }], notifs:['energyPane'], }
-            state.data['energyS2'] = { id:'energyS2', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:500000     }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:5500000     }, { id:'gem',  count:5500000     }, { id:'lunarite', count:3300000     }], notifs:['energyPane'], }
-            state.data['energyS3'] = { id:'energyS3', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:5000000    }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:55000000    }, { id:'gem',  count:55000000    }, { id:'lunarite', count:33000000    }], notifs:['energyPane'], }
-            state.data['energyS4'] = { id:'energyS4', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:50000000   }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:550000000   }, { id:'gem',  count:550000000   }, { id:'lunarite', count:330000000   }], notifs:['energyPane'], }
-            state.data['energyS5'] = { id:'energyS5', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:500000000  }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:5500000000  }, { id:'gem',  count:5500000000  }, { id:'lunarite', count:3300000000  }], notifs:['energyPane'], }
-            state.data['energyS6'] = { id:'energyS6', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:5000000000 }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:55000000000 }, { id:'gem',  count:55000000000 }, { id:'lunarite', count:33000000000 }], notifs:['energyPane'], }
+            state.data['energyS1'] = { id:'energyS1', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:50000      }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:550000      }, { id:'gem',  count:550000      }, { id:'lunarite', count:330000      }], notifs:['batteryPane'], }
+            state.data['energyS2'] = { id:'energyS2', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:500000     }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:5500000     }, { id:'gem',  count:5500000     }, { id:'lunarite', count:3300000     }], notifs:['batteryPane'], }
+            state.data['energyS3'] = { id:'energyS3', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:5000000    }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:55000000    }, { id:'gem',  count:55000000    }, { id:'lunarite', count:33000000    }], notifs:['batteryPane'], }
+            state.data['energyS4'] = { id:'energyS4', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:50000000   }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:550000000   }, { id:'gem',  count:550000000   }, { id:'lunarite', count:330000000   }], notifs:['batteryPane'], }
+            state.data['energyS5'] = { id:'energyS5', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:500000000  }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:5500000000  }, { id:'gem',  count:5500000000  }, { id:'lunarite', count:3300000000  }], notifs:['batteryPane'], }
+            state.data['energyS6'] = { id:'energyS6', unlocked:false, count:0, storage:{ id:'energy', type:'FIXED', count:5000000000 }, costType:'EXPONENTIAL', baseCosts:[{ id:'metal',  count:55000000000 }, { id:'gem',  count:55000000000 }, { id:'lunarite', count:33000000000 }], notifs:['batteryPane'], }
             /*----------------------------------------------------------------*/
 
             // PLASMA
@@ -1559,7 +1560,10 @@ export const store = createStore({
             }
 
             state.resources.forEach(item => {
+                let tempBoost = boost
+                if (item.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
                 commit('setDataProd', { id:item.id, prod:temp[item.id].prod })
+                commit('setDataBoost', { id:item.id, boost:(1 + tempBoost) * (1 + temp[item.id].boost) })
                 commit('setDataProduction', { id:item.id, production:temp[item.id].production })
                 commit('setDataConsumption', { id:item.id, consumption:temp[item.id].consumption })
             })            
@@ -2085,6 +2089,8 @@ export const store = createStore({
             
             state.data['darkmatter'].count += getters.getPotentialDM
             state.stats.allTimeDarkmatter += getters.getPotentialDM
+            
+            state.collapsed = []
             
             let exludedList = [
                 'darkmatter',
