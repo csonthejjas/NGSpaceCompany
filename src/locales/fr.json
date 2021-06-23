@@ -78,6 +78,8 @@
     "showToastAutoSave": "Afficher la notification de sauvegarde automatique",
     "showToastAchievement": "Afficher la notification d'un nouveau trophée",
     "saving": "Sauvegarde",
+    "manualSaving": "Sauvegarde manuelle",
+    "save": "Sauvegarder",
     "autoSavingDuration": "Durée entre 2 sauvegardes automatiques",
     "30seconds": "30 secondes",
     "2minutes": "2 minutes",

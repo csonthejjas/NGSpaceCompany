@@ -78,6 +78,8 @@
     "showToastAutoSave": "Display autosave notifications",
     "showToastAchievement": "Display achievement notifications",
     "saving": "Saving",
+    "manualSaving": "Manual Saving",
+    "save": "Save",
     "autoSavingDuration": "Auto-Save Duration",
     "30seconds": "30 seconds",
     "2minutes": "2 minutes",

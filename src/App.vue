@@ -1044,17 +1044,6 @@
                         <card id="saving" checked="true">
                             <div class="col-12">
                                 <div class="mb-1">
-                                    <small>{{ $t('manualSaving') }}</small>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-auto">
-                                        <button>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-1">
                                     <small>{{ $t('autoSavingDuration') }}</small>
                                 </div>
                                 <div>
@@ -1066,10 +1055,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 text-end">
-                                <button class="btn btn-danger" @click="hardResetModal.show();">
-                                    <span class="text-danger">{{ $t('hardReset') }}</span>
-                                </button>
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <small>{{ $t('manualSaving') }}</small>
+                                </div>
+                                <div class="row g-1">
+                                    <div class="col-auto">
+                                        <button class="btn" @click="onSave()">
+                                            {{ $t('save') }}
+                                        </button>
+                                    </div>
+                                    <div class="col text-end">
+                                        <button class="btn btn-danger" @click="hardResetModal.show();">
+                                            <span class="text-danger">{{ $t('hardReset') }}</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </card>
                     </pane>
@@ -1518,6 +1519,7 @@
                                 <li>NEW: un-collapse all on 'Rebirth'</li>
                                 <li>NEW: display real 'Max' amount of plasma/energy to be converted</li>
                                 <li>NEW: when card is minimized, display name + current count</li>
+                                <li>NEW: manual save button</li>
                             </ul>
                         </div>
                         <div class="col-12 border-top">
@@ -1995,6 +1997,12 @@ export default {
             
             localStorage.removeItem('ngsave')
             window.location.reload()
+        },
+        onSave() {
+        
+            this.save()
+            this.setTimeSinceAutoSave(1)
+            if (this.showToastAutoSave) this.toastAutoSave.show()
         },
     },
     beforeUnmount() {
