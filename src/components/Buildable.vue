@@ -201,7 +201,7 @@
 
                                 <costs :costs="data[id].costs" :id="id" :calc="calc" />
                                 
-                                <div v-if="id == 'segment' || multibuy == true" class="col-12">
+                                <div class="col-12">
                                     <div v-if="id != 'segment'" class="row g-1 justify-content-end">
                                         <div v-if="multibuy == true && data[id].count < 5" class="col-auto"><button class="btn" @click="build({id:id, upto:5})">= 5</button></div>
                                         <div v-if="multibuy == true && data[id].count < 25" class="col-auto"><button class="btn" @click="build({id:id, upto:25})">= 25</button></div>
