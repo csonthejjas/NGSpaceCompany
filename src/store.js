@@ -253,7 +253,7 @@ export const store = createStore({
         setTimeSinceAutoSave(state, payload) { state.timeSinceAutoSave = payload },
         setTimeSinceAutoEmc(state, payload) { state.timeSinceAutoEmc = payload },
         /*--------------------------------------------------------------------*/
-        addNotif(state, payload) { if (!(state.notifications.includes(payload))) state.notifications.push(payload) },
+        addNotif(state, payload) { if (!(state.notifications.includes(payload) || state.activePane === payload)) state.notifications.push(payload) },
         /*--------------------------------------------------------------------*/
         setDataProd(state, payload) { if (payload.prod  != state.data[payload.id].prod) state.data[payload.id].prod  = payload.prod },
         setDataBoost(state, payload) { if (payload.boost  != state.data[payload.id].boost) state.data[payload.id].boost = payload.boost },
