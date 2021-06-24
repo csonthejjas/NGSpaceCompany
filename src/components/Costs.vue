@@ -13,6 +13,11 @@
                         <i class="fas fa-fw fa-calculator"></i>
                     </button>
                 </div>
+                <div v-if="id && calc" class="col text-end">
+                    <button @click="$root.calcId=id; $root.calcModal.show();">
+                        <i class="fas fa-fw fa-calculator"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <div v-for="cost in costs" :key="cost.id" class="row g-1">
@@ -38,6 +43,6 @@
 
 <script>
 export default {
-    props: [ 'costs', 'mod', 'id' ],
+    props: [ 'costs', 'mod', 'id', 'calc' ],
 }
 </script>

@@ -199,25 +199,22 @@
                                     </div>
                                 </div>
 
-                                <costs :costs="data[id].costs" :id="id" />
+                                <costs :costs="data[id].costs" :id="id" :calc="calc" />
                                 
-                                <div class="col-12">
+                                <div v-if="id == 'segment' || multibuy == true" class="col-12">
                                     <div v-if="id != 'segment'" class="row g-1 justify-content-end">
-                                        <div class="col-auto">
-                                            <button class="btn" @click="build({id:id, count:1})">
-                                                {{ $t(btnText) }}
-                                            </button>
-                                        </div>
-                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:5})">= 5</button></div>
-                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:25})">= 25</button></div>
-                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:75})">= 75</button></div>
-                                        <div v-if="multibuy == true" class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
+                                        <div v-if="multibuy == true && data[id].count < 5" class="col-auto"><button class="btn" @click="build({id:id, upto:5})">= 5</button></div>
+                                        <div v-if="multibuy == true && data[id].count < 25" class="col-auto"><button class="btn" @click="build({id:id, upto:25})">= 25</button></div>
+                                        <div v-if="multibuy == true && data[id].count < 75" class="col-auto"><button class="btn" @click="build({id:id, upto:75})">= 75</button></div>
+                                        <div v-if="multibuy == true && data[id].count < 150" class="col-auto"><button class="btn" @click="build({id:id, upto:150})">= 150</button></div>
+                                        <div v-if="multibuy == true && data[id].count < 250" class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
+                                        <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t(btnText) }} 1</button></div>
                                     </div>
                                     <div v-if="id == 'segment'" class="row g-1 justify-content-end">
-                                        <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t(btnText) }} 1</button></div>
                                         <div class="col-auto"><button class="btn" @click="build({id:id, upto:50})">= 50</button></div>
                                         <div class="col-auto"><button class="btn" @click="build({id:id, upto:100})">= 100</button></div>
                                         <div class="col-auto"><button class="btn" @click="build({id:id, upto:250})">= 250</button></div>
+                                        <div class="col-auto"><button class="btn" @click="build({id:id, count:1})">{{ $t(btnText) }} 1</button></div>
                                     </div>
                                 </div>
                                 
@@ -237,7 +234,7 @@ import Costs from './Costs.vue'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
-    props: [ 'id', 'btnText', 'unlocker', 'collapse', 'multibuy' ],
+    props: [ 'id', 'btnText', 'unlocker', 'collapse', 'multibuy', 'calc' ],
     components: {
         'costs': Costs,
     },
@@ -245,6 +242,9 @@ export default {
         return {
             selected: null,
         }
+    },
+    created() {
+        this.selected = this.id == 'nanoswarm' ? this.data[this.id].resource : null
     },
     computed: {
         ...mapState([

@@ -1067,6 +1067,8 @@
     "spy_desc": "C'est là que vous pouvez envoyer des vaisseaux pour trouver des informations sur les flottes de vos ennemis. Au premier espionnage réussi, vous pourrez voir le nombre de chiffres des statistiques de la flotte ennemie, le second révélera le premier chiffre de chaque statistique et chaque espionnage suivant révélera le chiffre suivant.",
     "invade_desc": "Ici, vous pouvez activer des vaisseaux au sein de votre flotte et tenter d'envahir le système stellaire de la faction. Votre réputation affecte leur degré de préparation à une éventuelle invasion. Les statistiques de la flotte ennemie en tiennent déjà compte, donc aucun calcul supplémentaire n'est nécessaire. L'invasion a un mauvais effet sur votre réputation auprès de la faction en question, la réduisant de 10 pour une invasion réussie. Cependant, en raison de leur grand ego, ils ont pitié des tentatives infructueuses et la réputation n'est pas modifiée lors d'une invasion échouée.",
     "absorb_desc": "Absorber est le moyen le plus simple de conquérir un système stellaire. Malheureusement, vous devez être en bons termes avec la faction qui contrôle l'étoile: avoir plus de 60 points de réputation avec eux. Lors de l'absorption, vous perdrez 5 points de réputation, soit la moitié du montant que vous perdriez lors d'une invasion.",
+        
+    "calcModal": "Machine calculateur de coûts",
     
     "segmentModal": "Segment Dyson calculateur de coûts",
     "costTo50": "Coûts jusque 50",

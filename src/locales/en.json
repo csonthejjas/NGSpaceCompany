@@ -1071,8 +1071,14 @@
     "invade_desc": "Here, you can activate ships within your fleet and attempt to invade the faction' star system. You reputation with them affects how prepared they are to a possible invasion. The star system' fleet statistics take this into account already, so no extra calculation is needed. Invading has a bad effect on your reputation with the faction in question, reducing it by 10 for a successful invasion. However, due to their large ego, they take pity on failed attempts and reputation is not changed in the result of a loss.",
     "absorb_desc": "Absorbing is the simplest way of conquering a star system. Unfortunately, you must be on good terms with the faction in control, with over 60 reputation with them. When Absorbing, you will lose 5 reputation in doing so, which is half the amount you would lose in an invasion.",
     
-    "segmentModal": "Dyson Segment Cost Calculator",
+    "costTo5": "Costs to 5",
+    "costTo25": "Costs to 25",
     "costTo50": "Costs to 50",
+    "costTo75": "Costs to 75",
     "costTo100": "Costs to 100",
-    "costTo250": "Costs to 250"
+    "costTo150": "Costs to 150",
+    "costTo250": "Costs to 250",
+    
+    "calcModal": "Machine Cost Calculator",    
+    "segmentModal": "Dyson Segment Cost Calculator"
 }

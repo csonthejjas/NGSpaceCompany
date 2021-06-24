@@ -271,10 +271,10 @@ export const store = createStore({
                 if ('storage' in building && building.storage.id == id && building.count > 0) {
                 
                     if (building.storage.type == 'DOUBLE') item.storage = item.baseStorage * Math.pow(2, building.count)
-                    else if (building.storage.type == 'FIXED') item.storage += building.storage.count * building.count
-                    
-                    if (building.storage.id == 'energy') {
-                        item.storage += (building.storage.count * building.count) * (0.01 * state.data['boostEnergyStorage'].count)
+                    else if (building.storage.type == 'FIXED') {
+                        
+                        if (building.storage.id == 'energy') item.storage += (building.storage.count * building.count) * (1 + (0.01 * state.data['boostEnergyStorage'].count))
+                        else item.storage += building.storage.count * building.count
                     }
                 }
             }
@@ -1367,8 +1367,8 @@ export const store = createStore({
                 state.lastUpdateTime = data.lastUpdateTime || new Date().getTime()
                 state.autoSaveInterval = data.autoSaveInterval || 30 * 1000
                 state.companyName = data.companyName || 'NG Space'
-                state.notifAutoSave = data.notifAutoSave || true
-                state.notifAchievement = data.notifAchievement || true
+                state.notifAutoSave = data.notifAutoSave
+                state.notifAchievement = data.notifAchievement
                 state.displayLockedItems = data.displayLockedItems || false
                 state.username = data.username || null
                 state.token = data.token || null
@@ -1653,10 +1653,10 @@ export const store = createStore({
                     if (item.progress >= 100) {
                         item.count += 1
                         commit('addNotif', 'achievementPane')
-                        state.newAchievement = true
+                        state.newAchievement = true                        
                     }
-                    totalAchieved += pascal(item.count * 2 - 1)
                 }
+                totalAchieved += pascal(item.count * 2 - 1)
             })
             
             state.rank.xpNeeded = fibonacci(state.rank.level + 7)
@@ -1704,6 +1704,10 @@ export const store = createStore({
             /*----------------------------------------------------------------*/
             else if (id == 'upgradeEnergy2') {
                 state.data['energyT2'].outputs.forEach(output => { output.count *= 2 })
+            }
+            /*----------------------------------------------------------------*/
+            else if (id == 'boostEnergyStorage') {
+                commit('computeStorage', 'energy')
             }
             /*----------------------------------------------------------------*/
             else if (id == 'wonderMeteorite1') {

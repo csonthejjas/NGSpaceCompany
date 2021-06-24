@@ -96,7 +96,7 @@
             </div>
             
         </div>
-        <div class="col-12">
+        <div v-if="countTo100 > 0" class="col-12">
             <div class="heading-6">
                 <span>{{ $t('costTo100') }}</span>
             </div>
@@ -192,7 +192,7 @@
             </div>
             
         </div>
-        <div class="col-12">
+        <div v-if="countTo250 > 0" class="col-12">
             <div class="heading-6">
                 <span>{{ $t('costTo250') }}</span>
             </div>
@@ -355,7 +355,7 @@ export default {
     },
     methods: {
         computeCost(base, n) {
-            return base * (1 - Math.pow(1.02, n)) / (1 - 1.02)
+            return Math.floor(base * (1 - Math.pow(1.02, n)) / (1 - 1.02))
         },
     },
 }
