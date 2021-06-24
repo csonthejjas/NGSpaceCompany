@@ -75,6 +75,7 @@
     "copy": "Copier en mémoire",
     "importExport_desc": "Copier-coller dans un fichier quelque part afin de pouvoir l'importer dans le jeu à une date ultérieure. Vous pouvez également l'utiliser pour créer plusieurs 'sauvegardes' du jeu en stockant plusieurs instances séparément.",
     "notifications": "Notifications",
+    "showLockedItems": "Afficher les items bloqués",
     "showToastAutoSave": "Afficher la notification de sauvegarde automatique",
     "showToastAchievement": "Afficher la notification d'un nouveau trophée",
     "saving": "Sauvegarde",
@@ -992,6 +993,9 @@
     "bigTimer": "> 48h",
     "selectEmcAmount": "Choisissez un montant",
     "changeLog": "Change Log",
+    "notEnoughInputCount": "Pas de production, pas assez de",
+    "notEnoughInputStorage": "Pas de production, stockage trop petit",
+
     
     "total": "Total",
     "totalProduction": "Production",

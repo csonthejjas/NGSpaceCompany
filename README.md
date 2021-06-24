@@ -6,7 +6,7 @@ This game has been made as a remake of the original game from Sparticle999. Of c
 
 These are links to everything NG Space Company outside of the game itself.
 
-NG Site https://spacecompany.exileng.com
+NG Site https://ngspacecompany.exileng.com
 
 NG Discord https://discord.gg/3UkgeeT9CV
 

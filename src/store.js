@@ -66,6 +66,7 @@ export const store = createStore({
             newAchievement: false,
             notifAutoSave: true,
             notifAchievement: true,
+            displayLockedItems: false,
             collapsed: [],
             /*----------------------------------------------------------------*/
             fleet: { power:0, defense:0, speed:0 },
@@ -233,6 +234,7 @@ export const store = createStore({
         setAutoSaveInterval(state, payload) { state.autoSaveInterval = payload * 1000 },
         setNotifAutoSave(state, payload) { state.notifAutoSave = payload },
         setNotifAchievement(state, payload) { state.notifAchievement = payload },
+        setDisplayLockedItems(state, payload) { state.displayLockedItems = payload },
         setUsername(state, payload) { state.username = payload },
         setToken(state, payload) { state.token = payload },
         setEmcAmount(state, payload) { state.emcAmount = payload },
@@ -271,7 +273,9 @@ export const store = createStore({
                     if (building.storage.type == 'DOUBLE') item.storage = item.baseStorage * Math.pow(2, building.count)
                     else if (building.storage.type == 'FIXED') item.storage += building.storage.count * building.count
                     
-                    if (building.storage.id == 'energy') item.storage += building.storage.count * (0.01 * state.data['boostEnergyStorage'].count)
+                    if (building.storage.id == 'energy') {
+                        item.storage += (building.storage.count * building.count) * (0.01 * state.data['boostEnergyStorage'].count)
+                    }
                 }
             }
         },
@@ -1363,8 +1367,9 @@ export const store = createStore({
                 state.lastUpdateTime = data.lastUpdateTime || new Date().getTime()
                 state.autoSaveInterval = data.autoSaveInterval || 30 * 1000
                 state.companyName = data.companyName || 'NG Space'
-                state.notifAutoSave = data.notifAutoSave
-                state.notifAchievement = data.notifAchievement
+                state.notifAutoSave = data.notifAutoSave || true
+                state.notifAchievement = data.notifAchievement || true
+                state.displayLockedItems = data.displayLockedItems || false
                 state.username = data.username || null
                 state.token = data.token || null
                 state.emcAmount = data.emcAmount || 'max'
@@ -1450,6 +1455,7 @@ export const store = createStore({
                 companyName: state.companyName,
                 notifAutoSave: state.notifAutoSave,
                 notifAchievement: state.notifAchievement,
+                displayLockedItems: state.displayLockedItems,
                 username: state.username,
                 token: state.token,
                 emcAmount: state.emcAmount,
@@ -1485,7 +1491,10 @@ export const store = createStore({
         computeProdValues({ state, commit }) {
         
             let temp = {}
-            state.resources.forEach(item => { temp[item.id] = { prod:0, boost:0, consumption:0, production:0 } })
+            state.resources.forEach(item => {
+                item.problem = false
+                temp[item.id] = { prod:0, boost:0, consumption:0, production:0 }
+            })
 
             let prodBoost = 0
             item = state.data['boostProduction']
@@ -1513,14 +1522,21 @@ export const store = createStore({
             })
             
             state.producers.forEach(item => {
+                item.problem = null
                 let canProduce = true
+                let problem = false
                 if (!item.unlocked) canProduce = false
                 else {
                     if ('inputs' in item) {
-                        item.inputs.forEach(input => { if (state.data[input.id].count - (input.count * item.active) < 0) {
-                            canProduce = false
-                            return
-                        }})
+                        item.inputs.forEach(input => {
+                            if (state.data[input.id].count - (input.count * item.active) < 0) {
+                                canProduce = false
+                                problem = true
+                                if ((input.count * item.active) > state.data[input.id].storage) item.problem = { type:'notEnoughInputStorage', id:input.id }
+                                else item.problem = { type:'notEnoughInputCount', id:input.id }
+                                return
+                            }
+                        })
                     }
                     if ('outputs' in item) {
                         item.outputs.forEach(output => { if (!state.data[output.id].unlocked || ('toggle' in state.data[output.id] && state.data[output.id].toggle != 'on')) {
@@ -1548,6 +1564,13 @@ export const store = createStore({
                             if (output.id == 'science' && state.data['boostScience'].unlocked && state.data['boostScience'].count > 0) tempBoost += 0.02 * state.data['boostScience'].count
                             temp[output.id].prod += (output.count * item.active) * (1 + tempBoost) * (1 + temp[output.id].boost)
                             temp[output.id].production += (output.count * item.active) * (1 + tempBoost) * (1 + temp[output.id].boost)
+                        })
+                    }
+                }                
+                if (problem) {
+                    if ('outputs' in item) {
+                        item.outputs.forEach(output => {
+                            state.data[output.id].problem = true
                         })
                     }
                 }
@@ -2128,9 +2151,26 @@ export const store = createStore({
             state.stats.ships.current = 0
             state.stats.starOwned.current = 0
             
+            dispatch('rebirthFaction', { id:'carnelian', items:['upgradeGain', 'upgradeStorage1', 'upgradeStorage2', 'techEnergyStorage6', 'upgradeStorage3'] })
+            dispatch('rebirthFaction', { id:'prasnian', items:['techPlasma3', 'upgradeWonder1', 'upgradeWonder2', 'upgradeWonder3', 'autoEmc', 'techPlasma4', 'techPlasmaStorage3'] })
+            dispatch('rebirthFaction', { id:'hyacinite', items:['upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost'] })
+            dispatch('rebirthFaction', { id:'kitrinos', items:['upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5'] })
+            dispatch('rebirthFaction', { id:'moviton', items:['upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4'] })
+            dispatch('rebirthFaction', { id:'overlord', items:['boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'] })
+            
             dispatch('save')
             
             return true
+        },
+        /*--------------------------------------------------------------------*/
+        rebirthFaction({ state }, payload) {
+        
+            let faction = state.data[payload.id]
+            faction.opinion = 0
+            
+            payload.items.forEach(id => {
+                if (state.data[id].count > 0) faction.opinion += state.data[id].opinion
+            })
         },
     },
 })

@@ -1,5 +1,5 @@
 <template>
-    <div class="col" role="article">
+    <div v-if="data[id].unlocked || (!data[id].unlocked && displayLockedItems == true)" class="col" role="article">
         <div class="row gx-2">
             <div class="col-auto">
             
@@ -192,6 +192,11 @@
                                             <small class="text-normal ms-1">/s</small>
                                         </div>
                                     </div>
+                                    <div v-if="data[id].problem" class="mt-2 small">
+                                        <i class="fas fa-fw fa-exclamation-triangle text-danger"></i>
+                                        <span class="text-danger ms-1">{{ $t(data[id].problem.type) }}</span>
+                                        <span class="text-light ms-1">{{ $t(data[id].problem.id) }}</span>
+                                    </div>
                                 </div>
 
                                 <costs :costs="data[id].costs" :id="id" />
@@ -243,7 +248,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'data',
+            'data', 'displayLockedItems',
         ]),
         ...mapGetters([
             'isCollapsed'

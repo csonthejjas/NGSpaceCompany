@@ -37,14 +37,14 @@
                 <div class="row gx-2 gy-3 row-cols-1">
                 
                     <sidenav-group id="energyHeading" :unlocked="data['energy'].unlocked">
-                        <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" />
+                        <sidenav-item id="energyPane" icon="energy.png" :unlocked="data['energy'].unlocked" :prod="data['energy'].prod" :problem="data['energy'].problem" />
                         <sidenav-item id="batteryPane" icon="battery.png" :unlocked="data['energy'].unlocked" :count="data['energy'].count" :storage="data['energy'].storage" />
                     </sidenav-group>
                     
                     <sidenav-group id="fabricatedHeading" :unlocked="data['carbon'].unlocked">
-                        <sidenav-item id="plasmaPane" icon="plasma.png" :unlocked="data['plasma'].unlocked" :prod="data['plasma'].prod" :count="data['plasma'].count" :storage="data['plasma'].storage" />
-                        <sidenav-item id="meteoritePane" icon="meteorite.png" :unlocked="data['meteorite'].unlocked" :prod="data['meteorite'].prod" :count="data['meteorite'].count" :storage="data['meteorite'].storage" />
-                        <sidenav-item id="carbonPane" icon="carbon.png" :unlocked="data['carbon'].unlocked" :prod="data['carbon'].prod" :count="data['carbon'].count" :storage="data['carbon'].storage" />
+                        <sidenav-item id="plasmaPane" icon="plasma.png" :unlocked="data['plasma'].unlocked" :prod="data['plasma'].prod" :count="data['plasma'].count" :storage="data['plasma'].storage" :problem="data['plasma'].problem" />
+                        <sidenav-item id="meteoritePane" icon="meteorite.png" :unlocked="data['meteorite'].unlocked" :prod="data['meteorite'].prod" :count="data['meteorite'].count" :storage="data['meteorite'].storage" :problem="data['meteorite'].problem" />
+                        <sidenav-item id="carbonPane" icon="carbon.png" :unlocked="data['carbon'].unlocked" :prod="data['carbon'].prod" :count="data['carbon'].count" :storage="data['carbon'].storage" :problem="data['carbon'].problem" />
                     </sidenav-group>
 
                     <sidenav-group id="earthResourcesHeading" :unlocked="data['metal'].unlocked">
@@ -1017,9 +1017,6 @@
                                     <div class="col-auto">
                                         <button class="btn" @click="importData()">{{ $t('import') }}</button>
                                     </div>
-                                    <div class="col-auto">
-                                        <button class="btn">{{ $t('copy') }}</button>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1031,6 +1028,10 @@
                         </card>
                         <card id="notifications" checked="true">
                             <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkHideLocked" v-model="showLockedItems" @click="setDisplayLockedItems(!showLockedItems)" />
+                                    <label class="form-check-label small" for="checkHideLocked">{{ $t('showLockedItems') }}</label>
+                                </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="checkToastAutoSave" v-model="showToastAutoSave" @click="setNotifAutoSave(!showToastAutoSave)" />
                                     <label class="form-check-label small" for="checkToastAutoSave">{{ $t('showToastAutoSave') }}</label>
@@ -1511,7 +1512,16 @@
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
                         </div>
                         <div class="col-12 border-top">
-                            <div class="text-light">v1.13.0 - 2021-06-??</div>
+                            <div class="text-light">v1.14.0 - 2021-06-24</div>
+                            <ul class="small">
+                                <li>FIX: 'Battery Efficiency' does not actually increase battery stogage</li>
+                                <li>FIX: reset faction relationship to DM upgrade after rebirth</li>
+                                <li>NEW: display a warning message when there is not enough consumed resource storage to produce</li>
+                                <li>NEW: an option to hide or not locked items</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
+                            <div class="text-light">v1.13.0 - 2021-06-23</div>
                             <ul class="small">
                                 <li>FIX: exit game loop when last update is later than now</li>
                                 <li>FIX: reflect boosts in machine cards production/consumptions values</li>
@@ -1719,6 +1729,7 @@ export default {
             
             showToastAutoSave: true,
             showToastAchievement: true,
+            showLockedItems: false,
             
             compressed: null,
             newCompanyName: null,
@@ -1733,7 +1744,7 @@ export default {
             hardResetModal: null,
             segmentModal: null,
             
-            currentRelease: '1.13.0',
+            currentRelease: '1.14.0',
             ghLatestRelease: null,
             
             login: null,
@@ -1750,7 +1761,7 @@ export default {
         
             'data', 'companyName', 'locale', 'activePane', 'lastUpdateTime', 'autoSaveInterval', 'timeSinceAutoSave', 'rank',
             'resAchievements', 'prodAchievements', 'newAchievement',
-            'notifAutoSave', 'notifAchievement',
+            'notifAutoSave', 'notifAchievement', 'displayLockedItems',
             'username', 'token',
             'emcAmount', 'autoEmcInterval', 'timeSinceAutoEmc',
             'stats',
@@ -1769,7 +1780,7 @@ export default {
         ...mapMutations([
         
             'setLocale', 'setActivePane', 'setLastUpdateTime', 'setTimeSinceAutoSave', 'setCompanyName', 'setAutoSaveInterval',
-            'setNotifAutoSave', 'setNotifAchievement', 'setUsername', 'setToken', 'setEmcAmount', 'setTimeSinceAutoEmc', 'setAutoEmcInterval',
+            'setNotifAutoSave', 'setNotifAchievement', 'setDisplayLockedItems', 'setUsername', 'setToken', 'setEmcAmount', 'setTimeSinceAutoEmc', 'setAutoEmcInterval',
         ]),
         ...mapActions([
         
@@ -1816,6 +1827,7 @@ export default {
                 this.toastAutoSave = new Toast(element)
                 this.showToastAutoSave = this.notifAutoSave 
                 this.showToastAchievement = this.notifAchievement 
+                this.showLockedItems = this.displayLockedItems
                 
                 element = document.getElementById('toastAchievement')
                 this.toastAchievement = new Toast(element)
