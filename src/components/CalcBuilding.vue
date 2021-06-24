@@ -4,7 +4,7 @@
             <div class="heading-6">
                 <span>{{ $t('costTo' + bracket) }}</span>
             </div>
-            <div v-for="cost in data[id].costs" :key="cost.id" class="row g-1">
+            <div v-for="cost in data[id].baseCosts" :key="cost.id" class="row g-1">
                 <div class="col-auto d-flex align-items-center">
                     <img :src="require(`../assets/interface/${cost.id}.png`)" width="12" height="12" />
                 </div>

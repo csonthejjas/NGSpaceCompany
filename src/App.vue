@@ -94,7 +94,6 @@
                         <sidenav-item id="solCenterPane" icon="solCenter.png" :unlocked="data['techPlasma0'].unlocked" :done="data['techPlasma0'].count > 0 && data['techEmc0'].count > 0 && data['techDyson0'].count > 0" doneText="done" />
                         <sidenav-item id="emcPane" icon="emc.png" :unlocked="data['emc'].unlocked" />
                         <sidenav-item id="dysonPane" icon="dyson.png" :unlocked="data['segment'].unlocked" />
-                        <sidenav-item id="nanoswarmPane" icon="nanoswarm.png" :unlocked="data['nanoswarm'].unlocked" />
                     </sidenav-group>
 
                     <sidenav-group id="interstellarHeading" :unlocked="data['radarT1'].unlocked || data['antimatter'].unlocked || data['spaceship'].unlocked || data['shipT1'].unlocked">
@@ -618,11 +617,6 @@
                         <buildable id="dysonT3" btnText="build" />
                     </pane>
                     
-                    <!-- NANOSWARM PANE -->
-                    <pane id="nanoswarmPane" icon="nanoswarm.png">
-                        <buildable id="nanoswarm" btnText="build" />
-                    </pane>
-                    
                     <!-- ANTIMATTER PANE -->
                     <pane id="antimatterPane" icon="antimatter.png" :descs="['antimatterPane_desc']">
                         <buildable id="antimatterT1" btnText="build" />
@@ -786,7 +780,6 @@
                     <!-- STARGAZE OVERLORD PANE -->
                     <pane id="stargazeOverlordPane" icon="overlord.png" :descs="['stargazeOverlordPane_desc']">
                         <buildable id="boostDarkmatter" btnText="activate" />
-                        <buildable id="techNanoswarm0" btnText="activate" />
                         <buildable id="upgradeFaction" btnText="activate" />
                     </pane>
                         
@@ -1530,6 +1523,14 @@
                             <span class="h6 text-light">{{ $t('changeLog') }}</span>
                         </div>
                         <div class="col-12 border-top">
+                            <div class="text-light">v1.16.0 - 2021-06-24</div>
+                            <ul class="small">
+                                <li>FIX: calculator computed values</li>
+                                <li>FIX: computed ship costs after scouting and invasion</li>
+                                <li>NEW: nanoswarms DM upgrade will be removed for the moment (those who have it keep it until next rebirth)</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 border-top">
                             <div class="text-light">v1.15.0 - 2021-06-24</div>
                             <ul class="small">
                                 <li>FIX: 'Battery Efficiency' still doesn't increase battery storage in v1.14.0</li>
@@ -1777,7 +1778,7 @@ export default {
             segmentModal: null,
             calcModal: null,
             
-            currentRelease: '1.15.0',
+            currentRelease: '1.16.0',
             ghLatestRelease: null,
             
             login: null,

@@ -2025,6 +2025,8 @@ export const store = createStore({
                 let scout = state.data['shipT1']
                 scout.count -= scout.active
                 scout.active = 0
+                
+                commit('computeCosts', 'shipT1')
             }
             
             commit('computeFleetStats')
@@ -2069,6 +2071,8 @@ export const store = createStore({
                                     item.active -= 1
                                 }
                             }
+                            
+                            commit('computeCosts', i)
                         }
                     }
                     
@@ -2126,7 +2130,7 @@ export const store = createStore({
                 'hyacinite', 'upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost', 
                 'kitrinos', 'upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5',
                 'moviton', 'upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4',
-                'overlord', 'boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'
+                'overlord', 'boostDarkmatter', 'upgradeFaction'
             ]
             
             for (let i in state.data) {
@@ -2160,7 +2164,7 @@ export const store = createStore({
             dispatch('rebirthFaction', { id:'hyacinite', items:['upgradeScience1', 'upgradeScience2', 'techScience5', 'upgradeEnergyBoost'] })
             dispatch('rebirthFaction', { id:'kitrinos', items:['upgradeTier1', 'techEnergyStorage5', 'multiBuy', 'boostCapital', 'techTier5'] })
             dispatch('rebirthFaction', { id:'moviton', items:['upgradeFuel1', 'upgradeSpaceship', 'techMeteorite3', 'techMeteorite4'] })
-            dispatch('rebirthFaction', { id:'overlord', items:['boostDarkmatter', 'techNanoswarm0', 'upgradeFaction'] })
+            dispatch('rebirthFaction', { id:'overlord', items:['boostDarkmatter', 'upgradeFaction'] })
             
             dispatch('save')
             
